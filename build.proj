@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="CreateInstaller" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<ProjectName>Beanstream</ProjectName>
+		<BuildName>$(ProjectName)</BuildName>
+		<ProjectFile>$(ProjectName)\$(ProjectName).csproj</ProjectFile>
+		<DeployFileExt>zip</DeployFileExt>
+		<DeployFile>$(ProjectName).zip</DeployFile>
+		<InstallerExe>deploy.cmd</InstallerExe>
+	</PropertyGroup>
+	
+	<PropertyGroup>
+		<MSDeployExe>msdeploy.exe</MSDeployExe>
+		<MSDeployPath>C:\build\msdeploy</MSDeployPath>		
+		<MSDeployPath Condition="!Exists('$(MSDeployPath)\$(MSDeployExe)')">$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\IIS Extensions\MSDeploy\2@InstallPath)</MSDeployPath>
+		<MSDeployPath Condition="'$(MSDeployPath)'==''">$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\IIS Extensions\MSDeploy\1@InstallPath)</MSDeployPath>
+		<MSBuildPath>C:\build\MSBuild</MSBuildPath>
+		<MSBuildExtensionPackPath>$(MSBuildPath)\ExtensionPack</MSBuildExtensionPackPath>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<TPath>$(MSBuildExtensionPackPath)\MSBuild.ExtensionPack.tasks</TPath>
+		<TPath Condition="Exists('$(MSBuildExtensionPackPath)\Common\MSBuild.ExtensionPack.tasks')">$(MSBuildExtensionPackPath)\Common\MSBuild.ExtensionPack.tasks</TPath>
+	</PropertyGroup>
+	<Import Project="$(TPath)"/>
+	<PropertyGroup>
+		<BuildDir>build</BuildDir>
+		<RootDir>$(MSBuildProjectDirectory)</RootDir>
+		<SourceDir>$(RootDir)</SourceDir>
+		<CompileDir>$(RootDir)\dist-compiled</CompileDir>
+		<OutputDir>dist</OutputDir>
+	</PropertyGroup>
+	
+	<PropertyGroup>
+		<BuildInfoFileName>build.info</BuildInfoFileName>
+		<BuildInfoFile>$(RootDir)\$(OutputDir)\$(BuildInfoFileName)</BuildInfoFile>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<InstallerFiles Include="$(RootDir)\$(BuildDir)\$(InstallerExe)"/>
+	</ItemGroup>
+	
+	<Target Name="Clean" DependsOnTargets="">
+		<Microsoft.Build.Tasks.RemoveDir Directories="$(RootDir)\$(OutputDir)"/>
+		<Microsoft.Build.Tasks.RemoveDir Directories="$(CompileDir)"/>
+	</Target>
+	
+	<Target Name="Init" DependsOnTargets="Clean">
+		<MakeDir Directories="$(RootDir)\$(OutputDir)" Condition="!Exists('$(RootDir)\$(OutputDir)')" />
+		<MakeDir Directories="$(CompileDir)" Condition="!Exists('$(CompileDir)')" />
+	</Target>
+	
+	<Target Name="BuildInfo" DependsOnTargets="">
+		<Exec Command="hg branch > $(BuildInfoFile)" />
+		<ReadLinesFromFile File="$(BuildInfoFile)">
+			<Output TaskParameter="Lines" PropertyName="BuildBranch"/>
+		</ReadLinesFromFile>
+		
+		<MSBuild.ExtensionPack.Framework.DateAndTime TaskAction="Get" Format="yyyyMMdd-HHmmss">
+			<Output TaskParameter="Result" PropertyName="BuildTime"/>
+		</MSBuild.ExtensionPack.Framework.DateAndTime>
+		<Delete Files="$(BuildInfoFile)" />
+	</Target>
+	
+	<Target Name="UpdateBuildInfoFile" DependsOnTargets="BuildInfo">
+		<ItemGroup>
+			<XMLLines Include="&lt;Project&gt;&lt;/Project&gt;"/>
+		</ItemGroup>
+		<WriteLinesToFile File="$(BuildInfoFile)" Lines="@(XMLLines)" Overwrite="true"/>
+	 
+		<MSBuild.ExtensionPack.Xml.XmlFile TaskAction="AddElement" File="$(BuildInfoFile)" Element="PropertyGroup" ParentElement="//Project" />
+		<MSBuild.ExtensionPack.Xml.XmlFile TaskAction="AddElement" File="$(BuildInfoFile)" Element="BuildBranch" ParentElement="//Project/PropertyGroup" InnerText="$(BuildBranch)" />
+		<MSBuild.ExtensionPack.Xml.XmlFile TaskAction="AddElement" File="$(BuildInfoFile)" Element="BuildName" ParentElement="//Project/PropertyGroup" InnerText="$(BuildName)" />
+		<MSBuild.ExtensionPack.Xml.XmlFile TaskAction="AddElement" File="$(BuildInfoFile)" Element="BuildTime" ParentElement="//Project/PropertyGroup" InnerText="$(BuildTime)" />
+		<MSBuild.ExtensionPack.Xml.XmlFile TaskAction="AddElement" File="$(BuildInfoFile)" Element="BuildVersion" ParentElement="//Project/PropertyGroup" InnerText="$(BuildBranch)" />
+		
+		<MSBuild.ExtensionPack.FileSystem.File
+			TaskAction="Replace" 
+			RegexPattern="([^/]Project.*)" 
+			Replacement="&lt;Project ToolsVersion=%223.5%22 xmlns=%22http://schemas.microsoft.com/developer/msbuild/2003%22&gt;"
+			Files="$(BuildInfoFile)" />
+	</Target>
+	
+	<Target Name="Compile" DependsOnTargets="Clean;Init">
+		<MSBuild Projects="$(ProjectFile)"
+			Targets="Build;ResolveReferences;"
+			Properties="Configuration=Release;			
+			DebugSymbols=false; DebugType=None;
+			OutDir=$(CompileDir)\" />
+	</Target>
+	
+	<Target Name="CompressFiles" DependsOnTargets="">
+		<ItemGroup>	
+			<SourceDirFiles Include="$(CompileDir)\**\*.*" Exclude="$(CompileDir)\.hg\**;$(CompileDir)\$(OutputDir)*\**;$(CompileDir)\$(BuildDir)\**;$(CompileDir)\build*;$(CompileDir)\.hg*;$(CompileDir)\Web.*.config;$(CompileDir)\*\log4net.config;$(CompileDir)\log4net.config;"/>
+		</ItemGroup>
+			
+		<MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" 
+			CompressFiles="@(SourceDirFiles)" 
+			CompressionLevel="BestSpeed"
+			RemoveRoot="$(CompileDir)" 
+			ZipFileName="$(OutputDir)\$(BuildName)-$(BuildBranch)-$(BuildTime).$(DeployFileExt)"/>
+	</Target>
+	
+	<Target Name="CreateInstaller" DependsOnTargets="Clean;Init;BuildInfo;UpdateBuildInfoFile;Compile;CompressFiles">
+		<Message Text="Creating installer" />
+		<!-- <Copy SourceFiles="@(InstallerFiles)"
+			DestinationFolder="$(RootDir)\$(OutputDir)"
+			OverwriteReadOnlyFiles="True"/> -->
+	</Target>
+</Project>

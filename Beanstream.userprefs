@@ -1,0 +1,19 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Beanstream.Tests\SimpleTransactions.cs">
+    <Files>
+      <File FileName="Beanstream\Beanstream.cs" Line="74" Column="4" />
+      <File FileName="Beanstream.Tests\WhenCreatingAPayment.cs" Line="85" Column="42" />
+      <File FileName="Beanstream.Tests\SimpleTransactions.cs" Line="13" Column="3" />
+      <File FileName="Beanstream\Repository\PaymentsRepository.cs" Line="120" Column="5" />
+      <File FileName="Beanstream\Data\WebCommandExecuter.cs" Line="9" Column="68" />
+      <File FileName="Beanstream\Data\IWebCommandSpec.cs" Line="10" Column="26" />
+      <File FileName="Beanstream\ExecuteWebRequest.cs" Line="15" Column="56" />
+      <File FileName="Beanstream\Entities\RequestObject.cs" Line="12" Column="17" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
