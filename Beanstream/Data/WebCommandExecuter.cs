@@ -15,7 +15,7 @@ namespace Beanstream.Data
 
 			var result = new WebCommandResult<T>();
 			var request = WebRequest.Create(spec.Url);
-		//try	
+
 			spec.PrepareRequest(request);
 
 			using(var response = request.GetResponse() as HttpWebResponse)
@@ -34,6 +34,6 @@ namespace Beanstream.Data
 			}
 
 			return result;
-		}//catch Catch x As WebException throw Throw New WebCommandException("Unable to execute web command", request, x)
+		}
 	}
 }

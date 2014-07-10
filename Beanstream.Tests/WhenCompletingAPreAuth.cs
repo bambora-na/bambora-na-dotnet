@@ -2,7 +2,7 @@
 using System.Net;
 using Beanstream.Data;
 using Beanstream.Exceptions;
-using Beanstream.Repository;
+using Beanstream.Repositories;
 using Moq;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -38,10 +38,11 @@ namespace Beanstream.Tests
 
 			Beanstream.MerchantId = 100000000;
 			Beanstream.ApiKey = "F6EF00BDB80748358D52D8605CDC7027";
-			Beanstream.Payments.Repository = new PaymentsRepository(_executer.Object);
+			Payments payments = Beanstream.Payments ();
+			payments.Repository = new Repository(_executer.Object);
 
 			// Act
-			dynamic result = Beanstream.Payments.Complete(TrnId,_payment);
+			dynamic result = payments.Complete(TrnId,_payment);
 			var id = (int)JObject.Parse(result).id;
 
 			// Assert
@@ -54,11 +55,12 @@ namespace Beanstream.Tests
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new ArgumentNullException());
-			Beanstream.Payments.Repository = new PaymentsRepository(_executer.Object);
+			Payments payments = Beanstream.Payments ();
+			payments.Repository = new Repository(_executer.Object);
 
 			// Act
 			var ex = (ArgumentNullException)Assert.Throws(typeof(ArgumentNullException),
-				() => Beanstream.Payments.Complete(TrnId, null));
+				() => payments.Complete(TrnId, null));
 
 			// Assert
 			Assert.That(ex.ParamName, Is.EqualTo("payment"));
@@ -70,11 +72,12 @@ namespace Beanstream.Tests
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new ArgumentNullException());
-			Beanstream.Payments.Repository = new PaymentsRepository(_executer.Object);
+			Payments payments = Beanstream.Payments ();
+			payments.Repository = new Repository(_executer.Object);
 
 			// Act
 			var ex = (ArgumentNullException)Assert.Throws(typeof(ArgumentNullException),
-				() => Beanstream.Payments.Complete(null, _payment));
+				() => payments.Complete(null, _payment));
 
 			// Assert
 			Assert.That(ex.ParamName, Is.EqualTo("TransId"));
@@ -86,11 +89,12 @@ namespace Beanstream.Tests
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new ForbiddenException(HttpStatusCode.Forbidden, ""));
-			Beanstream.Payments.Repository = new PaymentsRepository(_executer.Object);
+			Payments payments = Beanstream.Payments ();
+			payments.Repository = new Repository(_executer.Object);
 
 			// Act
 			var ex = (ForbiddenException)Assert.Throws(typeof(ForbiddenException),
-				() => Beanstream.Payments.Complete(TrnId, _payment));
+				() => payments.Complete(TrnId, _payment));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.Forbidden));
@@ -102,11 +106,12 @@ namespace Beanstream.Tests
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new UnauthorizedException(HttpStatusCode.Unauthorized, ""));
-			Beanstream.Payments.Repository = new PaymentsRepository(_executer.Object);
+			Payments payments = Beanstream.Payments ();
+			payments.Repository = new Repository(_executer.Object);
 
 			// Act
 			var ex = (UnauthorizedException)Assert.Throws(typeof(UnauthorizedException),
-				() => Beanstream.Payments.Complete(TrnId, _payment));
+				() => payments.Complete(TrnId, _payment));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.Unauthorized));
@@ -118,11 +123,12 @@ namespace Beanstream.Tests
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new BusinessRuleException(HttpStatusCode.PaymentRequired, ""));
-			Beanstream.Payments.Repository = new PaymentsRepository(_executer.Object);
+			Payments payments = Beanstream.Payments ();
+			payments.Repository = new Repository(_executer.Object);
 
 			// Act
 			var ex = (BusinessRuleException)Assert.Throws(typeof(BusinessRuleException),
-				() => Beanstream.Payments.Complete(TrnId, _payment));
+				() => payments.Complete(TrnId, _payment));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.PaymentRequired));
@@ -134,11 +140,12 @@ namespace Beanstream.Tests
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new InvalidRequestException(HttpStatusCode.PaymentRequired, ""));
-			Beanstream.Payments.Repository = new PaymentsRepository(_executer.Object);
+			Payments payments = Beanstream.Payments ();
+			payments.Repository = new Repository(_executer.Object);
 
 			// Act
 			var ex = (InvalidRequestException)Assert.Throws(typeof(InvalidRequestException),
-				() => Beanstream.Payments.Complete(TrnId, _payment));
+				() => payments.Complete(TrnId, _payment));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.PaymentRequired));
@@ -150,11 +157,12 @@ namespace Beanstream.Tests
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new InternalServerException(HttpStatusCode.InternalServerError, ""));
-			Beanstream.Payments.Repository = new PaymentsRepository(_executer.Object);
+			Payments payments = Beanstream.Payments ();
+			payments.Repository = new Repository(_executer.Object);
 
 			// Act
 			var ex = (InternalServerException)Assert.Throws(typeof(InternalServerException),
-				() => Beanstream.Payments.Complete(TrnId, _payment));
+				() => payments.Complete(TrnId, _payment));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.InternalServerError));
@@ -166,11 +174,12 @@ namespace Beanstream.Tests
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new CommunicationException("API exception occured", null));
-			Beanstream.Payments.Repository = new PaymentsRepository(_executer.Object);
+			Payments payments = Beanstream.Payments ();
+			payments.Repository = new Repository(_executer.Object);
 
 			// Act
 			var ex = (CommunicationException)Assert.Throws(typeof(CommunicationException),
-				() => Beanstream.Payments.Complete(TrnId, _payment));
+				() => payments.Complete(TrnId, _payment));
 
 			// Assert
 			Assert.That(ex.Message, Is.EqualTo("API exception occured"));

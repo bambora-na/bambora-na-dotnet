@@ -1,5 +1,5 @@
 ﻿using Beanstream.Data;
-using Beanstream.Repository;
+using Beanstream.Repositories;
 
 namespace Beanstream
 {
@@ -35,94 +35,26 @@ namespace Beanstream
 		/// </summary>
 		public static string Platform { get; set; }
 
-		public static class Payments
+		public static Payments Payments() 
 		{
-			private static IPaymentsRepository _repository;
+			return new Payments();
+		}
 
-			public static IPaymentsRepository Repository
+
+		public static Profiles Profiles()
+		{
+			return new Profiles();
+		}
+
+
+		public static void ThrowIfNullArgument(object value, string name)
+		{
+			if (value == null)
 			{
-				private get
-				{
-					if (_repository == null)
-					{
-						_repository = new PaymentsRepository(
-							new WebCommandExecuter()
-						);
-					}
-
-					_repository.ApiVersion = ApiVersion;
-					_repository.MerchantId = MerchantId;
-					_repository.Passcode = ApiKey;
-					_repository.Username = Username;
-					_repository.Password = Password;
-					_repository.Platform = Platform;
-
-					return _repository;
-				}
-				set
-				{
-					_repository = value;
-				}
-			}
-
-			/// <summary>
-			/// This method is used for processing Purchases and Pre-Authorizations. 
-			/// </summary>
-			/// <param name="data">An object representing a request data</param>
-			/// <remarks>For more information on object see http://developer.beanstream.com</remarks>
-			/// <returns></returns>
-			public static string Create(object data)
-			{
-				return Repository.Create(data);
-			}
-
-			/// <summary>
-			/// This method is used for processing Pre-Auth Completions. 
-			/// </summary>
-			/// <param name="transId">The transaction Id of the Pre-Auth to complete</param>
-			/// <param name="data">An object representing a request data</param>
-			/// <remarks>For more information on object see http://developer.beanstream.com</remarks>
-			/// <returns></returns>
-			public static string Complete(int? transId, object data)
-			{
-				return Repository.Complete(transId, data);
-			}
-
-			/// <summary>
-			/// This method is used for processing Returns. 
-			/// </summary>
-			/// <param name="transId">The transaction Id of the initial purchase</param>
-			/// <param name="data">An object representing a request data</param>
-			/// <remarks>For more information on object see http://developer.beanstream.com</remarks>
-			/// <returns></returns>
-			public static string Return(int? transId, object data)
-			{
-				return Repository.Return(transId, data);
-			}
-
-			/// <summary>
-			/// This method is used for processing Voids. 
-			/// </summary>
-			/// <param name="transId">The transaction Id of the initial purchase/return</param>
-			/// <param name="data">An object representing a request data</param>
-			/// <remarks>For more information on object see http://developer.beanstream.com</remarks>
-			/// <returns></returns>
-			public static string Void(int? transId, object data)
-			{
-				return Repository.Void(transId, data);
-			}
-
-			/// <summary>
-			/// This method is used for continuing a 3D Secure or Interac transactions. 
-			/// </summary>
-			/// <param name="merchantData">The merchant data from the initial request</param>
-			/// <param name="data">An object representing a request data</param>
-			/// <remarks>For more information on object see http://developer.beanstream.com</remarks>
-			/// <returns></returns>
-			public static string Continue(string merchantData, object data)
-			{
-				return Repository.Continue(merchantData, data);
+				throw new System.ArgumentNullException(name);
 			}
 		}
+
 	}
+
 }

@@ -9,6 +9,7 @@ namespace Beanstream.Exceptions
 		private readonly HttpStatusCode _statusCode;
 
 		protected BaseApiException(HttpStatusCode statusCode, string response)
+			:base (statusCode.ToString()+":    "+response)
 		{
 			_response = response;
 			_statusCode =  statusCode;

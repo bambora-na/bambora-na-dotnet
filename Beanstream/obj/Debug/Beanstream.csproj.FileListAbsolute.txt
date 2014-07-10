@@ -18,3 +18,10 @@ C:\dev\projects\beanstream\sdk\beanstream-dotnet\Beanstream\bin\Debug\normnfkd.n
 C:\dev\projects\beanstream\sdk\beanstream-dotnet\Beanstream\obj\Debug\Beanstream.csprojResolveAssemblyReference.cache
 C:\dev\projects\beanstream\sdk\beanstream-dotnet\Beanstream\obj\Debug\Beanstream.dll
 C:\dev\projects\beanstream\sdk\beanstream-dotnet\Beanstream\obj\Debug\Beanstream.pdb
+F:\dev\beanstream\sdk\beanstream-dotnet\Beanstream\bin\Debug\Beanstream.dll
+F:\dev\beanstream\sdk\beanstream-dotnet\Beanstream\bin\Debug\Beanstream.pdb
+F:\dev\beanstream\sdk\beanstream-dotnet\Beanstream\bin\Debug\Newtonsoft.Json.dll
+F:\dev\beanstream\sdk\beanstream-dotnet\Beanstream\bin\Debug\Newtonsoft.Json.xml
+F:\dev\beanstream\sdk\beanstream-dotnet\Beanstream\obj\Debug\Beanstream.dll
+F:\dev\beanstream\sdk\beanstream-dotnet\Beanstream\obj\Debug\Beanstream.pdb
+F:\dev\beanstream\sdk\beanstream-dotnet\Beanstream\obj\Debug\Beanstream.csprojResolveAssemblyReference.cache

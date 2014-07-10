@@ -12,7 +12,7 @@
     <AssemblyName>Beanstream.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <StartupObject>Beanstream.Tests.SimpleTransactions</StartupObject>
+    <StartupObject>Beanstream.Tests.SampleTransactions</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,11 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Moq">
-      <HintPath>..\..\ThirdParty\Moq\4.0.0.0\Moq.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>..\..\ThirdParty\NUnit\2.5.10.11092\nunit.framework.dll</HintPath>
+      <HintPath>libs\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -48,6 +45,9 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
       <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Moq">
+      <HintPath>libs\Moq.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="WhenCompletingAPreAuth.cs" />
@@ -56,7 +56,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WhenRetuningAPayment.cs" />
     <Compile Include="WhenVoidingAPayment.cs" />
-    <Compile Include="SimpleTransactions.cs" />
+    <Compile Include="SampleTransactions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Beanstream\Beanstream.csproj">

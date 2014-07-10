@@ -24,3 +24,14 @@ C:\dev\projects\beanstream\sdk\beanstream-dotnet\Beanstream.Tests\obj\Debug\Bean
 C:\dev\projects\beanstream\sdk\beanstream-dotnet\Beanstream.Tests\obj\Debug\Beanstream.Tests.pdb
 C:\dev\projects\beanstream\sdk\beanstream-dotnet\Beanstream.Tests\bin\Debug\Beanstream.Tests.exe
 C:\dev\projects\beanstream\sdk\beanstream-dotnet\Beanstream.Tests\obj\Debug\Beanstream.Tests.exe
+F:\dev\beanstream\sdk\beanstream-dotnet\Beanstream.Tests\bin\Debug\Beanstream.Tests.exe
+F:\dev\beanstream\sdk\beanstream-dotnet\Beanstream.Tests\bin\Debug\Beanstream.Tests.pdb
+F:\dev\beanstream\sdk\beanstream-dotnet\Beanstream.Tests\bin\Debug\Beanstream.dll
+F:\dev\beanstream\sdk\beanstream-dotnet\Beanstream.Tests\bin\Debug\Moq.dll
+F:\dev\beanstream\sdk\beanstream-dotnet\Beanstream.Tests\bin\Debug\Newtonsoft.Json.dll
+F:\dev\beanstream\sdk\beanstream-dotnet\Beanstream.Tests\bin\Debug\nunit.framework.dll
+F:\dev\beanstream\sdk\beanstream-dotnet\Beanstream.Tests\bin\Debug\Beanstream.pdb
+F:\dev\beanstream\sdk\beanstream-dotnet\Beanstream.Tests\bin\Debug\Newtonsoft.Json.xml
+F:\dev\beanstream\sdk\beanstream-dotnet\Beanstream.Tests\obj\Debug\Beanstream.Tests.csprojResolveAssemblyReference.cache
+F:\dev\beanstream\sdk\beanstream-dotnet\Beanstream.Tests\obj\Debug\Beanstream.Tests.exe
+F:\dev\beanstream\sdk\beanstream-dotnet\Beanstream.Tests\obj\Debug\Beanstream.Tests.pdb
