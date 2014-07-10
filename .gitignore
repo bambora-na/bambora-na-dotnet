@@ -1,3 +1,4 @@
 *.exe
 *.suo
-*Debug/*
+**/bin/Debug/
+**/bin/Release/
