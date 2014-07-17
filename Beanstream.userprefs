@@ -1,10 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Beanstream\Beanstream.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Beanstream\Requests\IRequest.cs">
     <Files>
-      <File FileName="Beanstream\Beanstream.cs" Line="1" Column="1" />
+      <File FileName="Beanstream\Requests\PaymentRequest.cs" Line="27" Column="57" />
+      <File FileName="Beanstream.Tests\SampleTransactions.cs" Line="75" Column="41" />
+      <File FileName="Beanstream\Domain\BillingAddress.cs" Line="1" Column="1" />
       <File FileName="Beanstream.Tests\WhenCreatingAPayment.cs" Line="1" Column="1" />
-      <File FileName="Beanstream.Tests\WhenCompletingAPreAuth.cs" Line="1" Column="1" />
+      <File FileName="Beanstream\Domain\Card.cs" Line="36" Column="4" />
+      <File FileName="Beanstream\Requests\IRequest.cs" Line="27" Column="49" />
+      <File FileName="Beanstream\Responses\PaymentResponse.cs" Line="27" Column="31" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

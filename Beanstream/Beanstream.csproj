@@ -66,6 +66,15 @@
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\Payments.cs" />
     <Compile Include="Repositories\Profiles.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="Requests\PaymentRequest.cs" />
+    <Compile Include="Domain\IDomainObject.cs" />
+    <Compile Include="Requests\IRequest.cs" />
+    <Compile Include="PaymentMethod.cs" />
+    <Compile Include="Domain\Card.cs" />
+    <Compile Include="Domain\BillingAddress.cs" />
+    <Compile Include="Responses\IResponse.cs" />
+    <Compile Include="Responses\PaymentResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -87,4 +96,9 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <Folder Include="Domain\" />
+    <Folder Include="Requests\" />
+    <Folder Include="Responses\" />
+  </ItemGroup>
 </Project>

@@ -25,6 +25,7 @@ using System;
 using Beanstream.Data;
 using Beanstream.Repositories;
 using Newtonsoft.Json.Linq;
+using Beanstream.Requests;
 
 namespace Beanstream.Tests
 {
@@ -35,12 +36,12 @@ namespace Beanstream.Tests
 		public static void Main(string[] args) {
 			Console.WriteLine ("Running sample transactions...");
 
-			//SampleTransactions.ProcessPayment ();
+			SampleTransactions.ProcessPayment ();
 
 			// use Tokenized profiles to make payments
-			string customerCode = SampleTransactions.TokenizedProfileCreate ();
+			//string customerCode = SampleTransactions.TokenizedProfileCreate ();
 			//SampleTransactions.TokenizedProfilePayment (customerCode);
-			SampleTransactions.TokenizedProfileAddCard (customerCode);
+			//SampleTransactions.TokenizedProfileAddCard (customerCode);
 		}
 
 		static void ProcessPayment ()
@@ -60,7 +61,7 @@ namespace Beanstream.Tests
 					cvd = "123"
 				}
 			};
-					
+
 			Beanstream.MerchantId = 300200578;
 			Beanstream.ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70"; // your private key. Generate it in the Member Area: https://www.beanstream.com/admin/sDefault.asp Administration -> Account -> Order Settings -> API access passcode
 
@@ -68,6 +69,23 @@ namespace Beanstream.Tests
 			dynamic result = Beanstream.Payments().Create(payment);
 
 			Console.WriteLine ("Transaction result: " + result);
+		}
+
+		static void TestTest() {
+			PaymentRequest r = new PaymentRequest {
+				amount = "100.00",
+				order_number = "00000001",
+				payment_method = PaymentMethod.card,
+				card = new
+				{
+					name = "John Doe",
+					number = "5100000010001004",
+					expiry_month = "12",
+					expiry_year = "18",
+					cvd = "123"
+				}
+			}
+
 		}
 
 		static string TokenizedProfileCreate() 
