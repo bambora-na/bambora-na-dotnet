@@ -26,9 +26,15 @@ namespace Beanstream
 {
 	public class BillingAddress
 	{
-		public BillingAddress ()
-		{
-		}
+		public string billing_name { get; set; }
+		public string address_line1 { get; set; }
+		public string address_line2 { get; set; }
+		public string address_city { get; set; }
+		public string address_province { get; set; }
+		public string address_country { get; set; }
+		public string address_postal_code { get; set; }
+		public string phone_number { get; set; }
+		public string email_address { get; set; }
 	}
 }
 

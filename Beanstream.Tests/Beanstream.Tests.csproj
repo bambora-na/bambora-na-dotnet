@@ -50,12 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WhenCompletingAPreAuth.cs" />
-    <Compile Include="WhenContinuingATransaction.cs" />
-    <Compile Include="WhenCreatingAPayment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WhenRetuningAPayment.cs" />
-    <Compile Include="WhenVoidingAPayment.cs" />
     <Compile Include="SampleTransactions.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -26,17 +26,15 @@ namespace Beanstream
 {
 	public class Configuration
 	{
-		string merchantId { get; set;}
-		string apiPasscode { get; set;}
-		string profilesPasscode { get; set;}
-		string version { get; set;}
+		public int MerchantId { get; set;}
+		public string ApiPasscode { get; set;}
+		public string ProfilesPasscode { get; set;}
+		public string Version { get; set;}
+		public string Platform { get; set; }
 
-		public Configuration (string merchantId, string apiPasscode, string profilesPasscode, string version)
+		public Configuration ()
 		{
-			this.merchantId = merchantId;
-			this.apiPasscode = apiPasscode;
-			this.profilesPasscode = profilesPasscode;
-			this.version = version;
+			this.Platform = "www";
 		}
 	}
 }

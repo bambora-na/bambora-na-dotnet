@@ -32,13 +32,13 @@ namespace Beanstream.Repositories
 	
 		IRepository _repository;
 
-		public IRepository Repository
+		/*public IRepository Repository
 		{
 			private get
 			{
 				if (_repository == null)
 				{
-					_repository = new Repository(
+					_repository = new HttpsWebRequest(
 						new WebCommandExecuter()
 					);
 				}
@@ -106,9 +106,9 @@ namespace Beanstream.Repositories
 				_profileId = profileId;
 			}
 
-			/**
-			 * Update a profile
-			 */
+			 //
+			 // Update a profile
+			 //
 			public string Update(object data)
 			{
 				Beanstream.ThrowIfNullArgument(data, "data");
@@ -138,16 +138,16 @@ namespace Beanstream.Repositories
 				return new Profiles().Repository.ProcessTransaction(HttpMethod.Get, url);
 			}
 
-			/*public string UpdateCard(object card)
-				{
+			//public string UpdateCard(object card)
+			//	{
 
-					string url = Repository.BuildUrl () +
-						BeanstreamUrls.CardsUri.Replace ("{id}", _profileId)+;
+			//		string url = Repository.BuildUrl () +
+			//			BeanstreamUrls.CardsUri.Replace ("{id}", _profileId)+;
 
-					return Repository.ProcessTransaction(HttpMethod.Get, url);
-				}*/
+			//		return Repository.ProcessTransaction(HttpMethod.Get, url);
+			//	}
 
-		}
+		}*/
 	}
 }
 

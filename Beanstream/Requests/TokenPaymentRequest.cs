@@ -20,68 +20,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-
-using Beanstream.Data;
-using Beanstream.Repositories;
+using System;
 using Beanstream.Requests;
 
 namespace Beanstream
 {
-	public class Beanstream
+	public class TokenPaymentRequest : PaymentRequest
 	{
-		/// <summary>
-		/// The Beanstream merchant ID 
-		/// </summary>
-		public int MerchantId { get; set; }
-
-		/// <summary>
-		/// The API Key (Passcode) for accessing the API.
-		/// </summary>
-		public string ApiKey { get; set; }
-
-		public string ProfilesApiKey { get; set; }
-
-		/// <summary>
-		/// The api version to use
-		/// </summary>
-		public string ApiVersion { get; set; }
-
-
-		private Configuration _configuration { get; set; }
-
-		public Configuration Configuration {
-			get {
-				if (_configuration == null)
-					_configuration = new Configuration {
-						MerchantId = this.MerchantId,
-						ApiPasscode = ApiKey,
-						ProfilesPasscode = ProfilesApiKey,
-						Version = ApiVersion
-					};
-				return _configuration;
-			}
-		}
-
-		private TransactionRepository _transaction;
-		public TransactionRepository Transaction 
-		{ 
-			get { 
-				if (_transaction == null)
-					_transaction = new TransactionRepository ();
-				_transaction.Configuration = Configuration;
-				return _transaction;
-			} 
-		}
-
-
-		public static void ThrowIfNullArgument(object value, string name)
-		{
-			if (value == null)
-			{
-				throw new System.ArgumentNullException(name);
-			}
-		}
+		public readonly string payment_method = PaymentMethod.token.ToString ();
 
 	}
-
 }
+

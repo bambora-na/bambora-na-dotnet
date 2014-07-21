@@ -36,7 +36,8 @@ namespace Beanstream.Tests
 		public static void Main(string[] args) {
 			Console.WriteLine ("Running sample transactions...");
 
-			SampleTransactions.ProcessPayment ();
+			SampleTransactions.TheRefactor ();
+			//SampleTransactions.ProcessPayment ();
 
 			// use Tokenized profiles to make payments
 			//string customerCode = SampleTransactions.TokenizedProfileCreate ();
@@ -44,7 +45,40 @@ namespace Beanstream.Tests
 			//SampleTransactions.TokenizedProfileAddCard (customerCode);
 		}
 
-		static void ProcessPayment ()
+		static void TheRefactor() {
+			Beanstream beanstream = new Beanstream () {
+				MerchantId = 300200578,
+				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+			};
+
+			PaymentResponse response = beanstream.Transaction.MakeCardPayment (
+				new CardPaymentRequest {
+					order_number = "ABC1234567890997",
+					amount = "100.00",
+					card = new Card {
+						name = "John Doe",
+						number = "5100000010001004",
+						expiry_month = "12",
+						expiry_year = "18",
+						cvd = "123"
+					}
+				}
+			);
+			Console.WriteLine ("Transaction result: " + response.message_text);
+
+			// return the purchase
+			beanstream.Transaction.Return (
+				response.id, // the payment ID
+				new ReturnRequest {
+					amount = "100.00",
+					order_number = "ABC1234567890997"
+				}
+			);
+		}
+
+		/*static void ProcessPayment ()
 		{
 			Console.WriteLine ("Creating a payment...");
 			var payment = new
@@ -174,7 +208,7 @@ namespace Beanstream.Tests
 			dynamic result = Beanstream.Profiles ().Profile (customerCode).AddCard (request);
 
 			Console.WriteLine ("Added card to Tokenized Profile result: " + result);
-		}
+		}*/
 	}
 }
 

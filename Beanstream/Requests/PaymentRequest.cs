@@ -21,34 +21,27 @@
 // THE SOFTWARE.
 //
 using System;
+using Beanstream.Requests;
 
-namespace Beanstream.Requests
+namespace Beanstream
 {
-	public class PaymentRequest : IRequest<PaymentResponse>
+	public abstract class PaymentRequest : IRequest
 	{
-		public string amount { get; set; }
+		public string merchant_id { get; set; }
 		public string order_number { get; set; }
-		public string payment_method { get; set; }
-		public Card card { get; set; }
+		public string amount { get; set; }
+		public string language { get; set; }
+		public string customer_ip { get; set; }
+		public string term_url { get; set; }
+		public string comments { get; set; }
+		public bool complete { get; set; } // false for pre-authorizations
 		public BillingAddress billing { get; set; }
+		public ShippingAddress shipping { get; set; }
+		public Custom custom { get; set; }
 
-		public PaymentRequest ()
-		{
+		public PaymentRequest() {
+			complete = true;
 		}
-
-		#region IRequest implementation
-
-		public string toJson ()
-		{
-			throw new NotImplementedException ();
-		}
-
-		public PaymentResponse getResult ()
-		{
-			throw new NotImplementedException ();
-		}
-
-		#endregion
 	}
 }
 

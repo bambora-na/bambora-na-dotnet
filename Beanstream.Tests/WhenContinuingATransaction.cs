@@ -64,7 +64,7 @@ namespace Beanstream.Tests
 			Beanstream.MerchantId = 100000000;
 			Beanstream.ApiKey = "F6EF00BDB80748358D52D8605CDC7027";
 			Payments payments = Beanstream.Payments ();
-			payments.Repository = new Repository(_executer.Object);
+			payments.Repository = new HttpWebRequest(_executer.Object);
 
 			// Act
 			dynamic result = payments.Continue(MerchantData, _continuation);
@@ -81,7 +81,7 @@ namespace Beanstream.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new ArgumentNullException());
 			Payments payments = Beanstream.Payments ();
-			payments.Repository = new Repository(_executer.Object);
+			payments.Repository = new HttpWebRequest(_executer.Object);
 
 			// Act
 			var ex = (ArgumentNullException)Assert.Throws(typeof(ArgumentNullException),
@@ -98,7 +98,7 @@ namespace Beanstream.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new ArgumentNullException());
 			Payments payments = Beanstream.Payments ();
-			payments.Repository = new Repository(_executer.Object);
+			payments.Repository = new HttpWebRequest(_executer.Object);
 
 			// Act
 			var ex = (ArgumentNullException)Assert.Throws(typeof(ArgumentNullException),
@@ -115,7 +115,7 @@ namespace Beanstream.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new ForbiddenException(HttpStatusCode.Forbidden, ""));
 			Payments payments = Beanstream.Payments ();
-			payments.Repository = new Repository(_executer.Object);
+			payments.Repository = new HttpWebRequest(_executer.Object);
 
 			// Act
 			var ex = (ForbiddenException)Assert.Throws(typeof(ForbiddenException),
@@ -132,7 +132,7 @@ namespace Beanstream.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new UnauthorizedException(HttpStatusCode.Unauthorized, ""));
 			Payments payments = Beanstream.Payments ();
-			payments.Repository = new Repository(_executer.Object);
+			payments.Repository = new HttpWebRequest(_executer.Object);
 
 			// Act
 			var ex = (UnauthorizedException)Assert.Throws(typeof(UnauthorizedException),
@@ -149,7 +149,7 @@ namespace Beanstream.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new BusinessRuleException(HttpStatusCode.PaymentRequired, ""));
 			Payments payments = Beanstream.Payments ();
-			payments.Repository = new Repository(_executer.Object);
+			payments.Repository = new HttpWebRequest(_executer.Object);
 
 			// Act
 			var ex = (BusinessRuleException)Assert.Throws(typeof(BusinessRuleException),
@@ -166,7 +166,7 @@ namespace Beanstream.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new InvalidRequestException(HttpStatusCode.PaymentRequired, ""));
 			Payments payments = Beanstream.Payments ();
-			payments.Repository = new Repository(_executer.Object);
+			payments.Repository = new HttpWebRequest(_executer.Object);
 
 			// Act
 			var ex = (InvalidRequestException)Assert.Throws(typeof(InvalidRequestException),
@@ -183,7 +183,7 @@ namespace Beanstream.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new InternalServerException(HttpStatusCode.InternalServerError, ""));
 			Payments payments = Beanstream.Payments ();
-			payments.Repository = new Repository(_executer.Object);
+			payments.Repository = new HttpWebRequest(_executer.Object);
 
 			// Act
 			var ex = (InternalServerException)Assert.Throws(typeof(InternalServerException),
@@ -200,7 +200,7 @@ namespace Beanstream.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new CommunicationException("API exception occured", null));
 			Payments payments = Beanstream.Payments ();
-			payments.Repository = new Repository(_executer.Object);
+			payments.Repository = new HttpWebRequest(_executer.Object);
 
 			// Act
 			var ex = (CommunicationException)Assert.Throws(typeof(CommunicationException),

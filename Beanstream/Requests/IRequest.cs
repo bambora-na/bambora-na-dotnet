@@ -24,10 +24,9 @@ using System;
 
 namespace Beanstream.Requests
 {
-	public interface IRequest<T> where T: IResponse
+	public interface IRequest
 	{
-		string toJson ();
-		T getResult ();
+
 	}
 }
 

@@ -26,15 +26,13 @@ namespace Beanstream
 {
 	public class Card
 	{
-		string name { get; set; }
-		string number { get; set; }
-		string expiry_month { get; set; }
-		string expiry_year { get; set; }
-		string cvd { get; set; }
+		public string name { get; set; }
+		public string number { get; set; }
+		public string expiry_month { get; set; }
+		public string expiry_year { get; set; }
+		public string cvd { get; set; }
 
-		public Card ()
-		{
-		}
+
 	}
 }
 

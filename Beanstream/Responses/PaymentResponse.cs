@@ -26,9 +26,26 @@ namespace Beanstream
 {
 	public class PaymentResponse : IResponse
 	{
-		public PaymentResponse ()
-		{
-		}
+		public string id { get; set; }
+
+		public string approved { get; set; }
+
+		public string message_id { get; set; }
+
+		public string message_text { get; set; }
+
+		public string auth_code { get; set; }
+
+		public string created { get; set; }
+
+		public string amount { get; set; }
+
+		public string order_number { get; set; }
+
+		public string type { get; set; }
+
+		public Link[] links;
+
 	}
 }
 

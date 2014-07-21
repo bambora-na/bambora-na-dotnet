@@ -27,6 +27,11 @@ namespace Beanstream
 	public enum PaymentMethod
 	{
 		card,
+		token,
+		swipe,
+		interac,
+		cash,
+		cheque,
 		payment_profile
 	}
 }

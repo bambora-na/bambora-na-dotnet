@@ -30,13 +30,13 @@ namespace Beanstream.Repositories
 	{
 		private IRepository _repository;
 
-		public IRepository Repository
+		/*public IRepository Repository
 		{
 			private get
 			{
 				if (_repository == null)
 				{
-					_repository = new Repository(
+					_repository = new HttpsWebRequest(
 						new WebCommandExecuter()
 					);
 				}
@@ -44,9 +44,9 @@ namespace Beanstream.Repositories
 				_repository.ApiVersion = Beanstream.ApiVersion;
 				_repository.MerchantId = Beanstream.MerchantId;
 				_repository.Passcode = Beanstream.ApiKey;
-				_repository.Username = Beanstream.Username;
-				_repository.Password = Beanstream.Password;
-				_repository.Platform = Beanstream.Platform;
+				//_repository.Username = Beanstream.Username;
+				//_repository.Password = Beanstream.Password;
+				//_repository.Platform = Beanstream.Platform;
 				_repository.Url = BeanstreamUrls.BasePaymentsUrl;
 
 				return _repository;
@@ -142,7 +142,7 @@ namespace Beanstream.Repositories
 
 			return Repository.ProcessTransaction(HttpMethod.Post, url, continuation);
 			//return Repository.Continue(merchantData, data);
-		}
+		}*/
 	}
 }
 
