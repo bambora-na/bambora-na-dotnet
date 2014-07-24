@@ -25,6 +25,37 @@ using Beanstream.Requests;
 using Beanstream.Repositories;
 using Newtonsoft.Json;
 
+/// <summary>
+/// Transaction repository is used to process payments and returns.
+/// 
+/// Use this if you want to collect payments with credit cards, Interac, or with tokens using the Legato service.
+/// 
+/// Each transaction returns a PaymentResponse that holds the transaction's information, including the payment ID when creating a payment.
+/// This Payment ID is used for returns.
+/// 
+/// Usage:
+/// 
+///  Beanstream beanstream = new Beanstream () {
+///		MerchantId = YOUR_MERCHANT_ID,
+///		ApiKey = "YOUR_API_KEY",
+///		ApiVersion = "1"
+///	 };
+///
+///PaymentResponse response = beanstream.Transaction.MakeCardPayment (
+///	new CardPaymentRequest {
+///		order_number = "ABC1234567890997",
+///		amount = "100.00",
+///		card = new Card {
+///			name = "John Doe",
+///			number = "5100000010001004",
+///			expiry_month = "12",
+///			expiry_year = "18",
+///			cvd = "123"
+///		}
+///	}
+///);
+/// 
+/// </summary>
 namespace Beanstream
 {
 	public class TransactionRepository
@@ -35,7 +66,11 @@ namespace Beanstream
 			set { _configuration = value; }
 		}
 
-
+		/// <summary>
+		/// Make a credit card payment.
+		/// </summary>
+		/// <returns>he payment result</returns>
+		/// <param name="paymentRequest">Payment request.</param>
 		public PaymentResponse MakeCardPayment(CardPaymentRequest paymentRequest) {
 
 			string url = BeanstreamUrls.BasePaymentsUrl
@@ -54,6 +89,13 @@ namespace Beanstream
 
 		}
 
+		/// <summary>
+		/// Make a payment using a token from the Legato service.
+		/// This token represents the credit card so you do not have to store the credit card information
+		/// yourself. This helps you easily be PCI compliant.
+		/// </summary>
+		/// <returns>The payment result</returns>
+		/// <param name="paymentRequest">Payment request.</param>
 		public PaymentResponse MakeTokenPayment(TokenPaymentRequest paymentRequest) {
 
 			string url = BeanstreamUrls.BasePaymentsUrl
@@ -72,6 +114,12 @@ namespace Beanstream
 
 		}
 
+		/// <summary>
+		/// Return a previous payment made through Beanstream
+		/// </summary>
+		/// <returns>The payment result</returns>
+		/// <param name="paymentId">Payment identifier.</param>
+		/// <param name="returnRequest">Return request.</param>
 		public PaymentResponse Return(string paymentId, ReturnRequest returnRequest) {
 
 			string url = BeanstreamUrls.BasePaymentsUrl + BeanstreamUrls.ReturnsUri;
@@ -92,6 +140,12 @@ namespace Beanstream
 
 		}
 
+		/// <summary>
+		/// Return a previous card payment that was not made through Beanstream. Use this if you would like to
+		/// return a payment but that payment was performed on another gateway.
+		/// </summary>
+		/// <returns>The return result</returns>
+		/// <param name="returnRequest">Return request.</param>
 		public PaymentResponse UnreferencedReturn(UnreferencedCardReturnRequest returnRequest) {
 			string url = BeanstreamUrls.BasePaymentsUrl + BeanstreamUrls.ReturnsUri;
 
@@ -110,6 +164,13 @@ namespace Beanstream
 			return JsonConvert.DeserializeObject<PaymentResponse>(response);
 		}
 
+
+		/// <summary>
+		/// Return a previous swipe payment that was not made through Beanstream. Use this if you would like to
+		/// return a payment but that payment was performed on another payment service.
+		/// </summary>
+		/// <returns>The return result</returns>
+		/// <param name="returnRequest">Return request.</param>
 		public PaymentResponse UnreferencedReturn(UnreferencedSwipeReturnRequest returnRequest) {
 			string url = BeanstreamUrls.BasePaymentsUrl + BeanstreamUrls.ReturnsUri;
 
@@ -127,7 +188,12 @@ namespace Beanstream
 			string response = req.ProcessTransaction (HttpMethod.Post, url, returnRequest);
 			return JsonConvert.DeserializeObject<PaymentResponse>(response);
 		}
-
+			
+		/// <summary>
+		/// Void the specified paymentId.
+		/// </summary>
+		/// <returns>The return result</returns>
+		/// <param name="paymentId">Payment identifier from a previous transaction.</param>
 		public PaymentResponse Void(String paymentId) {
 			string url = BeanstreamUrls.BasePaymentsUrl + BeanstreamUrls.VoidsUri;
 

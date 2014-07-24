@@ -29,16 +29,15 @@ using Beanstream.Data;
 using Beanstream.Entities;
 using Beanstream.Exceptions;
 
+/// <summary>
+/// Creates the actual web request and returns the response object.
+/// It requires a merchantID and passcode to connect to the Beanstream REST API.
+/// </summary>
 namespace Beanstream.Repositories
 {
 	public class HttpsWebRequest
 	{
-		//private IWebCommandExecuter _executer;
 
-		//public string ApiVersion { get; set; }
-		//public string Platform { get; set; }
-		//public string Username { get; set; }
-		//public string Password { get; set; }
 		private string _merchantId;
 		private string _passcode;
 
@@ -49,77 +48,6 @@ namespace Beanstream.Repositories
 		public string Passcode {
 			set { _passcode = value; }
 		}
-
-		/*public HttpWebRequest(IWebCommandExecuter executer)
-		{
-			_executer = executer;
-		}*/
-
-		/*public string Create(object payment)
-		{
-			ThrowIfNullArgument(payment, "payment");
-
-			return ProcessTransaction(HttpMethod.Post, GetUrl(), payment);
-		}*/
-
-		/*public string Return(int? transId, object payment)
-		{
-			ThrowIfNullArgument(transId, "TransId");
-			ThrowIfNullArgument(payment, "payment");
-
-			var url = GetUrl() +
-			          BeanstreamUrls.ReturnsUri.Replace("{id}", transId.ToString());
-			
-			return ProcessTransaction(HttpMethod.Post, url, payment);
-		}*/
-
-		/*public string Void(int? transId, object payment)
-		{
-			ThrowIfNullArgument(transId, "TransId");
-			ThrowIfNullArgument(payment, "payment");
-
-			var url = GetUrl() +
-				BeanstreamUrls.VoidsUri.Replace("{id}", transId.ToString());
-
-			return ProcessTransaction(HttpMethod.Post, url, payment);
-		}*/
-
-		/*public string Complete(int? transId, object payment)
-		{
-			ThrowIfNullArgument(transId, "TransId");
-			ThrowIfNullArgument(payment, "payment");
-
-			var url = GetUrl() + 
-				BeanstreamUrls.PreAuthCompletionsUri.Replace("{id}", transId.ToString());
-
-			return ProcessTransaction(HttpMethod.Post, url, payment);
-		}*/
-
-		/*public string Continue(string merchantData, object continuation)
-		{
-			ThrowIfNullArgument(merchantData, "MerchantData");
-			ThrowIfNullArgument(continuation, "continuation");
-
-			var url = GetUrl() + 
-				BeanstreamUrls.ContinuationsUri.Replace("{id}", merchantData);
-
-			return ProcessTransaction(HttpMethod.Post, url, continuation);
-		}*/
-
-		/*private static void ThrowIfNullArgument(object value, string name)
-		{
-			if (value == null)
-			{
-				throw new ArgumentNullException(name);
-			}
-		}*/
-
-		/*public string BuildUrl()
-		{
-			return Url
-				.Replace("{v}", String.IsNullOrEmpty(ApiVersion) ? "v1" : ApiVersion)
-				.Replace("{p}", String.IsNullOrEmpty(Platform) ? "www" : Platform);
-		}*/
 
 		public string ProcessTransaction(HttpMethod method, string url)
 		{
@@ -132,20 +60,10 @@ namespace Beanstream.Repositories
 			{
 				var authScheme = "Passcode";
 
-				/*string Username = "";
-				string Passcode
-				if (MerchantId != null)
-				{
-					Username = MerchantId.Value.ToString(CultureInfo.InvariantCulture);
-					Password = Passcode;
-					authScheme = "Passcode";
-				}*/
-
 				var authInfo = new Credentials(_merchantId, _passcode, authScheme);
 				var requestInfo = new RequestObject(method, url, authInfo, data);
 
 				var command = new ExecuteWebRequest(requestInfo);
-
 				var result = new WebCommandExecuter().ExecuteCommand(command);
 
 				return result.Response;
