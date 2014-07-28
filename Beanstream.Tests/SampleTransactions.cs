@@ -55,7 +55,7 @@ namespace Beanstream.Tests
 
 			PaymentResponse response = beanstream.Transaction.MakeCardPayment (
 				new CardPaymentRequest {
-					order_number = "ABC1234567890997",
+					order_number = "ABC1234567891003",
 					amount = "100.00",
 					card = new Card {
 						name = "John Doe",
@@ -73,7 +73,7 @@ namespace Beanstream.Tests
 				response.id, // the payment ID
 				new ReturnRequest {
 					amount = "100.00",
-					order_number = "ABC1234567890997"
+					order_number = "ABC1234567891003"
 				}
 			);
 		}

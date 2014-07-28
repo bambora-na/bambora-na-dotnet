@@ -28,6 +28,7 @@ using System.Net;
 using Beanstream.Data;
 using Beanstream.Entities;
 using Beanstream.Exceptions;
+using Beanstream.Web;
 
 /// <summary>
 /// Creates the actual web request and returns the response object.
@@ -40,6 +41,7 @@ namespace Beanstream.Repositories
 
 		private string _merchantId;
 		private string _passcode;
+		private IWebCommandExecuter _executer = new WebCommandExecuter();
 
 		public int MerchantId {
 			set { _merchantId = value.ToString (CultureInfo.InvariantCulture); }
@@ -47,6 +49,10 @@ namespace Beanstream.Repositories
 
 		public string Passcode {
 			set { _passcode = value; }
+		}
+
+		public IWebCommandExecuter WebCommandExecutor { 
+			set { _executer = value; } 
 		}
 
 		public string ProcessTransaction(HttpMethod method, string url)
@@ -58,13 +64,14 @@ namespace Beanstream.Repositories
 		{
 			try
 			{
+				Console.WriteLine("url: "+url);
 				var authScheme = "Passcode";
 
 				var authInfo = new Credentials(_merchantId, _passcode, authScheme);
 				var requestInfo = new RequestObject(method, url, authInfo, data);
 
 				var command = new ExecuteWebRequest(requestInfo);
-				var result = new WebCommandExecuter().ExecuteCommand(command);
+				var result = _executer.ExecuteCommand(command);
 
 				return result.Response;
 			}

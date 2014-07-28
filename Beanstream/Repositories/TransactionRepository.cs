@@ -56,14 +56,22 @@ using Newtonsoft.Json;
 ///);
 /// 
 /// </summary>
+using Beanstream.Data;
+
+
 namespace Beanstream
 {
 	public class TransactionRepository
 	{
 		private Configuration _configuration;
+		private IWebCommandExecuter _webCommandExecuter = new WebCommandExecuter ();
 
 		public Configuration Configuration {
 			set { _configuration = value; }
+		}
+
+		public IWebCommandExecuter WebCommandExecuter {
+			set { _webCommandExecuter = value; }
 		}
 
 		/// <summary>
@@ -73,6 +81,8 @@ namespace Beanstream
 		/// <param name="paymentRequest">Payment request.</param>
 		public PaymentResponse MakeCardPayment(CardPaymentRequest paymentRequest) {
 
+			Beanstream.ThrowIfNullArgument (paymentRequest, "MakeCardPayment");
+
 			string url = BeanstreamUrls.BasePaymentsUrl
 							.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
 	   					    .Replace("{p}", String.IsNullOrEmpty(_configuration.Platform) ? "www" : _configuration.Platform);
@@ -80,7 +90,9 @@ namespace Beanstream
 			HttpsWebRequest req = new HttpsWebRequest () {
 				MerchantId = _configuration.MerchantId,
 				Passcode = _configuration.ApiPasscode,
+				WebCommandExecutor = _webCommandExecuter
 			};
+
 				
 			paymentRequest.merchant_id = _configuration.MerchantId.ToString();
 
@@ -105,6 +117,7 @@ namespace Beanstream
 			HttpsWebRequest req = new HttpsWebRequest () {
 				MerchantId = _configuration.MerchantId,
 				Passcode = _configuration.ApiPasscode,
+				WebCommandExecutor = _webCommandExecuter
 			};
 
 			paymentRequest.merchant_id = _configuration.MerchantId.ToString();
@@ -122,9 +135,8 @@ namespace Beanstream
 		/// <param name="returnRequest">Return request.</param>
 		public PaymentResponse Return(string paymentId, ReturnRequest returnRequest) {
 
-			string url = BeanstreamUrls.BasePaymentsUrl + BeanstreamUrls.ReturnsUri;
-
-			url.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
+			string url = BeanstreamUrls.ReturnsUrl
+				.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
 				.Replace("{p}", String.IsNullOrEmpty(_configuration.Platform) ? "www" : _configuration.Platform)
 				.Replace("{id}", String.IsNullOrEmpty(paymentId) ? "" : paymentId);
 
@@ -132,6 +144,7 @@ namespace Beanstream
 			HttpsWebRequest req = new HttpsWebRequest () {
 				MerchantId = _configuration.MerchantId,
 				Passcode = _configuration.ApiPasscode,
+				WebCommandExecutor = _webCommandExecuter
 			};
 			returnRequest.merchant_id = _configuration.MerchantId.ToString();
 
@@ -147,16 +160,16 @@ namespace Beanstream
 		/// <returns>The return result</returns>
 		/// <param name="returnRequest">Return request.</param>
 		public PaymentResponse UnreferencedReturn(UnreferencedCardReturnRequest returnRequest) {
-			string url = BeanstreamUrls.BasePaymentsUrl + BeanstreamUrls.ReturnsUri;
-
-			url.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
+			string url = BeanstreamUrls.ReturnsUrl
+				.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
 				.Replace("{p}", String.IsNullOrEmpty(_configuration.Platform) ? "www" : _configuration.Platform)
-				.Replace("{id}", 0);
+				.Replace("{id}", "0");
 
 
 			HttpsWebRequest req = new HttpsWebRequest () {
 				MerchantId = _configuration.MerchantId,
 				Passcode = _configuration.ApiPasscode,
+				WebCommandExecutor = _webCommandExecuter
 			};
 			returnRequest.merchant_id = _configuration.MerchantId.ToString();
 
@@ -172,16 +185,16 @@ namespace Beanstream
 		/// <returns>The return result</returns>
 		/// <param name="returnRequest">Return request.</param>
 		public PaymentResponse UnreferencedReturn(UnreferencedSwipeReturnRequest returnRequest) {
-			string url = BeanstreamUrls.BasePaymentsUrl + BeanstreamUrls.ReturnsUri;
-
-			url.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
+			string url = BeanstreamUrls.ReturnsUrl
+				.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
 				.Replace("{p}", String.IsNullOrEmpty(_configuration.Platform) ? "www" : _configuration.Platform)
-				.Replace("{id}", 0);
+				.Replace("{id}", "0");
 
 
 			HttpsWebRequest req = new HttpsWebRequest () {
 				MerchantId = _configuration.MerchantId,
 				Passcode = _configuration.ApiPasscode,
+				WebCommandExecutor = _webCommandExecuter
 			};
 			returnRequest.merchant_id = _configuration.MerchantId.ToString();
 
@@ -195,16 +208,16 @@ namespace Beanstream
 		/// <returns>The return result</returns>
 		/// <param name="paymentId">Payment identifier from a previous transaction.</param>
 		public PaymentResponse Void(String paymentId) {
-			string url = BeanstreamUrls.BasePaymentsUrl + BeanstreamUrls.VoidsUri;
-
-			url.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
+			string url = BeanstreamUrls.VoidsUrl
+				.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
 				.Replace("{p}", String.IsNullOrEmpty(_configuration.Platform) ? "www" : _configuration.Platform)
-				.Replace("{id}", 0);
+				.Replace("{id}", "0");
 
 
 			HttpsWebRequest req = new HttpsWebRequest () {
 				MerchantId = _configuration.MerchantId,
 				Passcode = _configuration.ApiPasscode,
+				WebCommandExecutor = _webCommandExecuter
 			};
 
 			var VoidPayment = new 

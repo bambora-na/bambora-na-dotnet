@@ -62,13 +62,18 @@ namespace Beanstream
 			}
 		}
 
+		public IWebCommandExecuter WebCommandExecuter { get; set; }
+
 		private TransactionRepository _transaction;
+
 		public TransactionRepository Transaction 
 		{ 
 			get { 
 				if (_transaction == null)
 					_transaction = new TransactionRepository ();
 				_transaction.Configuration = Configuration;
+				if (WebCommandExecuter != null)
+					_transaction.WebCommandExecuter = WebCommandExecuter;
 				return _transaction;
 			} 
 		}

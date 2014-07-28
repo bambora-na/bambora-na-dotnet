@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleTransactions.cs" />
+    <Compile Include="WhenCreatingAPayment.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Beanstream\Beanstream.csproj">

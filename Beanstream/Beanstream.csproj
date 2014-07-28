@@ -52,8 +52,6 @@
     <Compile Include="Exceptions\BaseApiException.cs" />
     <Compile Include="Beanstream.cs" />
     <Compile Include="ExecuteWebRequest.cs" />
-    <Compile Include="Data\IWebCommandExecuter.cs" />
-    <Compile Include="Data\IWebCommandSpec.cs" />
     <Compile Include="Data\WebCommandExecuter.cs" />
     <Compile Include="Data\WebCommandResult.cs" />
     <Compile Include="Exceptions\RedirectionException.cs" />
@@ -85,6 +83,8 @@
     <Compile Include="Requests\PaymentRequest.cs" />
     <Compile Include="Requests\UnreferencedCardReturnRequest.cs" />
     <Compile Include="Requests\UnreferencedSwipeReturnRequest.cs" />
+    <Compile Include="Data\IWebCommandSpec.cs" />
+    <Compile Include="Data\IWebCommandExecuter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
