@@ -35,67 +35,65 @@ namespace Beanstream.Tests
 	[TestFixture]
 	public class WhenRetuningAPayment
 	{
-		private const int TrnId = 10000001;
-		private object _payment;
+		private const string TrnId = "10000001";
+		private ReturnRequest _returnRequest;
 		private Mock<IWebCommandExecuter> _executer;
 
 		[SetUp]
 		public void Setup()
 		{
-			_payment = new
-			{
-				order_number = "Test1234",
-				amount = 100.00,
-				payment_method = "card",
-				card = new
-				{
-					name = "John Doe",
-					number = "5100000010001004",
-					expiry_month = "12",
-					expiry_year = "23",
-					cvd = "123"
-				}
+			_returnRequest = new ReturnRequest () {
+				amount = "100",
+				order_number = "Test1234"
 			};
 
 			_executer = new Mock<IWebCommandExecuter>();
 		}
 
 		[Test]
-		public void ItShouldHaveATransactionIdForASuccessfulPayment()
+		public void ItShouldHaveATransactionIdForASuccessfulReturn()
 		{
 			// Arrange
 			var webresult = new WebCommandResult<string> { Response = @"{""id"":""10000000""}" };
 
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>())).Returns(webresult);
 			
-			Beanstream.MerchantId = 100000000;
-			Beanstream.ApiKey = "F6EF00BDB80748358D52D8605CDC7027";
-			Payments payments = Beanstream.Payments ();
-			payments.Repository = new HttpWebRequest(_executer.Object);
+			Beanstream beanstream = new Beanstream () {
+				MerchantId = 300200578,
+				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+			};
+			beanstream.WebCommandExecuter = _executer.Object;
 
 			// Act
-			dynamic result = payments.Return(TrnId,_payment);
-			var id = (int)JObject.Parse(result).id;
+			dynamic result = beanstream.Payments.Return(TrnId,_returnRequest);
+
 
 			// Assert
-			Assert.AreEqual(id, 10000000);
+			Assert.AreEqual(result.id, "10000000");
 		}
 
 		[Test]
-		public void ItShouldThrowArgumentExceptionForInvalidPayment()
+		public void ItShouldThrowArgumentExceptionForInvalidReturn()
 		{
 			// Arrange
-			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new ArgumentNullException());
-			Payments payments = Beanstream.Payments ();
-			payments.Repository = new HttpWebRequest(_executer.Object);
+			Beanstream beanstream = new Beanstream () {
+				MerchantId = 300200578,
+				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+			};
+			beanstream.WebCommandExecuter = _executer.Object;
+
+			_returnRequest = null;
 
 			// Act
 			var ex = (ArgumentNullException)Assert.Throws(typeof(ArgumentNullException),
-				() => payments.Return(TrnId, null));
+				() =>beanstream.Payments.Return(TrnId,_returnRequest));
 
 			// Assert
-			Assert.That(ex.ParamName, Is.EqualTo("payment"));
+			Assert.That(ex.ParamName, Is.EqualTo("return"));
 		}
 
 		[Test]
@@ -103,30 +101,43 @@ namespace Beanstream.Tests
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new ArgumentNullException());
-			Payments payments = Beanstream.Payments ();
-			payments.Repository = new HttpWebRequest(_executer.Object);
+							.Throws(new ArgumentNullException("paymentId"));
+
+			Beanstream beanstream = new Beanstream () {
+				MerchantId = 300200578,
+				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+			};
+			beanstream.WebCommandExecuter = _executer.Object;
 
 			// Act
 			var ex = (ArgumentNullException)Assert.Throws(typeof(ArgumentNullException),
-				() => payments.Return(null, _payment));
+				() => beanstream.Payments.Return(TrnId,_returnRequest));
 
 			// Assert
-			Assert.That(ex.ParamName, Is.EqualTo("TransId"));
+			Assert.That(ex.ParamName, Is.EqualTo(("paymentId")));
 		}
 
 		[Test]
 		public void ItShouldThrowForbiddenExceptionForInvalidCredentials()
 		{
 			// Arrange
+
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new ForbiddenException(HttpStatusCode.Forbidden, ""));
-			Payments payments = Beanstream.Payments ();
-			payments.Repository = new HttpWebRequest(_executer.Object);
+							.Throws(new ForbiddenException(HttpStatusCode.Forbidden, "", 1, 0));
+
+			Beanstream beanstream = new Beanstream () {
+				MerchantId = 300200578,
+				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+			};
+			beanstream.WebCommandExecuter = _executer.Object;
 
 			// Act
 			var ex = (ForbiddenException)Assert.Throws(typeof(ForbiddenException),
-				() => payments.Return(TrnId,_payment));
+				() => beanstream.Payments.Return(TrnId,_returnRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.Forbidden));
@@ -137,13 +148,19 @@ namespace Beanstream.Tests
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new UnauthorizedException(HttpStatusCode.Unauthorized, ""));
-			Payments payments = Beanstream.Payments ();
-			payments.Repository = new HttpWebRequest(_executer.Object);
+				.Throws(new UnauthorizedException(HttpStatusCode.Unauthorized, "", 1, 0));
+
+			Beanstream beanstream = new Beanstream () {
+				MerchantId = 300200578,
+				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+			};
+			beanstream.WebCommandExecuter = _executer.Object;
 
 			// Act
 			var ex = (UnauthorizedException)Assert.Throws(typeof(UnauthorizedException),
-				() => payments.Return(TrnId, _payment));
+				() => beanstream.Payments.Return(TrnId,_returnRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.Unauthorized));
@@ -154,13 +171,19 @@ namespace Beanstream.Tests
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new BusinessRuleException(HttpStatusCode.PaymentRequired, ""));
-			Payments payments = Beanstream.Payments ();
-			payments.Repository = new HttpWebRequest(_executer.Object);
+				.Throws(new BusinessRuleException(HttpStatusCode.PaymentRequired, "", 1, 0));
+
+			Beanstream beanstream = new Beanstream () {
+				MerchantId = 300200578,
+				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+			};
+			beanstream.WebCommandExecuter = _executer.Object;
 
 			// Act
 			var ex = (BusinessRuleException)Assert.Throws(typeof(BusinessRuleException),
-				() => payments.Return(TrnId, _payment));
+				() => beanstream.Payments.Return(TrnId,_returnRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.PaymentRequired));
@@ -171,13 +194,19 @@ namespace Beanstream.Tests
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new InvalidRequestException(HttpStatusCode.PaymentRequired, ""));
-			Payments payments = Beanstream.Payments ();
-			payments.Repository = new HttpWebRequest(_executer.Object);
+				.Throws(new InvalidRequestException(HttpStatusCode.PaymentRequired, "", 1, 0));
+
+			Beanstream beanstream = new Beanstream () {
+				MerchantId = 300200578,
+				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+			};
+			beanstream.WebCommandExecuter = _executer.Object;
 
 			// Act
 			var ex = (InvalidRequestException)Assert.Throws(typeof(InvalidRequestException),
-				() => payments.Return(TrnId, _payment));
+				() => beanstream.Payments.Return(TrnId,_returnRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.PaymentRequired));
@@ -188,13 +217,19 @@ namespace Beanstream.Tests
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new InternalServerException(HttpStatusCode.InternalServerError, ""));
-			Payments payments = Beanstream.Payments ();
-			payments.Repository = new HttpWebRequest(_executer.Object);
+				.Throws(new InternalServerException(HttpStatusCode.InternalServerError, "", 1, 0));
+
+			Beanstream beanstream = new Beanstream () {
+				MerchantId = 300200578,
+				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+			};
+			beanstream.WebCommandExecuter = _executer.Object;
 
 			// Act
 			var ex = (InternalServerException)Assert.Throws(typeof(InternalServerException),
-				() => payments.Return(TrnId, _payment));
+				() => beanstream.Payments.Return(TrnId,_returnRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.InternalServerError));
@@ -205,13 +240,19 @@ namespace Beanstream.Tests
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new CommunicationException("API exception occured", null));
-			Payments payments = Beanstream.Payments ();
-			payments.Repository = new HttpWebRequest(_executer.Object);
+							.Throws(new CommunicationException("API exception occured", null));
+
+			Beanstream beanstream = new Beanstream () {
+				MerchantId = 300200578,
+				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+			};
+			beanstream.WebCommandExecuter = _executer.Object;
 
 			// Act
 			var ex = (CommunicationException)Assert.Throws(typeof(CommunicationException),
-				() => payments.Return(TrnId, _payment));
+				() => beanstream.Payments.Return(TrnId,_returnRequest));
 
 			// Assert
 			Assert.That(ex.Message, Is.EqualTo("API exception occured"));

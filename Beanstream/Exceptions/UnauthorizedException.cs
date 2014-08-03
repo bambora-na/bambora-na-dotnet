@@ -23,12 +23,22 @@
 
 using System.Net;
 
+/// <summary>
+/// Http status codes:
+///  401 - Unauthorized - No valid authentication provided.
+/// 
+/// The merchant API key may be wrong or improperly formatted and encoded.
+/// 
+/// This error should not occur while in a production environment. If it occurs the developer
+/// has done something wrong and the cardholder or merchant getting this message should contact the developer
+/// of the software.
+/// </summary>
 namespace Beanstream.Exceptions
 {
 	public class UnauthorizedException : BaseApiException
 	{
-		public UnauthorizedException(HttpStatusCode statusCode, string response)
-			: base(statusCode, response)
+		public UnauthorizedException(HttpStatusCode statusCode, string response, int category, int code)
+			: base(statusCode, response, category, code)
 		{ }
 	}
 }

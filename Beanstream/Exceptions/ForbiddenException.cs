@@ -23,12 +23,18 @@
 
 using System.Net;
 
+/// <summary>
+/// Http status codes:
+///  403 - Forbidden - Unauthorized access.
+/// 
+/// 
+/// </summary>
 namespace Beanstream.Exceptions
 {
 	public class ForbiddenException : BaseApiException
 	{
-		public ForbiddenException(HttpStatusCode statusCode, string response)
-			: base(statusCode, response)
+		public ForbiddenException(HttpStatusCode statusCode, string response, int category, int code)
+			: base(statusCode, response, category, code)
 		{ }
 	}
 }

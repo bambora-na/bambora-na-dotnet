@@ -23,12 +23,18 @@
 
 using System.Net;
 
+/// <summary>
+/// Http status codes:
+///  402 - Processing Error - Request failed business requirements or rejected by processor/bank.
+/// 
+/// 
+/// </summary>
 namespace Beanstream.Exceptions
 {
 	public class BusinessRuleException : BaseApiException
 	{
-		public BusinessRuleException(HttpStatusCode statusCode, string response)
-			: base(statusCode, response)
+		public BusinessRuleException(HttpStatusCode statusCode, string response, int category, int code)
+			: base(statusCode, response, category, code)
 		{ }
 	}
 }

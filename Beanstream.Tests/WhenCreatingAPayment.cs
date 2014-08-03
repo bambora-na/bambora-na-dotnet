@@ -89,7 +89,7 @@ namespace Beanstream.Tests
 			beanstream.WebCommandExecuter = _executer.Object;
 
 			// Act
-			PaymentResponse response = beanstream.Transaction.MakeCardPayment (_cardPaymentRequest);
+			PaymentResponse response = beanstream.Payments.MakeCardPayment (_cardPaymentRequest);
 
 
 			// Assert
@@ -113,7 +113,7 @@ namespace Beanstream.Tests
 
 			// Act
 			var ex = (ArgumentNullException)Assert.Throws(typeof(ArgumentNullException),
-				() => beanstream.Transaction.MakeCardPayment(null));
+				() => beanstream.Payments.MakeCardPayment(null));
 
 			// Assert
 			Assert.That(ex.ParamName, Is.EqualTo("MakeCardPayment"));
@@ -124,7 +124,7 @@ namespace Beanstream.Tests
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new ForbiddenException(HttpStatusCode.Forbidden, ""));
+				.Throws(new ForbiddenException(HttpStatusCode.Forbidden, "", 1, 0));
 
 			Beanstream beanstream = new Beanstream () {
 				MerchantId = 300200578,
@@ -136,7 +136,7 @@ namespace Beanstream.Tests
 
 			// Act
 			var ex = (ForbiddenException)Assert.Throws(typeof(ForbiddenException),
-				() => beanstream.Transaction.MakeCardPayment(_cardPaymentRequest));
+				() => beanstream.Payments.MakeCardPayment(_cardPaymentRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.Forbidden));
@@ -147,7 +147,7 @@ namespace Beanstream.Tests
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new UnauthorizedException(HttpStatusCode.Unauthorized, ""));
+				.Throws(new UnauthorizedException(HttpStatusCode.Unauthorized, "", 1, 0));
 
 			Beanstream beanstream = new Beanstream () {
 				MerchantId = 300200578,
@@ -159,7 +159,7 @@ namespace Beanstream.Tests
 
 			// Act
 			var ex = (UnauthorizedException)Assert.Throws(typeof(UnauthorizedException),
-				() => beanstream.Transaction.MakeCardPayment(_cardPaymentRequest));
+				() => beanstream.Payments.MakeCardPayment(_cardPaymentRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.Unauthorized));
@@ -170,7 +170,7 @@ namespace Beanstream.Tests
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new BusinessRuleException(HttpStatusCode.PaymentRequired, ""));
+				.Throws(new BusinessRuleException(HttpStatusCode.PaymentRequired, "", 1, 0));
 
 			Beanstream beanstream = new Beanstream () {
 				MerchantId = 300200578,
@@ -182,7 +182,7 @@ namespace Beanstream.Tests
 
 			// Act
 			var ex = (BusinessRuleException)Assert.Throws(typeof(BusinessRuleException),
-				() => beanstream.Transaction.MakeCardPayment(_cardPaymentRequest));
+				() => beanstream.Payments.MakeCardPayment(_cardPaymentRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.PaymentRequired));
@@ -193,7 +193,7 @@ namespace Beanstream.Tests
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new InvalidRequestException(HttpStatusCode.PaymentRequired, ""));
+				.Throws(new InvalidRequestException(HttpStatusCode.PaymentRequired, "", 1, 0));
 
 			Beanstream beanstream = new Beanstream () {
 				MerchantId = 300200578,
@@ -205,7 +205,7 @@ namespace Beanstream.Tests
 
 			// Act
 			var ex = (InvalidRequestException)Assert.Throws(typeof(InvalidRequestException),
-				() => beanstream.Transaction.MakeCardPayment(_cardPaymentRequest));
+				() => beanstream.Payments.MakeCardPayment(_cardPaymentRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.PaymentRequired));
@@ -216,7 +216,7 @@ namespace Beanstream.Tests
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new RedirectionException(HttpStatusCode.Redirect, ""));
+				.Throws(new RedirectionException(HttpStatusCode.Redirect, "", 1, 0));
 
 			Beanstream beanstream = new Beanstream () {
 				MerchantId = 300200578,
@@ -229,7 +229,7 @@ namespace Beanstream.Tests
 
 			// Act
 			var ex = (RedirectionException)Assert.Throws(typeof(RedirectionException),
-				() => beanstream.Transaction.MakeCardPayment(_cardPaymentRequest));
+				() => beanstream.Payments.MakeCardPayment(_cardPaymentRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.Redirect));
@@ -240,7 +240,7 @@ namespace Beanstream.Tests
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new InternalServerException(HttpStatusCode.InternalServerError, ""));
+				.Throws(new InternalServerException(HttpStatusCode.InternalServerError, "", 1, 0));
 
 			Beanstream beanstream = new Beanstream () {
 				MerchantId = 300200578,
@@ -253,7 +253,7 @@ namespace Beanstream.Tests
 
 			// Act
 			var ex = (InternalServerException)Assert.Throws(typeof(InternalServerException),
-				() => beanstream.Transaction.MakeCardPayment(_cardPaymentRequest));
+				() => beanstream.Payments.MakeCardPayment(_cardPaymentRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.InternalServerError));
@@ -275,7 +275,7 @@ namespace Beanstream.Tests
 
 			// Act
 			var ex = (CommunicationException)Assert.Throws(typeof(CommunicationException),
-				() => beanstream.Transaction.MakeCardPayment(_cardPaymentRequest));
+				() => beanstream.Payments.MakeCardPayment(_cardPaymentRequest));
 
 			// Assert
 			Assert.That(ex.Message, Is.EqualTo("API exception occured"));

@@ -28,10 +28,10 @@ namespace Beanstream
 		public static string BaseUrl = "https://{p}.beanstream.com/api";
 		public static string BasePaymentsUrl = BaseUrl + "/{v}/payments";
 		public static string BaseProfilesUrl = BaseUrl + "/{v}/profiles";
-		public static string PreAuthCompletionsUri = "/{id}/completions";
+		public static string PreAuthCompletionsUrl = BaseUrl + "/{id}/completions";
 		public static string ReturnsUrl = BasePaymentsUrl + "/{id}/returns";
 		public static string VoidsUrl =  BasePaymentsUrl + "/{id}/void";
-		public static string ContinuationsUri = "/{md}/continue";
+		public static string ContinuationsUrl = BaseUrl + "/{md}/continue";
 		public static string ProfileUri = "/{id}";
 		public static string CardsUri = ProfileUri+"/cards";
 	}

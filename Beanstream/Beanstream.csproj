@@ -60,9 +60,6 @@
     <Compile Include="HttpMethod.cs" />
     <Compile Include="BeanstreamUrls.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\IRepository.cs" />
-    <Compile Include="Repositories\Payments.cs" />
-    <Compile Include="Repositories\Profiles.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Requests\IRequest.cs" />
     <Compile Include="PaymentMethod.cs" />
@@ -70,8 +67,6 @@
     <Compile Include="Domain\BillingAddress.cs" />
     <Compile Include="Responses\IResponse.cs" />
     <Compile Include="Responses\PaymentResponse.cs" />
-    <Compile Include="Repositories\TransactionRepository.cs" />
-    <Compile Include="Repositories\HttpsWebRequest.cs" />
     <Compile Include="Requests\CardPaymentRequest.cs" />
     <Compile Include="Requests\TokenPaymentRequest.cs" />
     <Compile Include="Domain\Token.cs" />
@@ -85,6 +80,10 @@
     <Compile Include="Requests\UnreferencedSwipeReturnRequest.cs" />
     <Compile Include="Data\IWebCommandSpec.cs" />
     <Compile Include="Data\IWebCommandExecuter.cs" />
+    <Compile Include="APIs\Payments.cs" />
+    <Compile Include="APIs\PaymentsAPI.cs" />
+    <Compile Include="Requests\HttpsWebRequest.cs" />
+    <Compile Include="APIs\ProfilesAPI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

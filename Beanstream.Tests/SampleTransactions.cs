@@ -26,6 +26,7 @@ using Beanstream.Data;
 using Beanstream.Repositories;
 using Newtonsoft.Json.Linq;
 using Beanstream.Requests;
+using Beanstream.Exceptions;
 
 namespace Beanstream.Tests
 {
@@ -45,7 +46,13 @@ namespace Beanstream.Tests
 			//SampleTransactions.TokenizedProfileAddCard (customerCode);
 		}
 
+
+
+
+
 		static void TheRefactor() {
+
+
 			Beanstream beanstream = new Beanstream () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
@@ -53,7 +60,7 @@ namespace Beanstream.Tests
 				ApiVersion = "1"
 			};
 
-			PaymentResponse response = beanstream.Transaction.MakeCardPayment (
+			PaymentResponse response = beanstream.Payments.MakeCardPayment (
 				new CardPaymentRequest {
 					order_number = "ABC1234567891003",
 					amount = "100.00",
@@ -68,8 +75,10 @@ namespace Beanstream.Tests
 			);
 			Console.WriteLine ("Transaction result: " + response.message_text);
 
+
+
 			// return the purchase
-			beanstream.Transaction.Return (
+			response = beanstream.Payments.Return (
 				response.id, // the payment ID
 				new ReturnRequest {
 					amount = "100.00",
@@ -77,6 +86,9 @@ namespace Beanstream.Tests
 				}
 			);
 		}
+
+
+
 
 		/*static void ProcessPayment ()
 		{

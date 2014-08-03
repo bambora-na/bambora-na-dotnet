@@ -23,12 +23,17 @@
 
 using System.Net;
 
+/// <summary>
+/// Http status codes:
+///  302 - Found - Used for redirection response in 3DS, Masterpass and Interac Online requests
+/// 
+/// </summary>
 namespace Beanstream.Exceptions
 {
 	public class RedirectionException : BaseApiException
 	{
-		public RedirectionException(HttpStatusCode statusCode, string response)
-			: base(statusCode, response)
+		public RedirectionException(HttpStatusCode statusCode, string response, int category, int code)
+			: base(statusCode, response, category, code)
 		{ }
 	}
 }

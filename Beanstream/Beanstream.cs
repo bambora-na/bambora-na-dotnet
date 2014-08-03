@@ -64,17 +64,17 @@ namespace Beanstream
 
 		public IWebCommandExecuter WebCommandExecuter { get; set; }
 
-		private TransactionRepository _transaction;
+		private PaymentsAPI _payments;
 
-		public TransactionRepository Transaction 
+		public PaymentsAPI Payments 
 		{ 
 			get { 
-				if (_transaction == null)
-					_transaction = new TransactionRepository ();
-				_transaction.Configuration = Configuration;
+				if (_payments == null)
+					_payments = new PaymentsAPI ();
+				_payments.Configuration = Configuration;
 				if (WebCommandExecuter != null)
-					_transaction.WebCommandExecuter = WebCommandExecuter;
-				return _transaction;
+					_payments.WebCommandExecuter = WebCommandExecuter;
+				return _payments;
 			} 
 		}
 
