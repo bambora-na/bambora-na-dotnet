@@ -56,8 +56,14 @@ namespace Beanstream
 			httpRequest.Headers.Add("Authorization", GetAuthorizationHeaderString(_requestObject.Credentials));
 			httpRequest.ContentType = "application/json";
 
-			var data = JsonConvert.SerializeObject(_requestObject.Data);
-			
+			var data = JsonConvert.SerializeObject(
+				_requestObject.Data,
+				Formatting.Indented,
+				new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore } // ignore null values
+			);
+
+			Console.WriteLine ("Request Data:\n"+data);
+
 			using (var writer = new StreamWriter(request.GetRequestStream()))
 			{
 				writer.Write(data);

@@ -100,9 +100,18 @@ namespace Beanstream.Repositories
 
 			var statusCode = response.StatusCode;
 			var data = GetResponseBody(response); //Get from exception
-			JToken json = JObject.Parse(data);
-			var code = Convert.ToInt32( json.SelectToken("code") );
-			var category = Convert.ToInt32( json.SelectToken("category") );
+
+			var code = -1;
+			var category = -1;
+			if (data != null) {
+				try {
+					JToken json = JObject.Parse(data);
+					code = Convert.ToInt32( json.SelectToken("code") );
+					category = Convert.ToInt32( json.SelectToken("category") );
+				} catch (Exception ex) {
+					// ignore, we don't need the error codes and some issues do not return proper data that we can parse
+				}
+			}
 
 			switch (statusCode)
 			{

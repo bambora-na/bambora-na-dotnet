@@ -21,17 +21,18 @@
 // THE SOFTWARE.
 //
 using System;
-using Beanstream.Requests;
 
 namespace Beanstream
 {
-	public class ReturnRequest : IRequest
+	/// <summary>
+	/// Step 2 in the Interac purchase process.
+	/// This response contains the recirection info for the web browser to take
+	/// the customer to the official Interac page.
+	/// 
+	/// </summary>
+	public class InteracPurchaseResponse : PaymentResponse
 	{
-		public string payment_id { get; set; }
-		public string merchant_id { get; set; }
-		public string order_number { get; set; }
-		public string amount { get; set; }
-		public int adjId { get; set; }
+
 	}
 }
 

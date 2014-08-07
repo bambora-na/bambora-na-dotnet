@@ -78,13 +78,14 @@ namespace Beanstream
 		/// </summary>
 		/// <returns>he payment result</returns>
 		/// <param name="paymentRequest">Payment request.</param>
-		public PaymentResponse MakeCardPayment(CardPaymentRequest paymentRequest) {
+		public PaymentResponse MakePayment(PaymentRequest paymentRequest) {
 
 			Beanstream.ThrowIfNullArgument (paymentRequest, "paymentRequest");
 
 			string url = BeanstreamUrls.BasePaymentsUrl
 							.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
 	   					    .Replace("{p}", String.IsNullOrEmpty(_configuration.Platform) ? "www" : _configuration.Platform);
+
 
 			HttpsWebRequest req = new HttpsWebRequest () {
 				MerchantId = _configuration.MerchantId,
@@ -96,37 +97,11 @@ namespace Beanstream
 			paymentRequest.merchant_id = _configuration.MerchantId.ToString();
 
 			string response = req.ProcessTransaction (HttpMethod.Post, url, paymentRequest);
+			//Console.WriteLine ("\n\n"+response+"\n\n");
 			return JsonConvert.DeserializeObject<PaymentResponse>(response);
 
 		}
 
-		/// <summary>
-		/// Make a payment using a token from the Legato service.
-		/// This token represents the credit card so you do not have to store the credit card information
-		/// yourself. This helps you easily be PCI compliant.
-		/// </summary>
-		/// <returns>The payment result</returns>
-		/// <param name="paymentRequest">Payment request.</param>
-		public PaymentResponse MakeTokenPayment(TokenPaymentRequest paymentRequest) {
-
-			Beanstream.ThrowIfNullArgument (paymentRequest, "paymentRequest");
-
-			string url = BeanstreamUrls.BasePaymentsUrl
-				.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
-				.Replace("{p}", String.IsNullOrEmpty(_configuration.Platform) ? "www" : _configuration.Platform);
-
-			HttpsWebRequest req = new HttpsWebRequest () {
-				MerchantId = _configuration.MerchantId,
-				Passcode = _configuration.ApiPasscode,
-				WebCommandExecutor = _webCommandExecuter
-			};
-
-			paymentRequest.merchant_id = _configuration.MerchantId.ToString();
-
-			string response = req.ProcessTransaction (HttpMethod.Post, url, paymentRequest);
-			return JsonConvert.DeserializeObject<PaymentResponse>(response);
-
-		}
 
 		/// <summary>
 		/// Return a previous payment made through Beanstream
@@ -160,14 +135,27 @@ namespace Beanstream
 
 		}
 
+		public object CustomRequest(HttpMethod httpMethod, string url, object data) {
+			HttpsWebRequest req = new HttpsWebRequest () {
+				MerchantId = _configuration.MerchantId,
+				Passcode = _configuration.ApiPasscode,
+				WebCommandExecutor = _webCommandExecuter
+			};
+
+			string response = req.ProcessTransaction (HttpMethod.Post, url, data);
+			return response;
+		}
+
 		/// <summary>
 		/// Return a previous card payment that was not made through Beanstream. Use this if you would like to
 		/// return a payment but that payment was performed on another gateway.
 		/// </summary>
 		/// <returns>The return result</returns>
 		/// <param name="returnRequest">Return request.</param>
-		public PaymentResponse UnreferencedReturn(UnreferencedCardReturnRequest returnRequest) {
+		/// <param name="adjId">Reference the transaction identification number (trnId) from the original purchase</param>
+		/*public PaymentResponse UnreferencedReturn(int adjId, UnreferencedCardReturnRequest returnRequest) {
 
+			Beanstream.ThrowIfNullArgument (adjId, "adjId");
 			Beanstream.ThrowIfNullArgument (returnRequest, "returnRequest");
 
 			string url = BeanstreamUrls.ReturnsUrl
@@ -175,6 +163,7 @@ namespace Beanstream
 				.Replace("{p}", String.IsNullOrEmpty(_configuration.Platform) ? "www" : _configuration.Platform)
 				.Replace("{id}", "0"); // uses ID 0 since there is no existing payment ID for this transaction
 
+			returnRequest.adjId = adjId;
 
 			HttpsWebRequest req = new HttpsWebRequest () {
 				MerchantId = _configuration.MerchantId,
@@ -185,7 +174,7 @@ namespace Beanstream
 
 			string response = req.ProcessTransaction (HttpMethod.Post, url, returnRequest);
 			return JsonConvert.DeserializeObject<PaymentResponse>(response);
-		}
+		}*/
 
 
 		/// <summary>
@@ -194,7 +183,7 @@ namespace Beanstream
 		/// </summary>
 		/// <returns>The return result</returns>
 		/// <param name="returnRequest">Return request.</param>
-		public PaymentResponse UnreferencedReturn(UnreferencedSwipeReturnRequest returnRequest) {
+		/*public PaymentResponse UnreferencedReturn(UnreferencedSwipeReturnRequest returnRequest) {
 
 			Beanstream.ThrowIfNullArgument (returnRequest, "returnRequest");
 
@@ -213,18 +202,21 @@ namespace Beanstream
 
 			string response = req.ProcessTransaction (HttpMethod.Post, url, returnRequest);
 			return JsonConvert.DeserializeObject<PaymentResponse>(response);
-		}
+		}*/
 			
 		/// <summary>
 		/// Void the specified paymentId.
 		/// 
 		/// Voids generally need to occur before end of business on the same day that the transaction was processed.
-		/// For more detailed information about voids specific to your merchant account, please call
-		/// Beanstream support.
+		/// 
+		/// Voids are used to cancel a transaction before the item is registered against a customer credit card account. 
+		/// Cardholders will never see a voided transaction on their credit card statement. As a result, voids can only 
+		/// be attempted on the same day as the original transaction. After the end of day (roughly 11:59 pm EST/EDT), 
+		/// void requests will be rejected from the API if attempted.
 		/// </summary>
 		/// <returns>The return result</returns>
 		/// <param name="paymentId">Payment identifier from a previous transaction.</param>
-		public PaymentResponse Void(String paymentId) {
+		public PaymentResponse Void(String paymentId, int amount) {
 
 			Beanstream.ThrowIfNullArgument (paymentId, "paymentId");
 
@@ -242,7 +234,8 @@ namespace Beanstream
 
 			var VoidPayment = new 
 			{
-				merchant_id = _configuration.MerchantId
+				merchant_id = _configuration.MerchantId,
+				amount = amount
 			};
 			
 			string response = req.ProcessTransaction (HttpMethod.Post, url, VoidPayment);
@@ -250,36 +243,100 @@ namespace Beanstream
 		}
 
 		/// <summary>
-		/// Push the actual payment through for a pre-authorization.
+		/// Pre-authorize a payment. Use this if you want to know if a customer has sufficient funds
+		/// before processing a payment. A real-world example of this is pre-authorizing at the gas pump
+		/// for $100 before you fill up, then end up only using $60 of gas; the customer is only charged
+		/// $60. The final payment is used with PreAuthCompletion().
+		/// </summary>
+		/// <returns>The response, in particular the payment ID that is needed to complete the purchase.</returns>
+		/// <param name="paymentRequest">Payment request.</param>
+		public PaymentResponse PreAuth(CardPaymentRequest paymentRequest) {
+
+			Beanstream.ThrowIfNullArgument (paymentRequest, "paymentRequest");
+
+			paymentRequest.card.complete = false; // false to make it a pre-auth
+
+			return PreAuth (paymentRequest);
+		}
+
+		/// <summary>
+		/// Pre-authorize a payment. Use this if you want to know if a customer has sufficient funds
+		/// before processing a payment. A real-world example of this is pre-authorizing at the gas pump
+		/// for $100 before you fill up, then end up only using $60 of gas; the customer is only charged
+		/// $60. The final payment is used with PreAuthCompletion().
+		/// 
+		/// The PreAuth is used with tokenized payments with a token generated from the Legato Javascript service.
+		/// </summary>
+		/// <returns>The response, in particular the payment ID that is needed to complete the purchase.</returns>
+		/// <param name="paymentRequest">Payment request.</param>
+		public PaymentResponse PreAuth(TokenPaymentRequest paymentRequest) {
+
+			Beanstream.ThrowIfNullArgument (paymentRequest, "paymentRequest");
+
+			paymentRequest.complete = false; // false to make it a pre-auth
+
+			return PreAuth (paymentRequest);
+		}
+
+		/// <summary>
+		/// Internal handling of the Pre-auth requests after the 'complete' parameter
+		/// has been modified on the various PaymentRequest objects.
+		/// </summary>
+		/// <returns>The auth.</returns>
+		/// <param name="paymentRequest">Payment request.</param>
+		private PaymentResponse PreAuth(PaymentRequest paymentRequest) {
+		
+			string url = BeanstreamUrls.BasePaymentsUrl
+				.Replace ("{v}", String.IsNullOrEmpty (_configuration.Version) ? "v1" : "v" + _configuration.Version)
+				.Replace ("{p}", String.IsNullOrEmpty (_configuration.Platform) ? "www" : _configuration.Platform);
+
+
+			HttpsWebRequest req = new HttpsWebRequest () {
+				MerchantId = _configuration.MerchantId,
+				Passcode = _configuration.ApiPasscode,
+				WebCommandExecutor = _webCommandExecuter
+			};
+
+
+			string response = req.ProcessTransaction (HttpMethod.Post, url, paymentRequest);
+			return JsonConvert.DeserializeObject<PaymentResponse>(response);
+		}
+	
+
+		/// <summary>
+		/// Push the actual payment through after a pre-authorization.
 		/// 
 		/// Example:
 		/// Pre-authorize at the gas pump for $100 using Pre-Authorization request. Card is approved for $100 but not charged.
 		/// Consumer fills up with $60 worth of gas. Run the Pre-Auth-Completion request to process the actual
 		/// payment for $60.
 		/// 
-		/// A pre-auth payment request is a regular payment request but you set PaymentRequest.complete = false 
+		/// </summary>
+		/// <returns>Response to the payment</returns>
+		/// <param name="paymentId">Payment identifier obtained from the Pre-Auth request.</param>
+		/// <param name="amount">Amount to process</param>
+		public PaymentResponse PreAuthCompletion(String paymentId, string amount) {
+
+			return PreAuthCompletion (paymentId, amount, null);
+		}
+
+		/// <summary>
+		/// Push the actual payment through after a pre-authorization.
 		/// 
-		/// new CardPaymentRequest {
-		/// 	order_number = "ABC1234567891003",
-		/// 	amount = "100.00",
-		/// 	complete = false,  // set to FALSE for pre-auth
-		/// 	card = new Card {
-		/// 		name = "John Doe",
-		/// 		number = "5100000010001004",
-		/// 		expiry_month = "12",
-		/// 		expiry_year = "18",
-		/// 		cvd = "123"
-		/// 	}
-		/// };
+		/// Example:
+		/// Pre-authorize at the gas pump for $100 using Pre-Authorization request. Card is approved for $100 but not charged.
+		/// Consumer fills up with $60 worth of gas. Run the Pre-Auth-Completion request to process the actual
+		/// payment for $60.
 		/// 
 		/// </summary>
 		/// <returns>Response to the payment</returns>
 		/// <param name="paymentId">Payment identifier obtained from the Pre-Auth request.</param>
-		/// <param name="paymentRequest">Payment request.</param>
-		public PaymentResponse PreAuthCompletion(String paymentId, PaymentRequest paymentRequest) {
+		/// <param name="amount">Amount to process</param>
+		/// <param name="orderNumber">Optional order number</param>
+		public PaymentResponse PreAuthCompletion(String paymentId, string amount, string orderNumber) {
 
 			Beanstream.ThrowIfNullArgument (paymentId, "paymentId");
-			Beanstream.ThrowIfNullArgument (paymentRequest, "paymentRequest");
+			Beanstream.ThrowIfNullArgument (amount, "amount");
 
 			string url = BeanstreamUrls.PreAuthCompletionsUrl
 				.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
@@ -293,14 +350,21 @@ namespace Beanstream
 				WebCommandExecutor = _webCommandExecuter
 			};
 
-			var VoidPayment = new 
+			var Completion = new 
 			{
-				merchant_id = _configuration.MerchantId
+				merchant_id = _configuration.MerchantId,
+				amount = amount,
+				order_number = orderNumber
 			};
 
-			string response = req.ProcessTransaction (HttpMethod.Post, url, VoidPayment);
+			string response = req.ProcessTransaction (HttpMethod.Post, url, Completion);
 			return JsonConvert.DeserializeObject<PaymentResponse>(response);
 		}
+
+		public PaymentResponse InteracRedirect(String idebit_merchantdata, InteracRedirectRequest redirectRequest) {
+			return null;
+		}
+
 	}
 }
 

@@ -32,17 +32,19 @@ namespace Beanstream
 
 		public string message_id { get; set; }
 
-		public string message_text { get; set; }
+		public string message { get; set; }
 
 		public string auth_code { get; set; }
 
 		public string created { get; set; }
 
-		public string amount { get; set; }
-
 		public string order_number { get; set; }
 
 		public string type { get; set; }
+
+		public string payment_method { get; set; }
+
+		public CardResponse card { get; set; }
 
 		public Link[] links;
 

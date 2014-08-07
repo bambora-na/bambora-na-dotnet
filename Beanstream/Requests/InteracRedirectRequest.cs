@@ -21,17 +21,14 @@
 // THE SOFTWARE.
 //
 using System;
-using Beanstream.Requests;
 
 namespace Beanstream
 {
-	public class ReturnRequest : IRequest
+	public class InteracRedirectRequest
 	{
-		public string payment_id { get; set; }
-		public string merchant_id { get; set; }
-		public string order_number { get; set; }
-		public string amount { get; set; }
-		public int adjId { get; set; }
+		public readonly string payment_method = PaymentMethod.interac.ToString ();
+
+		public InteracRedirectResponse interac_response { get; set; }
 	}
 }
 

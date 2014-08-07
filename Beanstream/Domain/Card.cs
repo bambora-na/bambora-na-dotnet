@@ -31,8 +31,11 @@ namespace Beanstream
 		public string expiry_month { get; set; }
 		public string expiry_year { get; set; }
 		public string cvd { get; set; }
+		public Boolean complete { get; set; } // false for pre-authorizations
 
-
+		public Card () {
+			complete = true;
+		}
 	}
 }
 

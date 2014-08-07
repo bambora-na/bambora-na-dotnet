@@ -21,17 +21,16 @@
 // THE SOFTWARE.
 //
 using System;
-using Beanstream.Requests;
 
 namespace Beanstream
 {
-	public class ReturnRequest : IRequest
+	public class CardResponse
 	{
-		public string payment_id { get; set; }
-		public string merchant_id { get; set; }
-		public string order_number { get; set; }
-		public string amount { get; set; }
-		public int adjId { get; set; }
+		public string card_type { get; set; }
+		public int last_four { get; set; }
+		public Boolean cvd_match { get; set; }
+		public Boolean address_match { get; set; }
+		public Boolean postal_result { get; set; }
 	}
 }
 

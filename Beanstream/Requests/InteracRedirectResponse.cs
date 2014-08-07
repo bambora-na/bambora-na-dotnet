@@ -21,17 +21,19 @@
 // THE SOFTWARE.
 //
 using System;
-using Beanstream.Requests;
 
 namespace Beanstream
 {
-	public class ReturnRequest : IRequest
+	public class InteracRedirectResponse
 	{
-		public string payment_id { get; set; }
-		public string merchant_id { get; set; }
-		public string order_number { get; set; }
-		public string amount { get; set; }
-		public int adjId { get; set; }
+		public Boolean funded {get; set;}
+		public string idebit_track2 {get; set;}
+		public string idebit_isslang {get; set;}
+		public string idebit_version {get; set;}
+		public string idebit_issconf {get; set;}
+		public string idebit_issname {get; set;}
+		public string idebit_amount {get; set;}
+		public string idebit_invoice {get; set;}
 	}
 }
 

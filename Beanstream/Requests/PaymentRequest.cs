@@ -34,14 +34,9 @@ namespace Beanstream
 		public string customer_ip { get; set; }
 		public string term_url { get; set; }
 		public string comments { get; set; }
-		public bool complete { get; set; } // false for pre-authorizations
 		public BillingAddress billing { get; set; }
 		public ShippingAddress shipping { get; set; }
 		public Custom custom { get; set; }
-
-		public PaymentRequest() {
-			complete = true;
-		}
 	}
 }
 
