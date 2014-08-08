@@ -21,19 +21,18 @@
 // THE SOFTWARE.
 //
 using System;
-using Beanstream.Requests;
 
 /// <summary>
-/// Token payments use a token generated from Beanstream's Legato Javascript utility.
-/// The token is a unique one-time-use reference to the user's credit card information.
-/// 
+/// A token for a legato tokenization request. Each token is single-use.
 /// </summary>
 namespace Beanstream
 {
-	public class TokenPaymentRequest : PaymentRequest
+	public class LegatoTokenResponse
 	{
-		public readonly string payment_method = PaymentMethod.token.ToString ();
-		public Token token { get; set; }
+		public string token { get; set; }
+		public string code { get; set; }
+		public string version { get; set; }
+		public string message { get; set; }
 	}
 }
 

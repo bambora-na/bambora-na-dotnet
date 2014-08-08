@@ -21,19 +21,18 @@
 // THE SOFTWARE.
 //
 using System;
-using Beanstream.Requests;
 
 /// <summary>
-/// Token payments use a token generated from Beanstream's Legato Javascript utility.
-/// The token is a unique one-time-use reference to the user's credit card information.
-/// 
+/// Process Cash payments. This is a useful way to record a payment that
+/// you physically took.
+/// NOTE: You will need to have these payment options ACTIVATED by calling Beanstream 
+/// support at 1-888-472-0811
 /// </summary>
 namespace Beanstream
 {
-	public class TokenPaymentRequest : PaymentRequest
+	public class CashPaymentRequest : PaymentRequest
 	{
-		public readonly string payment_method = PaymentMethod.token.ToString ();
-		public Token token { get; set; }
+		public readonly string payment_method = PaymentMethod.cash.ToString ();
 	}
 }
 

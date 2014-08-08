@@ -70,7 +70,11 @@ namespace Beanstream.Repositories
 			{
 				var authScheme = "Passcode";
 
-				var authInfo = new Credentials(_merchantId, _passcode, authScheme);
+				Credentials authInfo = null;
+				// this request might not be using authorization
+				if (_passcode != null)
+					authInfo = new Credentials(_merchantId, _passcode, authScheme);
+
 				var requestInfo = new RequestObject(method, url, authInfo, data);
 
 				var command = new ExecuteWebRequest(requestInfo);

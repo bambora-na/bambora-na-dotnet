@@ -256,7 +256,7 @@ namespace Beanstream
 
 			paymentRequest.card.complete = false; // false to make it a pre-auth
 
-			return PreAuth (paymentRequest);
+			return PreAuthInternal (paymentRequest);
 		}
 
 		/// <summary>
@@ -273,9 +273,7 @@ namespace Beanstream
 
 			Beanstream.ThrowIfNullArgument (paymentRequest, "paymentRequest");
 
-			paymentRequest.complete = false; // false to make it a pre-auth
-
-			return PreAuth (paymentRequest);
+			return PreAuthInternal (paymentRequest);
 		}
 
 		/// <summary>
@@ -284,7 +282,7 @@ namespace Beanstream
 		/// </summary>
 		/// <returns>The auth.</returns>
 		/// <param name="paymentRequest">Payment request.</param>
-		private PaymentResponse PreAuth(PaymentRequest paymentRequest) {
+		private PaymentResponse PreAuthInternal(PaymentRequest paymentRequest) {
 		
 			string url = BeanstreamUrls.BasePaymentsUrl
 				.Replace ("{v}", String.IsNullOrEmpty (_configuration.Version) ? "v1" : "v" + _configuration.Version)

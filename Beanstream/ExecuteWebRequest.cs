@@ -53,7 +53,8 @@ namespace Beanstream
 			}
 
 			httpRequest.Method = _requestObject.Method.ToString();
-			httpRequest.Headers.Add("Authorization", GetAuthorizationHeaderString(_requestObject.Credentials));
+			if (_requestObject.Credentials != null) // we might use this for a no auth connection
+				httpRequest.Headers.Add("Authorization", GetAuthorizationHeaderString(_requestObject.Credentials));
 			httpRequest.ContentType = "application/json";
 
 			var data = JsonConvert.SerializeObject(
@@ -62,7 +63,7 @@ namespace Beanstream
 				new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore } // ignore null values
 			);
 
-			Console.WriteLine ("Request Data:\n"+data);
+			//Console.WriteLine ("Request Data:\n"+data);
 
 			using (var writer = new StreamWriter(request.GetRequestStream()))
 			{

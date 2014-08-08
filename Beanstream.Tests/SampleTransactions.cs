@@ -27,6 +27,10 @@ using Beanstream.Repositories;
 using Newtonsoft.Json.Linq;
 using Beanstream.Requests;
 using Beanstream.Exceptions;
+using System.Net;
+using Newtonsoft.Json;
+using System.IO;
+using Beanstream.Entities;
 
 namespace Beanstream.Tests
 {
@@ -34,9 +38,12 @@ namespace Beanstream.Tests
 	public class SampleTransactions
 	{
 
-		private static int orderNum = 76;
+		private static int orderNum = 120; // used so we can have unique order #'s for each transaction
+
+
 
 		public static void Main(string[] args) {
+
 			Console.WriteLine ("BEGIN running sample transactions");
 
 			// Payments API
@@ -44,15 +51,12 @@ namespace Beanstream.Tests
 			SampleTransactions.ProcessReturns ();
 			SampleTransactions.ProcessPreauthorization ();
 			SampleTransactions.ProcessVoids ();
-			SampleTransactions.ProcessInterac ();
+			SampleTransactions.ProcessTokenPayment ();
+			//SampleTransactions.ProcessInterac ();
 			//SampleTransactions.CustomRequest ();
+			SampleTransactions.ProcessPhysicalPayments (); // you need these options (cash and cheque) enabled on your merchant account first
 
-			// use Tokenized profiles to make payments
-			//string customerCode = SampleTransactions.TokenizedProfileCreate ();
-			//SampleTransactions.TokenizedProfilePayment (customerCode);
-			//SampleTransactions.TokenizedProfileAddCard (customerCode);
-
-			Console.WriteLine ("final order number: " + orderNum);
+			Console.WriteLine ("final order number: " + orderNum); // used so we can have unique order #'s for each transaction
 			Console.WriteLine ("FINISHED running sample transactions");
 		}
 
@@ -91,7 +95,6 @@ namespace Beanstream.Tests
 		static void ProcessReturns() {
 
 			Console.WriteLine ("Processing Returns... ");
-			orderNum++;
 
 			Beanstream beanstream = new Beanstream () {
 				MerchantId = 300200578,
@@ -103,7 +106,7 @@ namespace Beanstream.Tests
 			PaymentResponse response = beanstream.Payments.MakePayment (
 				new CardPaymentRequest {
 					amount = "40.00",
-					order_number = orderNum.ToString(),
+					order_number = orderNum++.ToString(),
 					card = new Card {
 						name = "John Doe",
 						number = "5100000010001004",
@@ -132,7 +135,6 @@ namespace Beanstream.Tests
 		static void ProcessPreauthorization() {
 
 			Console.WriteLine ("Processing Pre-auth payments... ");
-			orderNum++;
 
 			Beanstream beanstream = new Beanstream () {
 				MerchantId = 300200578,
@@ -142,7 +144,7 @@ namespace Beanstream.Tests
 
 			CardPaymentRequest paymentRequest = new CardPaymentRequest {
 				amount = "100.00",
-				order_number = orderNum.ToString (),
+				order_number = orderNum++.ToString (),
 				card = new Card {
 					name = "John Doe",
 					number = "5100000010001004",
@@ -179,7 +181,6 @@ namespace Beanstream.Tests
 		static void ProcessVoids() {
 
 			Console.WriteLine ("Processing Voids... ");
-			orderNum++;
 
 			Beanstream beanstream = new Beanstream () {
 				MerchantId = 300200578,
@@ -191,7 +192,7 @@ namespace Beanstream.Tests
 			PaymentResponse response = beanstream.Payments.MakePayment (
 				new CardPaymentRequest {
 					amount = "30.00",
-					order_number = orderNum.ToString(),
+					order_number = orderNum++.ToString(),
 					card = new Card {
 						name = "John Doe",
 						number = "5100000010001004",
@@ -227,7 +228,7 @@ namespace Beanstream.Tests
 			PaymentResponse response = beanstream.Payments.MakePayment (
 				new InteracPaymentRequest {
 					amount = "100.00",
-					order_number = orderNum.ToString()
+					order_number = orderNum++.ToString()
 				}
 			);
 			Console.WriteLine ("Interac Payment id: " + response.id + ", " + response.message+"\n");
@@ -235,6 +236,55 @@ namespace Beanstream.Tests
 
 			// STEP 2:
 			// Next you redirect the user to the bank's website for the actual interac processing
+		}
+
+
+		static void ProcessTokenPayment ()
+		{
+
+			// The first step is to call the Legato service to get a token.
+			// This is normally performed on the client machine, and not on the server.
+			// The goal with tokens is to not have credit card information move through your server,
+			// thus lowering your scope for PCI compliance
+
+			string url = "https://www.beanstream.com/scripts/tokenization/tokens";
+			var data = new {
+				number = "5100000010001004",
+				expiry_month = "12",
+				expiry_year = "18",
+				cvd = "123"
+			};
+
+			var requestInfo = new RequestObject(HttpMethod.Post, url, null, data);
+			var command = new ExecuteWebRequest (requestInfo);
+			WebCommandExecuter executer = new WebCommandExecuter ();
+			var result = executer.ExecuteCommand (command);
+
+			LegatoTokenResponse token = JsonConvert.DeserializeObject<LegatoTokenResponse>(result.Response);
+			Console.WriteLine ("legato token: " + token.token);
+
+			// Now that we have a token that represents our credit card info, we can process
+			// the payment with that token
+
+			Beanstream beanstream = new Beanstream () {
+				MerchantId = 300200578,
+				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ApiVersion = "1"
+			};
+
+			PaymentResponse paymentResponse = beanstream.Payments.MakePayment (
+				new TokenPaymentRequest () 
+				{
+					amount = "30",
+					order_number = orderNum++.ToString(),
+					token = new Token {
+						code = token.token,
+						name = "John Doe"
+					}
+				}
+			);
+
+			Console.WriteLine ("Token payment result: " + paymentResponse.id + ", " + paymentResponse.message+"\n");
 		}
 
 		static void CustomRequest() {
@@ -276,6 +326,48 @@ namespace Beanstream.Tests
 			object result = beanstream.Payments.CustomRequest (HttpMethod.Post, url, payment);
 			Console.WriteLine ("Result: "+result);
 		}
+
+
+		/// <summary>
+		/// Process Cash and Cheque payments. This is a useful way to record a payment that
+		/// you physically took.
+		/// NOTE: You will need to have these payment options ACTIVATED by calling Beanstream 
+		/// support at 1-888-472-0811
+		/// 
+		/// </summary>
+		static void ProcessPhysicalPayments() {
+
+			Console.WriteLine ("Processing Cash Payment... ");
+
+			Beanstream beanstream = new Beanstream () {
+				MerchantId = 300200578,
+				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ApiVersion = "1"
+			};
+
+
+			// process cash payment
+			PaymentResponse response = beanstream.Payments.MakePayment (
+				new CashPaymentRequest () {
+					amount = "50.00",
+					order_number = orderNum++.ToString()
+				}
+			);
+			Console.WriteLine ("Cash Payment id: " + response.id + ", " + response.message+"\n");
+
+
+			Console.WriteLine ("Processing Cheque Payment... ");
+			// process cheque payment
+			response = beanstream.Payments.MakePayment (
+				new ChequePaymentRequest () {
+					amount = "30.00",
+					order_number = orderNum++.ToString()
+				}
+			);
+			Console.WriteLine ("Cheque Payment id: " + response.id + ", " + response.message+"\n");
+
+		}
+
 
 		/*static string TokenizedProfileCreate() 
 		{
