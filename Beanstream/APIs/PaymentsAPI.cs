@@ -153,7 +153,7 @@ namespace Beanstream
 		/// <returns>The return result</returns>
 		/// <param name="returnRequest">Return request.</param>
 		/// <param name="adjId">Reference the transaction identification number (trnId) from the original purchase</param>
-		/*public PaymentResponse UnreferencedReturn(int adjId, UnreferencedCardReturnRequest returnRequest) {
+		public PaymentResponse UnreferencedReturn(int adjId, UnreferencedCardReturnRequest returnRequest) {
 
 			Beanstream.ThrowIfNullArgument (adjId, "adjId");
 			Beanstream.ThrowIfNullArgument (returnRequest, "returnRequest");
@@ -174,7 +174,7 @@ namespace Beanstream
 
 			string response = req.ProcessTransaction (HttpMethod.Post, url, returnRequest);
 			return JsonConvert.DeserializeObject<PaymentResponse>(response);
-		}*/
+		}
 
 
 		/// <summary>
@@ -183,7 +183,7 @@ namespace Beanstream
 		/// </summary>
 		/// <returns>The return result</returns>
 		/// <param name="returnRequest">Return request.</param>
-		/*public PaymentResponse UnreferencedReturn(UnreferencedSwipeReturnRequest returnRequest) {
+		public PaymentResponse UnreferencedReturn(UnreferencedSwipeReturnRequest returnRequest) {
 
 			Beanstream.ThrowIfNullArgument (returnRequest, "returnRequest");
 
@@ -202,7 +202,7 @@ namespace Beanstream
 
 			string response = req.ProcessTransaction (HttpMethod.Post, url, returnRequest);
 			return JsonConvert.DeserializeObject<PaymentResponse>(response);
-		}*/
+		}
 			
 		/// <summary>
 		/// Void the specified paymentId.

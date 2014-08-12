@@ -31,7 +31,7 @@ namespace Beanstream
 		public string merchant_id { get; set; }
 		public string order_number { get; set; }
 		public string amount { get; set; }
-		public int adjId { get; set; }
+		//public int adjId { get; set; }
 	}
 }
 
