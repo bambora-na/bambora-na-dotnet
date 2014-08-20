@@ -80,7 +80,7 @@ namespace Beanstream
 		/// <param name="paymentRequest">Payment request.</param>
 		public PaymentResponse MakePayment(PaymentRequest paymentRequest) {
 
-			Beanstream.ThrowIfNullArgument (paymentRequest, "paymentRequest");
+			Gateway.ThrowIfNullArgument (paymentRequest, "paymentRequest");
 
 			string url = BeanstreamUrls.BasePaymentsUrl
 							.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
@@ -111,8 +111,8 @@ namespace Beanstream
 		/// <param name="returnRequest">Return request.</param>
 		public PaymentResponse Return(string paymentId, ReturnRequest returnRequest) {
 
-			Beanstream.ThrowIfNullArgument (returnRequest, "returnRequest");
-			Beanstream.ThrowIfNullArgument (paymentId, "paymentId");
+			Gateway.ThrowIfNullArgument (returnRequest, "returnRequest");
+			Gateway.ThrowIfNullArgument (paymentId, "paymentId");
 
 			if (returnRequest.amount == null)
 				throw new ArgumentNullException ("An amount is required in order to make a return.");
@@ -155,8 +155,8 @@ namespace Beanstream
 		/// <param name="adjId">Reference the transaction identification number (trnId) from the original purchase</param>
 		public PaymentResponse UnreferencedReturn(int adjId, UnreferencedCardReturnRequest returnRequest) {
 
-			Beanstream.ThrowIfNullArgument (adjId, "adjId");
-			Beanstream.ThrowIfNullArgument (returnRequest, "returnRequest");
+			Gateway.ThrowIfNullArgument (adjId, "adjId");
+			Gateway.ThrowIfNullArgument (returnRequest, "returnRequest");
 
 			string url = BeanstreamUrls.ReturnsUrl
 				.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
@@ -185,7 +185,7 @@ namespace Beanstream
 		/// <param name="returnRequest">Return request.</param>
 		public PaymentResponse UnreferencedReturn(UnreferencedSwipeReturnRequest returnRequest) {
 
-			Beanstream.ThrowIfNullArgument (returnRequest, "returnRequest");
+			Gateway.ThrowIfNullArgument (returnRequest, "returnRequest");
 
 			string url = BeanstreamUrls.ReturnsUrl
 				.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
@@ -218,7 +218,7 @@ namespace Beanstream
 		/// <param name="paymentId">Payment identifier from a previous transaction.</param>
 		public PaymentResponse Void(String paymentId, int amount) {
 
-			Beanstream.ThrowIfNullArgument (paymentId, "paymentId");
+			Gateway.ThrowIfNullArgument (paymentId, "paymentId");
 
 			string url = BeanstreamUrls.VoidsUrl
 				.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
@@ -252,7 +252,7 @@ namespace Beanstream
 		/// <param name="paymentRequest">Payment request.</param>
 		public PaymentResponse PreAuth(CardPaymentRequest paymentRequest) {
 
-			Beanstream.ThrowIfNullArgument (paymentRequest, "paymentRequest");
+			Gateway.ThrowIfNullArgument (paymentRequest, "paymentRequest");
 
 			paymentRequest.card.complete = false; // false to make it a pre-auth
 
@@ -271,7 +271,7 @@ namespace Beanstream
 		/// <param name="paymentRequest">Payment request.</param>
 		public PaymentResponse PreAuth(TokenPaymentRequest paymentRequest) {
 
-			Beanstream.ThrowIfNullArgument (paymentRequest, "paymentRequest");
+			Gateway.ThrowIfNullArgument (paymentRequest, "paymentRequest");
 
 			return PreAuthInternal (paymentRequest);
 		}
@@ -333,8 +333,8 @@ namespace Beanstream
 		/// <param name="orderNumber">Optional order number</param>
 		public PaymentResponse PreAuthCompletion(String paymentId, string amount, string orderNumber) {
 
-			Beanstream.ThrowIfNullArgument (paymentId, "paymentId");
-			Beanstream.ThrowIfNullArgument (amount, "amount");
+			Gateway.ThrowIfNullArgument (paymentId, "paymentId");
+			Gateway.ThrowIfNullArgument (amount, "amount");
 
 			string url = BeanstreamUrls.PreAuthCompletionsUrl
 				.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)

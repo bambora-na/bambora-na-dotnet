@@ -25,9 +25,9 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
-using Beanstream.Entities;
 using Newtonsoft.Json;
 using Beanstream.Web;
+using Beanstream.Entities;
 
 namespace Beanstream
 {

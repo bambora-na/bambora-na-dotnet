@@ -80,7 +80,7 @@ namespace Beanstream.Tests
 			
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>())).Returns(webresult);
 
-			Beanstream beanstream = new Beanstream () {
+			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
@@ -103,7 +103,7 @@ namespace Beanstream.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new ArgumentNullException());
 
-			Beanstream beanstream = new Beanstream () {
+			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
@@ -126,7 +126,7 @@ namespace Beanstream.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new ForbiddenException(HttpStatusCode.Forbidden, "", 1, 0));
 
-			Beanstream beanstream = new Beanstream () {
+			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
@@ -149,7 +149,7 @@ namespace Beanstream.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new UnauthorizedException(HttpStatusCode.Unauthorized, "", 1, 0));
 
-			Beanstream beanstream = new Beanstream () {
+			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
@@ -172,7 +172,7 @@ namespace Beanstream.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new BusinessRuleException(HttpStatusCode.PaymentRequired, "", 1, 0));
 
-			Beanstream beanstream = new Beanstream () {
+			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
@@ -195,7 +195,7 @@ namespace Beanstream.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new InvalidRequestException(HttpStatusCode.PaymentRequired, "", 1, 0));
 
-			Beanstream beanstream = new Beanstream () {
+			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
@@ -218,7 +218,7 @@ namespace Beanstream.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new RedirectionException(HttpStatusCode.Redirect, "", 1, 0));
 
-			Beanstream beanstream = new Beanstream () {
+			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
@@ -242,7 +242,7 @@ namespace Beanstream.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new InternalServerException(HttpStatusCode.InternalServerError, "", 1, 0));
 
-			Beanstream beanstream = new Beanstream () {
+			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
@@ -265,7 +265,7 @@ namespace Beanstream.Tests
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new CommunicationException("API exception occured", null));
-			Beanstream beanstream = new Beanstream () {
+			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",

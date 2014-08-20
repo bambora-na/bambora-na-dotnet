@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,6 +38,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\InvalidRequestException.cs" />
@@ -50,13 +50,10 @@
     <Compile Include="Exceptions\InternalServerException.cs" />
     <Compile Include="Exceptions\UnauthorizedException.cs" />
     <Compile Include="Exceptions\BaseApiException.cs" />
-    <Compile Include="Beanstream.cs" />
     <Compile Include="ExecuteWebRequest.cs" />
     <Compile Include="Data\WebCommandExecuter.cs" />
     <Compile Include="Data\WebCommandResult.cs" />
     <Compile Include="Exceptions\RedirectionException.cs" />
-    <Compile Include="Entities\Credentials.cs" />
-    <Compile Include="Entities\RequestObject.cs" />
     <Compile Include="HttpMethod.cs" />
     <Compile Include="BeanstreamUrls.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,9 +81,16 @@
     <Compile Include="APIs\PaymentsAPI.cs" />
     <Compile Include="Requests\HttpsWebRequest.cs" />
     <Compile Include="APIs\ProfilesAPI.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Compile Include="Requests\Credentials.cs" />
+    <Compile Include="Requests\RequestObject.cs" />
+    <Compile Include="Responses\CardResponse.cs" />
+    <Compile Include="Responses\InteracPurchaseResponse.cs" />
+    <Compile Include="Responses\LegatoTokenResponse.cs" />
+    <Compile Include="Requests\InteracRedirectRequest.cs" />
+    <Compile Include="Requests\InteracRedirectResponse.cs" />
+    <Compile Include="Requests\CashPaymentRequest.cs" />
+    <Compile Include="Requests\ChequePaymentRequest.cs" />
+    <Compile Include="Gateway.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -109,5 +113,6 @@
     <Folder Include="Domain\" />
     <Folder Include="Requests\" />
     <Folder Include="Responses\" />
+    <Folder Include="lib\" />
   </ItemGroup>
 </Project>

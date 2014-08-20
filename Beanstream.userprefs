@@ -1,11 +1,15 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Beanstream\APIs\PaymentsAPI.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Beanstream.Tests\WhenCreatingAPayment.cs">
     <Files>
-      <File FileName="Beanstream.Tests\SampleTransactions.cs" Line="74" Column="6" />
-      <File FileName="Beanstream\APIs\PaymentsAPI.cs" Line="123" Column="4" />
-      <File FileName="Beanstream\APIs\Payments.cs" Line="86" Column="55" />
-      <File FileName="Beanstream\Requests\PaymentRequest.cs" Line="28" Column="38" />
+      <File FileName="Beanstream.Tests\SampleTransactions.cs" Line="76" Column="4" />
+      <File FileName="Beanstream\APIs\PaymentsAPI.cs" Line="112" Column="3" />
+      <File FileName="Beanstream\ExecuteWebRequest.cs" Line="1" Column="1" />
+      <File FileName="Beanstream\Requests\HttpsWebRequest.cs" Line="1" Column="1" />
+      <File FileName="Beanstream\Requests\CardPaymentRequest.cs" Line="1" Column="1" />
+      <File FileName="Beanstream\Requests\PaymentRequest.cs" Line="1" Column="1" />
+      <File FileName="Beanstream\Gateway.cs" Line="30" Column="22" />
+      <File FileName="Beanstream.Tests\WhenCreatingAPayment.cs" Line="31" Column="7" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

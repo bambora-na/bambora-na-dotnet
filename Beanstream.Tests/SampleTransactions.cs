@@ -38,7 +38,7 @@ namespace Beanstream.Tests
 	public class SampleTransactions
 	{
 
-		private static int orderNum = 152; // used so we can have unique order #'s for each transaction
+		private static int orderNum = 172; // used so we can have unique order #'s for each transaction
 
 
 
@@ -47,14 +47,14 @@ namespace Beanstream.Tests
 			Console.WriteLine ("BEGIN running sample transactions");
 
 			// Payments API
-			//SampleTransactions.ProcessPayment ();
-			//SampleTransactions.ProcessReturns ();
-			//SampleTransactions.ProcessPreauthorization ();
-			//SampleTransactions.ProcessVoids ();
+			SampleTransactions.ProcessPayment ();
+			SampleTransactions.ProcessReturns ();
+			SampleTransactions.ProcessPreauthorization ();
+			SampleTransactions.ProcessVoids ();
 			SampleTransactions.ProcessTokenPayment ();
 			//SampleTransactions.ProcessInterac ();
 			//SampleTransactions.CustomRequest ();
-			//SampleTransactions.ProcessPhysicalPayments (); // you need these options (cash and cheque) enabled on your merchant account first
+			SampleTransactions.ProcessPhysicalPayments (); // you need these options (cash and cheque) enabled on your merchant account first
 
 			Console.WriteLine ("final order number: " + orderNum); // used so we can have unique order #'s for each transaction
 			Console.WriteLine ("FINISHED running sample transactions");
@@ -68,7 +68,7 @@ namespace Beanstream.Tests
 
 			Console.WriteLine ("Processing Payment... ");
 
-			Beanstream beanstream = new Beanstream () {
+			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
@@ -96,7 +96,7 @@ namespace Beanstream.Tests
 
 			Console.WriteLine ("Processing Returns... ");
 
-			Beanstream beanstream = new Beanstream () {
+			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
@@ -137,7 +137,7 @@ namespace Beanstream.Tests
 
 			Console.WriteLine ("Processing Pre-auth payments... ");
 
-			Beanstream beanstream = new Beanstream () {
+			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
@@ -183,7 +183,7 @@ namespace Beanstream.Tests
 
 			Console.WriteLine ("Processing Voids... ");
 
-			Beanstream beanstream = new Beanstream () {
+			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
@@ -213,7 +213,7 @@ namespace Beanstream.Tests
 		}
 
 
-		static void ProcessInterac() {
+		/*static void ProcessInterac() {
 
 			Console.WriteLine ("Processing Interac Payment... ");
 
@@ -237,7 +237,7 @@ namespace Beanstream.Tests
 
 			// STEP 2:
 			// Next you redirect the user to the bank's website for the actual interac processing
-		}
+		}*/
 
 
 		static void ProcessTokenPayment ()
@@ -267,7 +267,7 @@ namespace Beanstream.Tests
 			// Now that we have a token that represents our credit card info, we can process
 			// the payment with that token
 
-			Beanstream beanstream = new Beanstream () {
+			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
@@ -292,7 +292,7 @@ namespace Beanstream.Tests
 
 			Console.WriteLine ("Processing Custom Payment... ");
 
-			Beanstream beanstream = new Beanstream () {
+			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
@@ -340,7 +340,7 @@ namespace Beanstream.Tests
 
 			Console.WriteLine ("Processing Cash Payment... ");
 
-			Beanstream beanstream = new Beanstream () {
+			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"

@@ -26,7 +26,6 @@ using System.Globalization;
 using System.IO;
 using System.Net;
 using Beanstream.Data;
-using Beanstream.Entities;
 using Beanstream.Exceptions;
 using Beanstream.Web;
 
@@ -36,6 +35,7 @@ using Beanstream.Web;
 /// </summary>
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Beanstream.Entities;
 
 
 namespace Beanstream.Repositories
