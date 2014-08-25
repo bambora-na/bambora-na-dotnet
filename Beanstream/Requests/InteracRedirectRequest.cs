@@ -26,7 +26,7 @@ namespace Beanstream
 {
 	public class InteracRedirectRequest
 	{
-		public readonly string payment_method = PaymentMethod.interac.ToString ();
+		public readonly string payment_method = PaymentMethods.interac.ToString ();
 
 		public InteracRedirectResponse interac_response { get; set; }
 	}

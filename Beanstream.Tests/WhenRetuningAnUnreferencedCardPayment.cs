@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 //
 // Copyright (c) 2014 Beanstream Internet Commerce Corp, Digital River, Inc.
 //
@@ -29,35 +29,34 @@ using Beanstream.Repositories;
 using Moq;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using System.ComponentModel;
 
 namespace Beanstream.Tests
 {
 	[TestFixture]
-	public class WhenVoidingAPayment
+	public class WhenRetuningAnUnreferencedCardPayment
 	{
 		private const string TrnId = "10000001";
-		private object _payment;
+		private UnreferencedCardReturnRequest _returnRequest;
 		private Mock<IWebCommandExecuter> _executer;
 
 		[SetUp]
 		public void Setup()
 		{
-			_payment = new
-			{
-				order_number = "Test1234"
+			_returnRequest = new UnreferencedCardReturnRequest () {
+				Amount = 100,
+				OrderNumber = "Test1234"
 			};
 
 			_executer = new Mock<IWebCommandExecuter>();
 		}
 
+		// unreferenced returns do not have a transaction ID
+
 		[Test]
-		public void ItShouldHaveATransactionIdForASuccessfulVoid()
+		public void ItShouldThrowArgumentExceptionForInvalidReturn()
 		{
 			// Arrange
-			var webresult = new WebCommandResult<string> { Response = @"{""id"":""10000000""}" };
-
-			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>())).Returns(webresult);
-
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
@@ -65,10 +64,14 @@ namespace Beanstream.Tests
 			};
 			beanstream.WebCommandExecuter = _executer.Object;
 
+			_returnRequest = null;
+
 			// Act
-			dynamic result = beanstream.Payments.Void("10000000", 10);
+			var ex = (ArgumentNullException)Assert.Throws(typeof(ArgumentNullException),
+				() =>beanstream.Payments.UnreferencedReturn(_returnRequest));
+
 			// Assert
-			Assert.AreEqual(result.TransactionId, "10000000");
+			Assert.That(ex.ParamName, Is.EqualTo("returnRequest"));
 		}
 
 		[Test]
@@ -76,7 +79,7 @@ namespace Beanstream.Tests
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new ArgumentNullException());
+							.Throws(new ArgumentNullException("paymentId"));
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
@@ -87,18 +90,19 @@ namespace Beanstream.Tests
 
 			// Act
 			var ex = (ArgumentNullException)Assert.Throws(typeof(ArgumentNullException),
-				() => beanstream.Payments.Void(null, 10));
+				() => beanstream.Payments.UnreferencedReturn(_returnRequest));
 
 			// Assert
-			Assert.That(ex.ParamName, Is.EqualTo("paymentId"));
+			Assert.That(ex.ParamName, Is.EqualTo(("paymentId")));
 		}
 
 		[Test]
 		public void ItShouldThrowForbiddenExceptionForInvalidCredentials()
 		{
 			// Arrange
+
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new ForbiddenException(HttpStatusCode.Forbidden, "", 1, 0));
+							.Throws(new ForbiddenException(HttpStatusCode.Forbidden, "", 1, 0));
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
@@ -109,7 +113,7 @@ namespace Beanstream.Tests
 
 			// Act
 			var ex = (ForbiddenException)Assert.Throws(typeof(ForbiddenException),
-				() => beanstream.Payments.Void(TrnId, 10));
+				() => beanstream.Payments.UnreferencedReturn(_returnRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.Forbidden));
@@ -131,7 +135,7 @@ namespace Beanstream.Tests
 
 			// Act
 			var ex = (UnauthorizedException)Assert.Throws(typeof(UnauthorizedException),
-				() => beanstream.Payments.Void(TrnId, 10));
+				() => beanstream.Payments.UnreferencedReturn(_returnRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.Unauthorized));
@@ -153,7 +157,7 @@ namespace Beanstream.Tests
 
 			// Act
 			var ex = (BusinessRuleException)Assert.Throws(typeof(BusinessRuleException),
-				() => beanstream.Payments.Void(TrnId, 10));
+				() => beanstream.Payments.UnreferencedReturn(_returnRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.PaymentRequired));
@@ -175,7 +179,7 @@ namespace Beanstream.Tests
 
 			// Act
 			var ex = (InvalidRequestException)Assert.Throws(typeof(InvalidRequestException),
-				() => beanstream.Payments.Void(TrnId, 10));
+				() => beanstream.Payments.UnreferencedReturn(_returnRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.PaymentRequired));
@@ -197,7 +201,7 @@ namespace Beanstream.Tests
 
 			// Act
 			var ex = (InternalServerException)Assert.Throws(typeof(InternalServerException),
-				() => beanstream.Payments.Void(TrnId, 10));
+				() => beanstream.Payments.UnreferencedReturn(_returnRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.InternalServerError));
@@ -208,7 +212,7 @@ namespace Beanstream.Tests
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new CommunicationException("API exception occured", null));
+							.Throws(new CommunicationException("API exception occured", null));
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
@@ -219,7 +223,7 @@ namespace Beanstream.Tests
 
 			// Act
 			var ex = (CommunicationException)Assert.Throws(typeof(CommunicationException),
-				() => beanstream.Payments.Void(TrnId, 10));
+				() => beanstream.Payments.UnreferencedReturn(_returnRequest));
 
 			// Assert
 			Assert.That(ex.Message, Is.EqualTo("API exception occured"));

@@ -21,15 +21,19 @@
 // THE SOFTWARE.
 //
 using System;
+using Newtonsoft.Json;
 
 namespace Beanstream.Requests
 {
 	public class CardPaymentRequest : PaymentRequest
 	{
 
-		public readonly string payment_method = PaymentMethod.card.ToString ();
-		public Card card { get; set; }
+		[JsonProperty(PropertyName = "card")]
+		public Card Card { get; set; }
 
+		public CardPaymentRequest() {
+			PaymentMethod = PaymentMethods.card.ToString ();
+		}
 	}
 }
 

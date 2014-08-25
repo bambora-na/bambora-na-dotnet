@@ -21,17 +21,26 @@
 // THE SOFTWARE.
 //
 using System;
+using Newtonsoft.Json;
 
 namespace Beanstream
 {
 	public class Token
 	{
-		public Boolean complete { get; set; }
-		public string name { get; set; }
-		public string code { get; set; }
+		[JsonProperty(PropertyName = "complete")]
+		public bool Complete { get; set; }
+
+		[JsonProperty(PropertyName = "name")]
+		public string  Name { get; set; }
+
+		[JsonProperty(PropertyName = "code")]
+		public string  Code { get; set; }
+
+		[JsonProperty(PropertyName = "function", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public string Function { get; set; }
 
 		public Token() {
-			complete = true;
+			Complete = true;
 		}
 	}
 }

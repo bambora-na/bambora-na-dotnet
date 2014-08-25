@@ -24,6 +24,9 @@ using System;
 
 namespace Beanstream
 {
+	/// <summary>
+	/// Responses from the various APIs
+	/// </summary>
 	public interface IResponse
 	{
 	}

@@ -22,16 +22,23 @@
 //
 using System;
 using Beanstream.Requests;
+using Newtonsoft.Json;
 
 namespace Beanstream
 {
 	public class ReturnRequest : IRequest
 	{
-		public string payment_id { get; set; }
-		public string merchant_id { get; set; }
-		public string order_number { get; set; }
-		public string amount { get; set; }
-		//public int adjId { get; set; }
+		[JsonProperty(PropertyName = "payment_id")]
+		public string PaymentId { get; set; }
+
+		[JsonProperty(PropertyName = "merchant_id")]
+		public string MerchantId { get; set; }
+
+		[JsonProperty(PropertyName = "order_number")]
+		public string OrderNumber { get; set; }
+
+		[JsonProperty(PropertyName = "amount")]
+		public Double Amount { get; set; }
 	}
 }
 

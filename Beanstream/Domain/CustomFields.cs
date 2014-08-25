@@ -21,24 +21,26 @@
 // THE SOFTWARE.
 //
 using System;
-
-/// <summary>
-/// Process Cash payments. This is a useful way to record a payment that
-/// you physically took.
-/// NOTE: You will need to have these payment options ACTIVATED by calling Beanstream 
-/// support at 1-888-472-0811
-/// </summary>
 using Newtonsoft.Json;
-
 
 namespace Beanstream
 {
-	public class CashPaymentRequest : PaymentRequest
+	public class CustomFields
 	{
+		[JsonProperty(PropertyName = "ref1")]
+		public string Ref1 { get; set; }
 
-		public CashPaymentRequest() {
-			PaymentMethod = PaymentMethods.cash.ToString ();
-		}
+		[JsonProperty(PropertyName = "ref2")]
+		public string Ref2 { get; set; }
+
+		[JsonProperty(PropertyName = "ref3")]
+		public string Ref3 { get; set; }
+
+		[JsonProperty(PropertyName = "ref4")]
+		public string Ref4 { get; set; }
+
+		[JsonProperty(PropertyName = "ref5")]
+		public string Ref5 { get; set; }
 	}
 }
 

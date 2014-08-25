@@ -27,7 +27,7 @@ namespace Beanstream
 	public class UnreferencedCardReturnRequest : ReturnRequest
 	{
 		public int adjId { get; set; }
-		public readonly string payment_method = PaymentMethod.card.ToString();
+		public readonly string payment_method = PaymentMethods.card.ToString();
 		public Card card { get; set; }
 	}
 }

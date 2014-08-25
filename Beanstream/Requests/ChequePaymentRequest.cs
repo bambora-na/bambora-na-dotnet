@@ -28,11 +28,17 @@ using System;
 /// NOTE: You will need to have these payment options ACTIVATED by calling Beanstream 
 /// support at 1-888-472-0811
 /// </summary>
+using Newtonsoft.Json;
+
+
 namespace Beanstream
 {
 	public class ChequePaymentRequest : PaymentRequest
 	{
-		public readonly string payment_method = PaymentMethod.cheque.ToString ();
+
+		public ChequePaymentRequest() {
+			PaymentMethod = PaymentMethods.cheque.ToString ();
+		}
 	}
 }
 

@@ -28,12 +28,19 @@ using Beanstream.Requests;
 /// The token is a unique one-time-use reference to the user's credit card information.
 /// 
 /// </summary>
+using Newtonsoft.Json;
+
+
 namespace Beanstream
 {
 	public class TokenPaymentRequest : PaymentRequest
 	{
-		public readonly string payment_method = PaymentMethod.token.ToString ();
-		public Token token { get; set; }
+		[JsonProperty(PropertyName = "token")]
+		public Token Token { get; set; }
+
+		public TokenPaymentRequest() {
+			PaymentMethod = PaymentMethods.token.ToString ();
+		}
 	}
 }
 

@@ -21,14 +21,20 @@
 // THE SOFTWARE.
 //
 using System;
+using Newtonsoft.Json;
 
 namespace Beanstream
 {
 	public class Link
 	{
-		public string rel { get; set; }
-		public string href { get; set; }
-		public string method { get; set; }
+		[JsonProperty(PropertyName = "rel")]
+		public string Rel { get; set; }
+
+		[JsonProperty(PropertyName = "href")]
+		public string Href { get; set; }
+
+		[JsonProperty(PropertyName = "method")]
+		public string Method { get; set; }
 	}
 }
 

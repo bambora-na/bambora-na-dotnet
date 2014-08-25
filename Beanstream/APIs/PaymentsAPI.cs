@@ -36,25 +36,25 @@ using Beanstream.Data;
 /// 
 /// Usage:
 /// 
-///  Beanstream beanstream = new Beanstream () {
-///		MerchantId = YOUR_MERCHANT_ID,
-///		ApiKey = "YOUR_API_KEY",
-///		ApiVersion = "1"
-///	 };
-///
-///PaymentResponse response = beanstream.Transaction.MakeCardPayment (
-///	new CardPaymentRequest {
-///		order_number = "ABC1234567890997",
-///		amount = "100.00",
-///		card = new Card {
-///			name = "John Doe",
-///			number = "5100000010001004",
-///			expiry_month = "12",
-///			expiry_year = "18",
-///			cvd = "123"
-///		}
-///	}
-///);
+///  Gateway beanstream = new Gateway () {
+/// 	MerchantId = 300200578,
+/// 	ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+/// 	ApiVersion = "1"
+///  };
+/// 
+///  PaymentResponse response = beanstream.Payments.MakePayment (
+/// 	new CardPaymentRequest {
+/// 		Amount = 100.00,
+/// 		OrderNumber = orderNum++.ToString(),
+/// 		Card = new Card {
+/// 			Name = "John Doe",
+/// 			Number = "5100000010001004",
+/// 			ExpiryMonth = "12",
+/// 			ExpiryYear = "18",
+/// 			Cvd = "123"
+/// 		}
+/// 	}
+///  );
 /// 
 /// </summary>
 
@@ -94,7 +94,7 @@ namespace Beanstream
 			};
 
 				
-			paymentRequest.merchant_id = _configuration.MerchantId.ToString();
+			paymentRequest.MerchantId = _configuration.MerchantId;
 
 			string response = req.ProcessTransaction (HttpMethod.Post, url, paymentRequest);
 			//Console.WriteLine ("\n\n"+response+"\n\n");
@@ -114,9 +114,6 @@ namespace Beanstream
 			Gateway.ThrowIfNullArgument (returnRequest, "returnRequest");
 			Gateway.ThrowIfNullArgument (paymentId, "paymentId");
 
-			if (returnRequest.amount == null)
-				throw new ArgumentNullException ("An amount is required in order to make a return.");
-
 			string url = BeanstreamUrls.ReturnsUrl
 				.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
 				.Replace("{p}", String.IsNullOrEmpty(_configuration.Platform) ? "www" : _configuration.Platform)
@@ -128,49 +125,39 @@ namespace Beanstream
 				Passcode = _configuration.ApiPasscode,
 				WebCommandExecutor = _webCommandExecuter
 			};
-			returnRequest.merchant_id = _configuration.MerchantId.ToString();
+			returnRequest.MerchantId = _configuration.MerchantId.ToString();
 
 			string response = req.ProcessTransaction (HttpMethod.Post, url, returnRequest);
 			return JsonConvert.DeserializeObject<PaymentResponse>(response);
 
 		}
 
-		public object CustomRequest(HttpMethod httpMethod, string url, object data) {
-			HttpsWebRequest req = new HttpsWebRequest () {
-				MerchantId = _configuration.MerchantId,
-				Passcode = _configuration.ApiPasscode,
-				WebCommandExecutor = _webCommandExecuter
-			};
-
-			string response = req.ProcessTransaction (HttpMethod.Post, url, data);
-			return response;
-		}
-
 		/// <summary>
 		/// Return a previous card payment that was not made through Beanstream. Use this if you would like to
 		/// return a payment but that payment was performed on another gateway.
+		/// 
+		/// You must have this capability enabled on your account by calling Beanstream support. It is dangerous to
+		/// have it enabled as the API will not check if you have a transaction ID.
 		/// </summary>
 		/// <returns>The return result</returns>
 		/// <param name="returnRequest">Return request.</param>
 		/// <param name="adjId">Reference the transaction identification number (trnId) from the original purchase</param>
-		public PaymentResponse UnreferencedReturn(int adjId, UnreferencedCardReturnRequest returnRequest) {
-
-			Gateway.ThrowIfNullArgument (adjId, "adjId");
+		public PaymentResponse UnreferencedReturn(UnreferencedCardReturnRequest returnRequest) {
+		
 			Gateway.ThrowIfNullArgument (returnRequest, "returnRequest");
 
 			string url = BeanstreamUrls.ReturnsUrl
 				.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
 				.Replace("{p}", String.IsNullOrEmpty(_configuration.Platform) ? "www" : _configuration.Platform)
 				.Replace("{id}", "0"); // uses ID 0 since there is no existing payment ID for this transaction
-
-			returnRequest.adjId = adjId;
+				
 
 			HttpsWebRequest req = new HttpsWebRequest () {
 				MerchantId = _configuration.MerchantId,
 				Passcode = _configuration.ApiPasscode,
 				WebCommandExecutor = _webCommandExecuter
 			};
-			returnRequest.merchant_id = _configuration.MerchantId.ToString();
+			returnRequest.MerchantId = _configuration.MerchantId.ToString();
 
 			string response = req.ProcessTransaction (HttpMethod.Post, url, returnRequest);
 			return JsonConvert.DeserializeObject<PaymentResponse>(response);
@@ -180,6 +167,9 @@ namespace Beanstream
 		/// <summary>
 		/// Return a previous swipe payment that was not made through Beanstream. Use this if you would like to
 		/// return a payment but that payment was performed on another payment service.
+		/// 
+		/// You must have this capability enabled on your account by calling Beanstream support. It is dangerous to
+		/// have it enabled as the API will not check if you have a transaction ID.
 		/// </summary>
 		/// <returns>The return result</returns>
 		/// <param name="returnRequest">Return request.</param>
@@ -198,7 +188,7 @@ namespace Beanstream
 				Passcode = _configuration.ApiPasscode,
 				WebCommandExecutor = _webCommandExecuter
 			};
-			returnRequest.merchant_id = _configuration.MerchantId.ToString();
+			returnRequest.MerchantId = _configuration.MerchantId.ToString();
 
 			string response = req.ProcessTransaction (HttpMethod.Post, url, returnRequest);
 			return JsonConvert.DeserializeObject<PaymentResponse>(response);
@@ -216,7 +206,7 @@ namespace Beanstream
 		/// </summary>
 		/// <returns>The return result</returns>
 		/// <param name="paymentId">Payment identifier from a previous transaction.</param>
-		public PaymentResponse Void(String paymentId, int amount) {
+		public PaymentResponse Void(string paymentId, double amount) {
 
 			Gateway.ThrowIfNullArgument (paymentId, "paymentId");
 
@@ -239,6 +229,7 @@ namespace Beanstream
 			};
 			
 			string response = req.ProcessTransaction (HttpMethod.Post, url, VoidPayment);
+			Console.WriteLine (response);
 			return JsonConvert.DeserializeObject<PaymentResponse>(response);
 		}
 
@@ -254,7 +245,7 @@ namespace Beanstream
 
 			Gateway.ThrowIfNullArgument (paymentRequest, "paymentRequest");
 
-			paymentRequest.card.complete = false; // false to make it a pre-auth
+			paymentRequest.Card.Complete = false; // false to make it a pre-auth
 
 			return PreAuthInternal (paymentRequest);
 		}
@@ -313,7 +304,7 @@ namespace Beanstream
 		/// <returns>Response to the payment</returns>
 		/// <param name="paymentId">Payment identifier obtained from the Pre-Auth request.</param>
 		/// <param name="amount">Amount to process</param>
-		public PaymentResponse PreAuthCompletion(String paymentId, string amount) {
+		public PaymentResponse PreAuthCompletion(string paymentId, double amount) {
 
 			return PreAuthCompletion (paymentId, amount, null);
 		}
@@ -331,10 +322,9 @@ namespace Beanstream
 		/// <param name="paymentId">Payment identifier obtained from the Pre-Auth request.</param>
 		/// <param name="amount">Amount to process</param>
 		/// <param name="orderNumber">Optional order number</param>
-		public PaymentResponse PreAuthCompletion(String paymentId, string amount, string orderNumber) {
+		public PaymentResponse PreAuthCompletion(string paymentId, double amount, string orderNumber) {
 
 			Gateway.ThrowIfNullArgument (paymentId, "paymentId");
-			Gateway.ThrowIfNullArgument (amount, "amount");
 
 			string url = BeanstreamUrls.PreAuthCompletionsUrl
 				.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
@@ -359,9 +349,10 @@ namespace Beanstream
 			return JsonConvert.DeserializeObject<PaymentResponse>(response);
 		}
 
-		public PaymentResponse InteracRedirect(String idebit_merchantdata, InteracRedirectRequest redirectRequest) {
+		//TODO being implemented
+		/*public PaymentResponse InteracRedirect(String idebit_merchantdata, InteracRedirectRequest redirectRequest) {
 			return null;
-		}
+		}*/
 
 	}
 }

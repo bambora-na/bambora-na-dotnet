@@ -26,7 +26,7 @@ namespace Beanstream
 {
 	public class UnreferencedSwipeReturnRequest : ReturnRequest
 	{
-		public readonly string payment_method = PaymentMethod.swipe.ToString();
+		public readonly string payment_method = PaymentMethods.swipe.ToString();
 		public bool complete { get; set; }
 		public string track2_data { get; set; }
 

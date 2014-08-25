@@ -59,7 +59,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Requests\IRequest.cs" />
-    <Compile Include="PaymentMethod.cs" />
     <Compile Include="Domain\Card.cs" />
     <Compile Include="Domain\BillingAddress.cs" />
     <Compile Include="Responses\IResponse.cs" />
@@ -70,14 +69,11 @@
     <Compile Include="Domain\Link.cs" />
     <Compile Include="Requests\ReturnRequest.cs" />
     <Compile Include="Domain\ShippingAddress.cs" />
-    <Compile Include="Domain\EmptyClass.cs" />
-    <Compile Include="Domain\Custom.cs" />
     <Compile Include="Requests\PaymentRequest.cs" />
     <Compile Include="Requests\UnreferencedCardReturnRequest.cs" />
     <Compile Include="Requests\UnreferencedSwipeReturnRequest.cs" />
     <Compile Include="Data\IWebCommandSpec.cs" />
     <Compile Include="Data\IWebCommandExecuter.cs" />
-    <Compile Include="APIs\Payments.cs" />
     <Compile Include="APIs\PaymentsAPI.cs" />
     <Compile Include="Requests\HttpsWebRequest.cs" />
     <Compile Include="APIs\ProfilesAPI.cs" />
@@ -87,10 +83,13 @@
     <Compile Include="Responses\InteracPurchaseResponse.cs" />
     <Compile Include="Responses\LegatoTokenResponse.cs" />
     <Compile Include="Requests\InteracRedirectRequest.cs" />
-    <Compile Include="Requests\InteracRedirectResponse.cs" />
     <Compile Include="Requests\CashPaymentRequest.cs" />
     <Compile Include="Requests\ChequePaymentRequest.cs" />
     <Compile Include="Gateway.cs" />
+    <Compile Include="Domain\Address.cs" />
+    <Compile Include="PaymentMethods.cs" />
+    <Compile Include="Domain\CustomFields.cs" />
+    <Compile Include="Responses\InteracRedirectResponse.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

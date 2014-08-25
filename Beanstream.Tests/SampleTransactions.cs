@@ -38,7 +38,7 @@ namespace Beanstream.Tests
 	public class SampleTransactions
 	{
 
-		private static int orderNum = 172; // used so we can have unique order #'s for each transaction
+		private static int orderNum = 190; // used so we can have unique order #'s for each transaction
 
 
 
@@ -47,14 +47,13 @@ namespace Beanstream.Tests
 			Console.WriteLine ("BEGIN running sample transactions");
 
 			// Payments API
-			SampleTransactions.ProcessPayment ();
-			SampleTransactions.ProcessReturns ();
-			SampleTransactions.ProcessPreauthorization ();
+			//SampleTransactions.ProcessPayment ();
+			//SampleTransactions.ProcessReturns ();
+			//SampleTransactions.ProcessPreauthorization ();
 			SampleTransactions.ProcessVoids ();
-			SampleTransactions.ProcessTokenPayment ();
+			//SampleTransactions.ProcessTokenPayment ();
+			//SampleTransactions.ProcessPhysicalPayments (); // you need these options (cash and cheque) enabled on your merchant account first
 			//SampleTransactions.ProcessInterac ();
-			//SampleTransactions.CustomRequest ();
-			SampleTransactions.ProcessPhysicalPayments (); // you need these options (cash and cheque) enabled on your merchant account first
 
 			Console.WriteLine ("final order number: " + orderNum); // used so we can have unique order #'s for each transaction
 			Console.WriteLine ("FINISHED running sample transactions");
@@ -76,18 +75,18 @@ namespace Beanstream.Tests
 
 			PaymentResponse response = beanstream.Payments.MakePayment (
 				new CardPaymentRequest {
-					amount = "100.00",
-					order_number = orderNum.ToString(),
-					card = new Card {
-						name = "John Doe",
-						number = "5100000010001004",
-						expiry_month = "12",
-						expiry_year = "18",
-						cvd = "123"
+					Amount = 100.00,
+					OrderNumber = orderNum++.ToString(),
+					Card = new Card {
+						Name = "John Doe",
+						Number = "5100000010001004",
+						ExpiryMonth = "12",
+						ExpiryYear = "18",
+						Cvd = "123"
 					}
 				}
 			);
-			Console.WriteLine ("Payment id: " + response.id + ", " + response.message+"\n");
+			Console.WriteLine ("Payment id: " + response.TransactionId + ", " + response.Message+"\n");
 
 		}
 
@@ -105,30 +104,30 @@ namespace Beanstream.Tests
 			// we make a payment first so we can return it
 			PaymentResponse response = beanstream.Payments.MakePayment (
 				new CardPaymentRequest {
-					amount = "40.00",
-					order_number = orderNum++.ToString(),
-					card = new Card {
-						name = "John Doe",
-						number = "5100000010001004",
-						expiry_month = "12",
-						expiry_year = "18",
-						cvd = "123"
+					Amount = 40.00,
+					OrderNumber = orderNum++.ToString(),
+					Card = new Card {
+						Name = "John Doe",
+						Number = "5100000010001004",
+						ExpiryMonth = "12",
+						ExpiryYear = "18",
+						Cvd = "123"
 					}
 				}
 			);
-			Console.WriteLine ("Return Payment id: " + response.id);
+			Console.WriteLine ("Return Payment id: " + response.TransactionId);
 
 
 			// return the purchase
 			response = beanstream.Payments.Return (
-				response.id,
+				response.TransactionId,
 				new ReturnRequest {
-					amount = "40.00",
-					order_number = orderNum.ToString()
+					Amount = 40.00,
+					OrderNumber = orderNum.ToString()
 				}
 			);
 
-			Console.WriteLine ("Return result: " + response.id + ", " + response.message+"\n" );
+			Console.WriteLine ("Return result: " + response.TransactionId + ", " + response.Message+"\n" );
 		}
 
 
@@ -144,14 +143,14 @@ namespace Beanstream.Tests
 			};
 
 			CardPaymentRequest paymentRequest = new CardPaymentRequest {
-				amount = "100.00",
-				order_number = orderNum++.ToString (),
-				card = new Card {
-					name = "John Doe",
-					number = "5100000010001004",
-					expiry_month = "12",
-					expiry_year = "18",
-					cvd = "123"
+				Amount = 100.00,
+				OrderNumber = orderNum++.ToString(),
+				Card = new Card {
+					Name = "John Doe",
+					Number = "5100000010001004",
+					ExpiryMonth = "12",
+					ExpiryYear = "18",
+					Cvd = "123"
 				}
 			};
 
@@ -168,13 +167,13 @@ namespace Beanstream.Tests
 			// 3.b. De-select Restrict Internet Transaction Processing Types: allows you to process all types of transactions including returns, voids and pre-auth completions
 
 
-			Console.WriteLine ("Pre-auth Payment id: " + response.id + ", " + response.message);
+			Console.WriteLine ("Pre-auth Payment id: " + response.TransactionId + ", " + response.Message);
 
 
 			// complete the pre-auth and get the money from the customer
-			response = beanstream.Payments.PreAuthCompletion ( response.id, "60.00" );
+			response = beanstream.Payments.PreAuthCompletion ( response.TransactionId, 60.00 );
 
-			Console.WriteLine ("Pre-auth result: " + response.id + ", " + response.message+"\n" );
+			Console.WriteLine ("Pre-auth result: " + response.TransactionId + ", " + response.Message+"\n" );
 		}
 
 
@@ -192,27 +191,27 @@ namespace Beanstream.Tests
 			// we make a payment first so we can void it
 			PaymentResponse response = beanstream.Payments.MakePayment (
 				new CardPaymentRequest {
-					amount = "30.00",
-					order_number = orderNum++.ToString(),
-					card = new Card {
-						name = "John Doe",
-						number = "5100000010001004",
-						expiry_month = "12",
-						expiry_year = "18",
-						cvd = "123"
+					Amount = 30.00,
+					OrderNumber = orderNum++.ToString(),
+					Card = new Card {
+						Name = "John Doe",
+						Number = "5100000010001004",
+						ExpiryMonth = "12",
+						ExpiryYear = "18",
+						Cvd = "123"
 					}
 				}
 			);
-			Console.WriteLine ("Void Payment id: " + response.id);
+			Console.WriteLine ("Void Payment id: " + response.TransactionId);
 
 
 			// void the purchase
-			response = beanstream.Payments.Void (response.id, 30); // void the $30 amount
+			response = beanstream.Payments.Void (response.TransactionId, 30); // void the $30 amount
 
-			Console.WriteLine ("Void result: " + response.id + ", " + response.message+"\n");
+			Console.WriteLine ("Void result: " + response.TransactionId + ", " + response.Message+"\n");
 		}
 
-
+		//TODO this is being implemented
 		/*static void ProcessInterac() {
 
 			Console.WriteLine ("Processing Interac Payment... ");
@@ -262,7 +261,7 @@ namespace Beanstream.Tests
 			var result = executer.ExecuteCommand (command);
 
 			LegatoTokenResponse token = JsonConvert.DeserializeObject<LegatoTokenResponse>(result.Response);
-			Console.WriteLine ("legato token: " + token.token);
+			Console.WriteLine ("legato token: " + token.Token);
 
 			// Now that we have a token that represents our credit card info, we can process
 			// the payment with that token
@@ -276,56 +275,16 @@ namespace Beanstream.Tests
 			PaymentResponse paymentResponse = beanstream.Payments.MakePayment (
 				new TokenPaymentRequest () 
 				{
-					amount = "30",
-					order_number = orderNum++.ToString(),
-					token = new Token {
-						code = token.token,
-						name = "John Doe"
+					Amount = 30,
+					OrderNumber = orderNum++.ToString(),
+					Token = new Token {
+						Code = token.Token,
+						Name = "John Doe"
 					}
 				}
 			);
 
-			Console.WriteLine ("Token payment result: " + paymentResponse.id + ", " + paymentResponse.message+"\n");
-		}
-
-		static void CustomRequest() {
-
-			Console.WriteLine ("Processing Custom Payment... ");
-
-			Gateway beanstream = new Gateway () {
-				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ApiVersion = "1"
-			};
-
-			string url = "https://{p}.beanstream.com/api/{v}/payments"
-				.Replace("{v}", String.IsNullOrEmpty(beanstream.Configuration.Version) ? "v1" : "v"+beanstream.Configuration.Version)
-				.Replace("{p}", String.IsNullOrEmpty(beanstream.Configuration.Platform) ? "www" : beanstream.Configuration.Platform);
-
-
-			var payment = new
-			{
-				order_number = "ABC1234567890",
-				amount = 100.00,
-				payment_method = "interac", 
-				billing = new 
-				{
-					name = "John Doe",
-					address_line1 = "2659 Douglas Street",
-					address_line2 = "302",
-					city = "Victoria",
-					province = "BC",
-					country = "CA",
-					postal_code = "V8T4M3",
-					phone_number = "2501231234",
-					email_address = "johndoe@beanstream.com"
-				},
-				comments= "create a payment"
-			};
-
-
-			object result = beanstream.Payments.CustomRequest (HttpMethod.Post, url, payment);
-			Console.WriteLine ("Result: "+result);
+			Console.WriteLine ("Token payment result: " + paymentResponse.TransactionId + ", " + paymentResponse.Message+"\n");
 		}
 
 
@@ -350,27 +309,28 @@ namespace Beanstream.Tests
 			// process cash payment
 			PaymentResponse response = beanstream.Payments.MakePayment (
 				new CashPaymentRequest () {
-					amount = "50.00",
-					order_number = orderNum++.ToString()
+					Amount = 50.00,
+					OrderNumber = orderNum++.ToString()
 				}
 			);
-			Console.WriteLine ("Cash Payment id: " + response.id + ", " + response.message+"\n");
+			Console.WriteLine ("Cash Payment id: " + response.TransactionId + ", " + response.Message+"\n");
 
 
 			Console.WriteLine ("Processing Cheque Payment... ");
 			// process cheque payment
 			response = beanstream.Payments.MakePayment (
 				new ChequePaymentRequest () {
-					amount = "30.00",
-					order_number = orderNum++.ToString()
+					Amount = 30.00,
+					OrderNumber = orderNum++.ToString()
 				}
 			);
-			Console.WriteLine ("Cheque Payment id: " + response.id + ", " + response.message+"\n");
+			Console.WriteLine ("Cheque Payment id: " + response.TransactionId + ", " + response.Message+"\n");
 
 		}
 
 
-		/*static string TokenizedProfileCreate() 
+		//TODO this will be completed with the rest of the PaymentProfiles integration
+		/*static string ProfileCreate() 
 		{
 			Console.WriteLine ("Creating a Tokenized Profile...");
 			var profile = new 
@@ -410,7 +370,7 @@ namespace Beanstream.Tests
 			return customerCode;
 		}
 
-		static void TokenizedProfilePayment(string customerCode) 
+		static void ProfilePayment(string customerCode) 
 		{
 			Console.WriteLine ("Creating a payment through a Tokenized Profile...");
 			var payment = new
@@ -434,7 +394,7 @@ namespace Beanstream.Tests
 			Console.WriteLine ("Tokenized profile payment result: " + result);
 		}
 
-		static void TokenizedProfileAddCard(string customerCode) 
+		static void ProfileAddCard(string customerCode) 
 		{
 			Console.WriteLine ("Adding a card to a Tokenized Profile...");
 			var request = new

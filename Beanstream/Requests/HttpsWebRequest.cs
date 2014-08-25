@@ -108,13 +108,11 @@ namespace Beanstream.Repositories
 			var code = -1;
 			var category = -1;
 			if (data != null) {
-				try {
-					JToken json = JObject.Parse(data);
+				JToken json = JObject.Parse(data);
+				if ( json != null && json.SelectToken("code") != null )
 					code = Convert.ToInt32( json.SelectToken("code") );
+				if ( json != null && json.SelectToken("category") != null )
 					category = Convert.ToInt32( json.SelectToken("category") );
-				} catch (Exception ex) {
-					// ignore, we don't need the error codes and some issues do not return proper data that we can parse
-				}
 			}
 
 			switch (statusCode)

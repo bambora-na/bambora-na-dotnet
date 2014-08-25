@@ -21,16 +21,38 @@
 // THE SOFTWARE.
 //
 using System;
+using Newtonsoft.Json;
 
 namespace Beanstream
 {
-	public class Custom
+	public abstract class Address
 	{
-		public string ref1 { get; set; }
-		public string ref2 { get; set; }
-		public string ref3 { get; set; }
-		public string ref4 { get; set; }
-		public string ref5 { get; set; }
+		[JsonProperty(PropertyName = "name")]
+		public string Name { get; set; }
+
+		[JsonProperty(PropertyName = "address_line1")]
+		public string AddressLine1 { get; set; }
+
+		[JsonProperty(PropertyName = "address_line2")]
+		public string AddressLine2 { get; set; }
+
+		[JsonProperty(PropertyName = "city")]
+		public string City { get; set; }
+
+		[JsonProperty(PropertyName = "province")]
+		public string Province { get; set; }
+
+		[JsonProperty(PropertyName = "country")]
+		public string Country { get; set; }
+
+		[JsonProperty(PropertyName = "postal_code")]
+		public string PostalCode { get; set; }
+
+		[JsonProperty(PropertyName = "phone_number")]
+		public string PhoneNumber { get; set; }
+
+		[JsonProperty(PropertyName = "email_address")]
+		public string EmailAddress { get; set; }
 	}
 }
 

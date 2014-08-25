@@ -21,20 +21,42 @@
 // THE SOFTWARE.
 //
 using System;
+using Newtonsoft.Json;
 
 namespace Beanstream
 {
 	public class Card
 	{
-		public string name { get; set; }
-		public string number { get; set; }
-		public string expiry_month { get; set; }
-		public string expiry_year { get; set; }
-		public string cvd { get; set; }
-		public Boolean complete { get; set; } // false for pre-authorizations
+		[JsonProperty(PropertyName = "complete", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public bool? Complete { get; set; }
+
+		[JsonProperty(PropertyName = "card_id", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public string CardId { get; set; }
+
+		[JsonProperty(PropertyName = "function", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public string Function { get; set; }
+
+		[JsonProperty(PropertyName = "name", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public string Name { get; set; }
+
+		[JsonProperty(PropertyName = "number", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public string Number { get; set; }
+
+		[JsonProperty(PropertyName = "expiry_month", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public string ExpiryMonth { get; set; }
+
+		[JsonProperty(PropertyName = "expiry_year", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public string ExpiryYear { get; set; }
+
+		[JsonProperty(PropertyName = "cvd", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public string Cvd { get; set; }
+
+		[JsonProperty(PropertyName = "card_type")]
+		public string CardType { get; set; }
+
 
 		public Card () {
-			complete = true;
+			Complete = true;
 		}
 	}
 }

@@ -43,8 +43,8 @@ namespace Beanstream.Tests
 		public void Setup()
 		{
 			_returnRequest = new ReturnRequest () {
-				amount = "100",
-				order_number = "Test1234"
+				Amount = 100,
+				OrderNumber = "Test1234"
 			};
 
 			_executer = new Mock<IWebCommandExecuter>();
@@ -68,9 +68,8 @@ namespace Beanstream.Tests
 			// Act
 			dynamic result = beanstream.Payments.Return(TrnId,_returnRequest);
 
-
 			// Assert
-			Assert.AreEqual(result.id, "10000000");
+			Assert.AreEqual(result.TransactionId, "10000000");
 		}
 
 		[Test]
@@ -91,7 +90,7 @@ namespace Beanstream.Tests
 				() =>beanstream.Payments.Return(TrnId,_returnRequest));
 
 			// Assert
-			Assert.That(ex.ParamName, Is.EqualTo("return"));
+			Assert.That(ex.ParamName, Is.EqualTo("returnRequest"));
 		}
 
 		[Test]
@@ -140,7 +139,7 @@ namespace Beanstream.Tests
 		}
 
 		[Test]
-		public void ItShouldThrowUnothorizedExceptionForInvalidPermissions()
+		public void ItShouldThrowUnauthorizedExceptionForInvalidPermissions()
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))

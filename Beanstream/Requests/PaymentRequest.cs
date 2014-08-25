@@ -22,21 +22,44 @@
 //
 using System;
 using Beanstream.Requests;
+using Newtonsoft.Json;
 
 namespace Beanstream
 {
 	public abstract class PaymentRequest : IRequest
 	{
-		public string merchant_id { get; set; }
-		public string order_number { get; set; }
-		public string amount { get; set; }
-		public string language { get; set; }
-		public string customer_ip { get; set; }
-		public string term_url { get; set; }
-		public string comments { get; set; }
-		public BillingAddress billing { get; set; }
-		public ShippingAddress shipping { get; set; }
-		public Custom custom { get; set; }
+		[JsonProperty(PropertyName = "payment_method")]
+		public string PaymentMethod { get; set; }
+
+		[JsonProperty(PropertyName = "merchant_id")]
+		public int MerchantId { get; set; }
+
+		[JsonProperty(PropertyName = "order_number")]
+		public string OrderNumber { get; set; }
+
+		[JsonProperty(PropertyName = "amount")]
+		public Double Amount { get; set; }
+
+		[JsonProperty(PropertyName = "language")]
+		public string Language { get; set; }
+
+		[JsonProperty(PropertyName = "term_url")]
+		public string TerminalUrl { get; set; }
+
+		[JsonProperty(PropertyName = "customer_ip")]
+		public string CustomerIp { get; set; }
+
+		[JsonProperty(PropertyName = "comments")]
+		public string Comments { get; set; }
+
+		[JsonProperty(PropertyName = "billing")]
+		public Address Billing { get; set; }
+
+		[JsonProperty(PropertyName = "shipping")]
+		public Address Shipping { get; set; }
+
+		[JsonProperty(PropertyName = "custom")]
+		public CustomFields CustomFields { get; set; }
 	}
 }
 

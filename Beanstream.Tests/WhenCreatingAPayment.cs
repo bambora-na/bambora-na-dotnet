@@ -58,14 +58,14 @@ namespace Beanstream.Tests
 		public void Setup()
 		{
 			_cardPaymentRequest = new CardPaymentRequest {
-				order_number = "ABC1234567890997",
-				amount = "100.00",
-				card = new Card {
-					name = "John Doe",
-					number = "5100000010001004",
-					expiry_month = "12",
-					expiry_year = "18",
-					cvd = "123"
+				Amount = 40.00,
+				OrderNumber = "asdfghjkl00001",
+				Card = new Card {
+					Name = "John Doe",
+					Number = "5100000010001004",
+					ExpiryMonth = "12",
+					ExpiryYear = "18",
+					Cvd = "123"
 				}
 			};
 
@@ -93,7 +93,7 @@ namespace Beanstream.Tests
 
 
 			// Assert
-			Assert.AreEqual(response.id, "10000000");
+			Assert.AreEqual(response.TransactionId, "10000000");
 		}
 
 		[Test]
@@ -116,7 +116,7 @@ namespace Beanstream.Tests
 				() => beanstream.Payments.MakePayment(null));
 
 			// Assert
-			Assert.That(ex.ParamName, Is.EqualTo("MakeCardPayment"));
+			Assert.That(ex.ParamName, Is.EqualTo("paymentRequest"));
 		}
 
 		[Test]
@@ -143,7 +143,7 @@ namespace Beanstream.Tests
 		}
 
 		[Test]
-		public void ItShouldThrowUnothorizedExceptionForInvalidPermissions()
+		public void ItShouldThrowUnauthorizedExceptionForInvalidPermissions()
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))

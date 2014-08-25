@@ -21,16 +21,34 @@
 // THE SOFTWARE.
 //
 using System;
+using Newtonsoft.Json;
 
 namespace Beanstream
 {
+	/// <summary>
+	/// The result of storing a card on a payment profile.
+	/// </summary>
 	public class CardResponse
 	{
-		public string card_type { get; set; }
-		public int last_four { get; set; }
-		public Boolean cvd_match { get; set; }
-		public Boolean address_match { get; set; }
-		public Boolean postal_result { get; set; }
+
+		[JsonProperty(PropertyName = "last_four", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public string LastFour { get; set; }
+
+		[JsonProperty(PropertyName = "cvd_match", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public int? CvdMatch { get; set; }
+
+		[JsonProperty(PropertyName = "address_match", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public int? AddressMatch { get; set; }
+
+		[JsonProperty(PropertyName = "postal_result", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public int? PostalMatch { get; set; }
+
+		[JsonProperty(PropertyName = "avs_result", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public string AvsResult { get; set; }
+
+		[JsonProperty(PropertyName = "cvd_result", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public string CvdResult { get; set; }
+
 	}
 }
 

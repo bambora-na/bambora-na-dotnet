@@ -62,8 +62,10 @@ namespace Beanstream
 				Formatting.Indented,
 				new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore } // ignore null values
 			);
-			Console.WriteLine ("URL: "+Url);
-			Console.WriteLine ("Request Data:\n"+data);
+
+			// useful to examine output
+			//Console.WriteLine ("URL: "+Url);
+			//Console.WriteLine ("Request Data:\n"+data);
 
 			using (var writer = new StreamWriter(request.GetRequestStream()))
 			{

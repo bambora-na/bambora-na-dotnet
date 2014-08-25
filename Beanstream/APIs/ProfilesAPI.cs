@@ -26,7 +26,7 @@ using Beanstream.Repositories;
 using Beanstream.Data;
 
 /// <summary>
-/// DEPRECATED
+/// This API is in progress and will be going through a major refactor
 /// </summary>
 namespace Beanstream
 {

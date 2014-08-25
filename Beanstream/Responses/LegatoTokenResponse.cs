@@ -25,14 +25,24 @@ using System;
 /// <summary>
 /// A token for a legato tokenization request. Each token is single-use.
 /// </summary>
+using Newtonsoft.Json;
+
+
 namespace Beanstream
 {
 	public class LegatoTokenResponse
 	{
-		public string token { get; set; }
-		public string code { get; set; }
-		public string version { get; set; }
-		public string message { get; set; }
+		[JsonProperty(PropertyName = "token")]
+		public string Token { get; set; }
+
+		[JsonProperty(PropertyName = "code")]
+		public string Code { get; set; }
+
+		[JsonProperty(PropertyName = "version")]
+		public string Version { get; set; }
+
+		[JsonProperty(PropertyName = "message")]
+		public string Message { get; set; }
 	}
 }
 

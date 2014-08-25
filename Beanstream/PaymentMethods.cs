@@ -22,23 +22,17 @@
 //
 using System;
 
-/// <summary>
-/// Process Cash payments. This is a useful way to record a payment that
-/// you physically took.
-/// NOTE: You will need to have these payment options ACTIVATED by calling Beanstream 
-/// support at 1-888-472-0811
-/// </summary>
-using Newtonsoft.Json;
-
-
 namespace Beanstream
 {
-	public class CashPaymentRequest : PaymentRequest
+	public enum PaymentMethods
 	{
-
-		public CashPaymentRequest() {
-			PaymentMethod = PaymentMethods.cash.ToString ();
-		}
+		card,
+		token,
+		swipe,
+		interac,
+		cash,
+		cheque,
+		payment_profile
 	}
 }
 

@@ -21,32 +21,62 @@
 // THE SOFTWARE.
 //
 using System;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Beanstream
 {
+	/// <summary>
+	/// Response information when a payment is processed.
+	/// </summary>
 	public class PaymentResponse : IResponse
 	{
-		public string id { get; set; }
+		[JsonProperty(PropertyName = "id")]
+		public string TransactionId { get; set; }
 
-		public string approved { get; set; }
+		
+		[JsonProperty(PropertyName = "approved")]
+		public string Approved { get; set; }
 
-		public string message_id { get; set; }
+		
+		[JsonProperty(PropertyName = "message_id")]
+		public string MessageId { get; set; }
 
-		public string message { get; set; }
+		
+		[JsonProperty(PropertyName = "message")]
+		public string Message { get; set; }
 
-		public string auth_code { get; set; }
+		
+		[JsonProperty(PropertyName = "auth_code")]
+		public string AuthCode { get; set; }
 
-		public string created { get; set; }
+		
+		[JsonProperty(PropertyName = "created")]
+		public DateTime Created { get; set; }
 
-		public string order_number { get; set; }
+		
+		[JsonProperty(PropertyName = "order_number")]
+		public string OrderNumber { get; set; }
 
-		public string type { get; set; }
+		
+		[JsonProperty(PropertyName = "type")]
+		public string TransType { get; set; }
 
-		public string payment_method { get; set; }
+		
+		[JsonProperty(PropertyName = "payment_method")]
+		public string PaymentMethod { get; set; }
 
-		public CardResponse card { get; set; }
+		
+		[JsonProperty(PropertyName = "card", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public Card Card { get; set; }
 
-		public Link[] links;
+		//TODO being implemented
+		//[JsonProperty(PropertyName = "swipe", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		//public Swipe Swipe { get; set; }
+
+		
+		[JsonProperty(PropertyName = "links", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public IList<Link> Links { get; set; }
 
 	}
 }

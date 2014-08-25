@@ -29,50 +29,61 @@ using Beanstream.Repositories;
 using Moq;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using Beanstream.Requests;
 
 namespace Beanstream.Tests
 {
 	[TestFixture]
-	public class WhenVoidingAPayment
+	public class WhenPreAuthACardPayment
 	{
-		private const string TrnId = "10000001";
-		private object _payment;
+		private CardPaymentRequest _cardPaymentRequest;
 		private Mock<IWebCommandExecuter> _executer;
+
 
 		[SetUp]
 		public void Setup()
 		{
-			_payment = new
-			{
-				order_number = "Test1234"
+			_cardPaymentRequest = new CardPaymentRequest {
+				Amount = 40.00,
+				OrderNumber = "asdfghjkl00001",
+				Card = new Card {
+					Name = "John Doe",
+					Number = "5100000010001004",
+					ExpiryMonth = "12",
+					ExpiryYear = "18",
+					Cvd = "123"
+				}
 			};
 
 			_executer = new Mock<IWebCommandExecuter>();
 		}
 
 		[Test]
-		public void ItShouldHaveATransactionIdForASuccessfulVoid()
+		public void ItShouldHaveATransactionIdForASuccessfulPreAuth()
 		{
 			// Arrange
-			var webresult = new WebCommandResult<string> { Response = @"{""id"":""10000000""}" };
+			var webresult = new WebCommandResult<string>{Response = @"{""id"":""10000000""}"};
 
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>())).Returns(webresult);
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
 				ApiVersion = "1"
 			};
 			beanstream.WebCommandExecuter = _executer.Object;
 
 			// Act
-			dynamic result = beanstream.Payments.Void("10000000", 10);
+			PaymentResponse response = beanstream.Payments.PreAuth (_cardPaymentRequest);
+
+
 			// Assert
-			Assert.AreEqual(result.TransactionId, "10000000");
+			Assert.AreEqual(response.TransactionId, "10000000");
 		}
 
 		[Test]
-		public void ItShouldThrowArgumentExceptionForInvalidTransactionId()
+		public void ItShouldThrowArgumentExceptionForInvalidPreAuth()
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
@@ -81,16 +92,17 @@ namespace Beanstream.Tests
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
 				ApiVersion = "1"
 			};
 			beanstream.WebCommandExecuter = _executer.Object;
 
 			// Act
 			var ex = (ArgumentNullException)Assert.Throws(typeof(ArgumentNullException),
-				() => beanstream.Payments.Void(null, 10));
+				() => beanstream.Payments.PreAuth( (CardPaymentRequest)null));
 
 			// Assert
-			Assert.That(ex.ParamName, Is.EqualTo("paymentId"));
+			Assert.That(ex.ParamName, Is.EqualTo("paymentRequest"));
 		}
 
 		[Test]
@@ -103,13 +115,14 @@ namespace Beanstream.Tests
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
 				ApiVersion = "1"
 			};
 			beanstream.WebCommandExecuter = _executer.Object;
 
 			// Act
 			var ex = (ForbiddenException)Assert.Throws(typeof(ForbiddenException),
-				() => beanstream.Payments.Void(TrnId, 10));
+				() => beanstream.Payments.PreAuth(_cardPaymentRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.Forbidden));
@@ -125,13 +138,14 @@ namespace Beanstream.Tests
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
 				ApiVersion = "1"
 			};
 			beanstream.WebCommandExecuter = _executer.Object;
 
 			// Act
 			var ex = (UnauthorizedException)Assert.Throws(typeof(UnauthorizedException),
-				() => beanstream.Payments.Void(TrnId, 10));
+				() => beanstream.Payments.PreAuth(_cardPaymentRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.Unauthorized));
@@ -147,13 +161,14 @@ namespace Beanstream.Tests
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
 				ApiVersion = "1"
 			};
 			beanstream.WebCommandExecuter = _executer.Object;
 
 			// Act
 			var ex = (BusinessRuleException)Assert.Throws(typeof(BusinessRuleException),
-				() => beanstream.Payments.Void(TrnId, 10));
+				() => beanstream.Payments.PreAuth(_cardPaymentRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.PaymentRequired));
@@ -169,16 +184,41 @@ namespace Beanstream.Tests
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
 				ApiVersion = "1"
 			};
 			beanstream.WebCommandExecuter = _executer.Object;
 
 			// Act
 			var ex = (InvalidRequestException)Assert.Throws(typeof(InvalidRequestException),
-				() => beanstream.Payments.Void(TrnId, 10));
+				() => beanstream.Payments.PreAuth(_cardPaymentRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.PaymentRequired));
+		}
+
+		[Test]
+		public void ItShouldThrowRedirectExceptionFor3DsecureOrIOnline()
+		{
+			// Arrange
+			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
+				.Throws(new RedirectionException(HttpStatusCode.Redirect, "", 1, 0));
+
+			Gateway beanstream = new Gateway () {
+				MerchantId = 300200578,
+				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+			};
+			beanstream.WebCommandExecuter = _executer.Object;
+
+
+			// Act
+			var ex = (RedirectionException)Assert.Throws(typeof(RedirectionException),
+				() => beanstream.Payments.PreAuth(_cardPaymentRequest));
+
+			// Assert
+			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.Redirect));
 		}
 
 		[Test]
@@ -191,13 +231,15 @@ namespace Beanstream.Tests
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
 				ApiVersion = "1"
 			};
 			beanstream.WebCommandExecuter = _executer.Object;
 
+
 			// Act
 			var ex = (InternalServerException)Assert.Throws(typeof(InternalServerException),
-				() => beanstream.Payments.Void(TrnId, 10));
+				() => beanstream.Payments.PreAuth(_cardPaymentRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.InternalServerError));
@@ -209,17 +251,17 @@ namespace Beanstream.Tests
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new CommunicationException("API exception occured", null));
-
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
 				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
 				ApiVersion = "1"
 			};
 			beanstream.WebCommandExecuter = _executer.Object;
 
 			// Act
 			var ex = (CommunicationException)Assert.Throws(typeof(CommunicationException),
-				() => beanstream.Payments.Void(TrnId, 10));
+				() => beanstream.Payments.PreAuth(_cardPaymentRequest));
 
 			// Assert
 			Assert.That(ex.Message, Is.EqualTo("API exception occured"));
