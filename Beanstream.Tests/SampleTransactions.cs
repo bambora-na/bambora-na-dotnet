@@ -38,7 +38,7 @@ namespace Beanstream.Tests
 	public class SampleTransactions
 	{
 
-		private static int orderNum = 190; // used so we can have unique order #'s for each transaction
+		private static int orderNum = 192; // used so we can have unique order #'s for each transaction
 
 
 
@@ -47,12 +47,12 @@ namespace Beanstream.Tests
 			Console.WriteLine ("BEGIN running sample transactions");
 
 			// Payments API
-			//SampleTransactions.ProcessPayment ();
-			//SampleTransactions.ProcessReturns ();
-			//SampleTransactions.ProcessPreauthorization ();
+			SampleTransactions.ProcessPayment ();
+			SampleTransactions.ProcessReturns ();
+			SampleTransactions.ProcessPreauthorization ();
 			SampleTransactions.ProcessVoids ();
-			//SampleTransactions.ProcessTokenPayment ();
-			//SampleTransactions.ProcessPhysicalPayments (); // you need these options (cash and cheque) enabled on your merchant account first
+			SampleTransactions.ProcessTokenPayment ();
+			SampleTransactions.ProcessPhysicalPayments (); // you need these options (cash and cheque) enabled on your merchant account first
 			//SampleTransactions.ProcessInterac ();
 
 			Console.WriteLine ("final order number: " + orderNum); // used so we can have unique order #'s for each transaction
