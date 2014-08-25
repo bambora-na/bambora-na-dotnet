@@ -22,6 +22,12 @@
 //
 using System;
 
+/// <summary>
+/// Holds the account configuration for the merchant.
+/// 
+/// At the minimum to use the Payments API you need to supply a MerchantID and
+/// an ApiPasscode.
+/// </summary>
 namespace Beanstream
 {
 	public class Configuration
@@ -35,6 +41,7 @@ namespace Beanstream
 		public Configuration ()
 		{
 			this.Platform = "www";
+			this.Version = "1";
 		}
 	}
 }

@@ -26,7 +26,7 @@ using Newtonsoft.Json;
 
 namespace Beanstream
 {
-	public class ReturnRequest : IRequest
+	public class ReturnRequest
 	{
 		[JsonProperty(PropertyName = "payment_id")]
 		public string PaymentId { get; set; }

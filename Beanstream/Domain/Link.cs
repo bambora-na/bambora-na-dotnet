@@ -23,6 +23,12 @@
 using System;
 using Newtonsoft.Json;
 
+/// <summary>
+/// Part of a response from a payment request. It displays other operations
+/// that can be performed with the resulting payment ID (or Transaction ID).
+/// Operations such as: return and void.
+/// These links aren't needed when using the SDK but are displayed none the less.
+/// </summary>
 namespace Beanstream
 {
 	public class Link

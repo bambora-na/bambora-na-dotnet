@@ -28,6 +28,7 @@ namespace Beanstream.Web
 {
 	/// <summary>
 	/// Represents a web command, i.e. An HTTP web request and its response.
+	/// This lives so we can create mock objects for unit testing.
 	/// </summary>
 	/// <typeparam name="T">The type representing the response from the request.</typeparam>
 	public interface IWebCommandSpec<out T>

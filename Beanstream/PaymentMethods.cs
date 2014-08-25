@@ -22,6 +22,9 @@
 //
 using System;
 
+/// <summary>
+/// The types of payments you can make
+/// </summary>
 namespace Beanstream
 {
 	public enum PaymentMethods

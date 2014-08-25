@@ -23,6 +23,9 @@
 using System;
 using Newtonsoft.Json;
 
+/// <summary>
+/// A billing address that can be used for credit card lookup.
+/// </summary>
 namespace Beanstream
 {
 	public class BillingAddress: Address

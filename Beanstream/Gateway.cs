@@ -25,6 +25,22 @@ using Beanstream.Data;
 using Beanstream.Repositories;
 using Beanstream.Requests;
 
+/// <summary>
+/// The entry-point into making payments and handling payment profiles.
+/// 
+/// This gives you access to the PaymentsAPI, ProfilesAPI, and the ReportingAPI.
+/// 
+/// Each API requires its own API key that you can obtain in the member area of your 
+/// Beanstream account https://www.beanstream.com/admin/sDefault.asp
+/// 
+/// You must set the MerchantID and one of the API keys before you use this class.
+/// Exceptions will the thrown otherwise.
+/// 
+/// The login credentials are stored in a Configuration object.
+/// 
+/// This class is not threadsafe but designed to have its own instance per thread. If you 
+/// are making payments through multiple threads you want to create one Gateway object per thread.
+/// </summary>
 namespace Beanstream
 {
 	public class Gateway

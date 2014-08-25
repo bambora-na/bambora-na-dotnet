@@ -23,6 +23,9 @@
 using System;
 using Newtonsoft.Json;
 
+/// <summary>
+/// Extra result data from a payment request.
+/// </summary>
 namespace Beanstream
 {
 	public class CustomFields

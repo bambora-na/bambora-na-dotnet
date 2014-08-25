@@ -27,6 +27,11 @@ using Beanstream.Web;
 
 namespace Beanstream.Data
 {
+	/// <summary>
+	/// Executes web requests. This piece of code is pulled out from HttpWebRequest
+	/// (which does the heavy lifting of the actual request) so that we can plug in
+	/// mock responses for unit testing.
+	/// </summary>
 	public class WebCommandExecuter : IWebCommandExecuter
 	{
 		public WebCommandResult<T> ExecuteCommand<T>(IWebCommandSpec<T> spec)

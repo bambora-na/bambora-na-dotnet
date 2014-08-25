@@ -23,6 +23,9 @@
 using System;
 using Newtonsoft.Json;
 
+/// <summary>
+/// A Credit Card.
+/// </summary>
 namespace Beanstream
 {
 	public class Card
@@ -30,6 +33,7 @@ namespace Beanstream
 		[JsonProperty(PropertyName = "complete", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
 		public bool? Complete { get; set; }
 
+		// card ID is used for storing cards on a payment profile
 		[JsonProperty(PropertyName = "card_id", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
 		public string CardId { get; set; }
 

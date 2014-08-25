@@ -23,6 +23,12 @@
 
 namespace Beanstream.Entities
 {
+	/// <summary>
+	/// Credentials for authentication. You do not want to create this object yourself
+	/// when using the API however it is available to use if you want to make a custom 
+	/// request, such as leveraging the connection classes here to talk to the
+	/// Legato service.
+	/// </summary>
 	public class Credentials
 	{
 		private readonly string _username;

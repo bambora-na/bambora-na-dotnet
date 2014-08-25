@@ -22,6 +22,9 @@
 //
 using System;
 
+/// <summary>
+/// A Shipping Address that can be used for you to know where to ship a product to.
+/// </summary>
 namespace Beanstream
 {
 	public class ShippingAddress : Address

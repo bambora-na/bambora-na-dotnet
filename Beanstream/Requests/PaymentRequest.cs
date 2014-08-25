@@ -26,7 +26,7 @@ using Newtonsoft.Json;
 
 namespace Beanstream
 {
-	public abstract class PaymentRequest : IRequest
+	public abstract class PaymentRequest
 	{
 		[JsonProperty(PropertyName = "payment_method")]
 		public string PaymentMethod { get; set; }

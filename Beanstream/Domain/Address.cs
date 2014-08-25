@@ -23,6 +23,9 @@
 using System;
 using Newtonsoft.Json;
 
+/// <summary>
+/// An address, used for Billing or Shipping which are the non-abstract implementations.
+/// </summary>
 namespace Beanstream
 {
 	public abstract class Address
