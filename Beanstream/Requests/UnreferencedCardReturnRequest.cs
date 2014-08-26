@@ -21,8 +21,9 @@
 // THE SOFTWARE.
 //
 using System;
+using Beanstream.Api.SDK.Domain;
 
-namespace Beanstream
+namespace Beanstream.Api.SDK.Requests
 {
 	public class UnreferencedCardReturnRequest : ReturnRequest
 	{

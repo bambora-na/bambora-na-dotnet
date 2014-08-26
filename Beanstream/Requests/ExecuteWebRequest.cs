@@ -26,10 +26,10 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json;
-using Beanstream.Web;
-using Beanstream.Entities;
+using Beanstream.Api.SDK.Data;
+using Beanstream.Api.SDK.Domain;
 
-namespace Beanstream
+namespace Beanstream.Api.SDK.Requests
 {
 	public class ExecuteWebRequest : IWebCommandSpec<string>
 	{

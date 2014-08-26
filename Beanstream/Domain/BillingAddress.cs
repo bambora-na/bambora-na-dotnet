@@ -26,7 +26,7 @@ using Newtonsoft.Json;
 /// <summary>
 /// A billing address that can be used for credit card lookup.
 /// </summary>
-namespace Beanstream
+namespace Beanstream.Api.SDK.Domain
 {
 	public class BillingAddress: Address
 	{

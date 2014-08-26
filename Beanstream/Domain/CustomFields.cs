@@ -26,7 +26,7 @@ using Newtonsoft.Json;
 /// <summary>
 /// Extra result data from a payment request.
 /// </summary>
-namespace Beanstream
+namespace Beanstream.Api.SDK.Domain
 {
 	public class CustomFields
 	{

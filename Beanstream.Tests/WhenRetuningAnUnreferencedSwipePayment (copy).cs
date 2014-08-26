@@ -23,14 +23,15 @@
 
 using System;
 using System.Net;
-using Beanstream.Data;
-using Beanstream.Exceptions;
-using Beanstream.Repositories;
+using Beanstream.Api.SDK.Data;
+using Beanstream.Api.SDK.Exceptions;
+using Beanstream.Api.SDK;
 using Moq;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using Beanstream.Api.SDK.Requests;
 
-namespace Beanstream.Tests
+namespace Beanstream.Api.SDK.Tests
 {
 	[TestFixture]
 	public class WhenRetuningAnUnreferencedSwipePayment

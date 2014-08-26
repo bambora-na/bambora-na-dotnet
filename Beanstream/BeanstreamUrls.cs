@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 //
 
-namespace Beanstream
+namespace Beanstream.Api.SDK
 {
 	internal class BeanstreamUrls
 	{

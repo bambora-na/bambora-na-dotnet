@@ -28,7 +28,7 @@ using System;
 using Newtonsoft.Json;
 
 
-namespace Beanstream
+namespace Beanstream.Api.SDK
 {
 	public class LegatoTokenResponse
 	{

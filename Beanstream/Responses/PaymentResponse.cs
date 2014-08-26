@@ -23,8 +23,9 @@
 using System;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using Beanstream.Api.SDK.Domain;
 
-namespace Beanstream
+namespace Beanstream.Api.SDK
 {
 	/// <summary>
 	/// Response information when a payment is processed.

@@ -22,7 +22,7 @@
 //
 using System;
 
-namespace Beanstream.Entities
+namespace Beanstream.Api.SDK.Requests
 {
 	public class RequestObject
 	{

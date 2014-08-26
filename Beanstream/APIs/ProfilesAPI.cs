@@ -22,13 +22,13 @@
 //
 
 using System;
-using Beanstream.Repositories;
-using Beanstream.Data;
+using Beanstream.Api.SDK;
+using Beanstream.Api.SDK.Data;
 
 /// <summary>
 /// This API is in progress and will be going through a major refactor
 /// </summary>
-namespace Beanstream
+namespace Beanstream.Api.SDK
 {
 	public class ProfilesAPI
 	{

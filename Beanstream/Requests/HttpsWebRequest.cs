@@ -25,9 +25,8 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Net;
-using Beanstream.Data;
-using Beanstream.Exceptions;
-using Beanstream.Web;
+using Beanstream.Api.SDK.Data;
+using Beanstream.Api.SDK.Exceptions;
 
 /// <summary>
 /// Creates the actual web request and returns the response object.
@@ -35,10 +34,10 @@ using Beanstream.Web;
 /// </summary>
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Beanstream.Entities;
+using Beanstream.Api.SDK.Domain;
 
 
-namespace Beanstream.Repositories
+namespace Beanstream.Api.SDK.Requests
 {
 	public class HttpsWebRequest
 	{

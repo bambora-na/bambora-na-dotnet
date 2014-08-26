@@ -23,7 +23,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace Beanstream
+namespace Beanstream.Api.SDK.Domain
 {
 	public class Token
 	{

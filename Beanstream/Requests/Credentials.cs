@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 //
 
-namespace Beanstream.Entities
+namespace Beanstream.Api.SDK.Requests
 {
 	/// <summary>
 	/// Credentials for authentication. You do not want to create this object yourself

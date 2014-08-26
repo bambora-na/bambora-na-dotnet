@@ -12,7 +12,7 @@
     <AssemblyName>Beanstream.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <StartupObject>Beanstream.Tests.SampleTransactions</StartupObject>
+    <StartupObject>Beanstream.Api.SDK.Tests.SampleTransactions</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

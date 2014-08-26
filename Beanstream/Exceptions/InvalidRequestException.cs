@@ -34,7 +34,7 @@ using System.Net;
 /// has done something wrong and the cardholder or merchant getting this message should contact the developer
 /// of the software.
 /// </summary>
-namespace Beanstream.Exceptions
+namespace Beanstream.Api.SDK.Exceptions
 {
 	public class InvalidRequestException : BaseApiException
 	{

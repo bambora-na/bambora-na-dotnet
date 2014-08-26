@@ -29,7 +29,7 @@ using Newtonsoft.Json;
 /// Operations such as: return and void.
 /// These links aren't needed when using the SDK but are displayed none the less.
 /// </summary>
-namespace Beanstream
+namespace Beanstream.Api.SDK.Domain
 {
 	public class Link
 	{

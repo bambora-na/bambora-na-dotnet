@@ -26,7 +26,7 @@ using Newtonsoft.Json;
 /// <summary>
 /// A Credit Card.
 /// </summary>
-namespace Beanstream
+namespace Beanstream.Api.SDK.Domain
 {
 	public class Card
 	{

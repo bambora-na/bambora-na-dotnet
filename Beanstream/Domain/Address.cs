@@ -26,7 +26,7 @@ using Newtonsoft.Json;
 /// <summary>
 /// An address, used for Billing or Shipping which are the non-abstract implementations.
 /// </summary>
-namespace Beanstream
+namespace Beanstream.Api.SDK.Domain
 {
 	public abstract class Address
 	{

@@ -28,7 +28,7 @@ using System;
 /// At the minimum to use the Payments API you need to supply a MerchantID and
 /// an ApiPasscode.
 /// </summary>
-namespace Beanstream
+namespace Beanstream.Api.SDK
 {
 	public class Configuration
 	{

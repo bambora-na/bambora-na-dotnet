@@ -21,9 +21,9 @@
 // THE SOFTWARE.
 //
 
-using Beanstream.Data;
-using Beanstream.Repositories;
-using Beanstream.Requests;
+using Beanstream.Api.SDK.Data;
+using Beanstream.Api.SDK;
+using Beanstream.Api.SDK.Requests;
 
 /// <summary>
 /// The entry-point into making payments and handling payment profiles.
@@ -41,7 +41,7 @@ using Beanstream.Requests;
 /// This class is not threadsafe but designed to have its own instance per thread. If you 
 /// are making payments through multiple threads you want to create one Gateway object per thread.
 /// </summary>
-namespace Beanstream
+namespace Beanstream.Api.SDK
 {
 	public class Gateway
 	{

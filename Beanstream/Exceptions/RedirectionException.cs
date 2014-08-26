@@ -28,7 +28,7 @@ using System.Net;
 ///  302 - Found - Used for redirection response in 3DS, Masterpass and Interac Online requests
 /// 
 /// </summary>
-namespace Beanstream.Exceptions
+namespace Beanstream.Api.SDK.Exceptions
 {
 	public class RedirectionException : BaseApiException
 	{

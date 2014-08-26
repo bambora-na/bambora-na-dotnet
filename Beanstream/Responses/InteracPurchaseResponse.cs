@@ -22,7 +22,7 @@
 //
 using System;
 
-namespace Beanstream
+namespace Beanstream.Api.SDK
 {
 	/// <summary>
 	/// Step 2 in the Interac purchase process.

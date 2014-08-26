@@ -31,7 +31,7 @@ using System;
 using Newtonsoft.Json;
 
 
-namespace Beanstream
+namespace Beanstream.Api.SDK.Requests
 {
 	public class CashPaymentRequest : PaymentRequest
 	{

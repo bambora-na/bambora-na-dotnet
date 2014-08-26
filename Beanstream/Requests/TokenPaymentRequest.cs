@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 //
 using System;
-using Beanstream.Requests;
+using Beanstream.Api.SDK.Requests;
 
 /// <summary>
 /// Token payments use a token generated from Beanstream's Legato Javascript utility.
@@ -29,9 +29,10 @@ using Beanstream.Requests;
 /// 
 /// </summary>
 using Newtonsoft.Json;
+using Beanstream.Api.SDK.Domain;
 
 
-namespace Beanstream
+namespace Beanstream.Api.SDK.Requests
 {
 	public class TokenPaymentRequest : PaymentRequest
 	{

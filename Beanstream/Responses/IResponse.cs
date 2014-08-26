@@ -22,7 +22,7 @@
 //
 using System;
 
-namespace Beanstream
+namespace Beanstream.Api.SDK
 {
 	/// <summary>
 	/// Responses from the various APIs

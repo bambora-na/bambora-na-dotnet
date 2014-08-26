@@ -21,10 +21,9 @@
 // THE SOFTWARE.
 //
 using System;
-using Beanstream.Requests;
-using Beanstream.Repositories;
+using Beanstream.Api.SDK.Requests;
 using Newtonsoft.Json;
-using Beanstream.Data;
+using Beanstream.Api.SDK.Data;
 
 /// <summary>
 /// Transaction repository is used to process payments and returns.
@@ -58,7 +57,7 @@ using Beanstream.Data;
 /// 
 /// </summary>
 
-namespace Beanstream
+namespace Beanstream.Api.SDK
 {
 	public class PaymentsAPI
 	{

@@ -23,7 +23,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace Beanstream
+namespace Beanstream.Api.SDK
 {
 	/// <summary>
 	/// The result of storing a card on a payment profile.

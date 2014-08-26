@@ -21,9 +21,9 @@
 // THE SOFTWARE.
 //
 
-using Beanstream.Web;
+using Beanstream.Api.SDK.Data;
 
-namespace Beanstream.Data
+namespace Beanstream.Api.SDK.Data
 {
 	public interface IWebCommandExecuter
 	{

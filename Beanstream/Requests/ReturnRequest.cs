@@ -21,10 +21,10 @@
 // THE SOFTWARE.
 //
 using System;
-using Beanstream.Requests;
+using Beanstream.Api.SDK.Requests;
 using Newtonsoft.Json;
 
-namespace Beanstream
+namespace Beanstream.Api.SDK.Requests
 {
 	public class ReturnRequest
 	{

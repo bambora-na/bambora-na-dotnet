@@ -29,7 +29,7 @@ using System.Net;
 /// 
 /// 
 /// </summary>
-namespace Beanstream.Exceptions
+namespace Beanstream.Api.SDK.Exceptions
 {
 	public class BusinessRuleException : BaseApiException
 	{

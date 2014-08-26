@@ -25,7 +25,7 @@ using System;
 /// <summary>
 /// The types of payments you can make
 /// </summary>
-namespace Beanstream
+namespace Beanstream.Api.SDK
 {
 	public enum PaymentMethods
 	{

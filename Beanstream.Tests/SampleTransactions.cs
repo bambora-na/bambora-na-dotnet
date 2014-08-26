@@ -22,23 +22,23 @@
 //
 
 using System;
-using Beanstream.Data;
-using Beanstream.Repositories;
+using Beanstream.Api.SDK.Data;
+using Beanstream.Api.SDK;
 using Newtonsoft.Json.Linq;
-using Beanstream.Requests;
-using Beanstream.Exceptions;
+using Beanstream.Api.SDK.Requests;
+using Beanstream.Api.SDK.Exceptions;
 using System.Net;
 using Newtonsoft.Json;
 using System.IO;
-using Beanstream.Entities;
+using Beanstream.Api.SDK.Domain;
 
-namespace Beanstream.Tests
+namespace Beanstream.Api.SDK.Tests
 {
 
 	public class SampleTransactions
 	{
 
-		private static int orderNum = 192; // used so we can have unique order #'s for each transaction
+		private static int orderNum = 220; // used so we can have unique order #'s for each transaction
 
 
 

@@ -37,7 +37,7 @@ using System.Net;
 /// has its own IP address that you will need to obtain by calling Beanstream's technical support. You will 
 /// also have to make sure your firewall will allow a connection out to these new IP addresses.
 /// </summary>
-namespace Beanstream.Exceptions
+namespace Beanstream.Api.SDK.Exceptions
 {
 	public class InternalServerException : BaseApiException
 	{

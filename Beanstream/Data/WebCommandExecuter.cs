@@ -23,9 +23,9 @@
 
 using System;
 using System.Net;
-using Beanstream.Web;
 
-namespace Beanstream.Data
+
+namespace Beanstream.Api.SDK.Data
 {
 	/// <summary>
 	/// Executes web requests. This piece of code is pulled out from HttpWebRequest

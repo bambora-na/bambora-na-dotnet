@@ -22,8 +22,9 @@
 //
 using System;
 using Newtonsoft.Json;
+using Beanstream.Api.SDK.Domain;
 
-namespace Beanstream.Requests
+namespace Beanstream.Api.SDK.Requests
 {
 	public class CardPaymentRequest : PaymentRequest
 	{

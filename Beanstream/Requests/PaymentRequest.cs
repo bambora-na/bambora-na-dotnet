@@ -21,10 +21,11 @@
 // THE SOFTWARE.
 //
 using System;
-using Beanstream.Requests;
+using Beanstream.Api.SDK.Requests;
 using Newtonsoft.Json;
+using Beanstream.Api.SDK.Domain;
 
-namespace Beanstream
+namespace Beanstream.Api.SDK.Requests
 {
 	public abstract class PaymentRequest
 	{

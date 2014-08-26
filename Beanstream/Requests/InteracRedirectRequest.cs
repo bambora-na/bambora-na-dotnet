@@ -22,7 +22,7 @@
 //
 using System;
 
-namespace Beanstream
+namespace Beanstream.Api.SDK.Requests
 {
 	public class InteracRedirectRequest
 	{
