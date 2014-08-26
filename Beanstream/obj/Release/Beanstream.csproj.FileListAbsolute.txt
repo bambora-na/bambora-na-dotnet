@@ -1,3 +1,0 @@
-C:\Workspace\DotNet\Beanstream.Api.Sdk\dist-compiled\Beanstream.dll
-C:\Workspace\DotNet\Beanstream.Api.Sdk\Beanstream\obj\Release\ResolveAssemblyReference.cache
-C:\Workspace\DotNet\Beanstream.Api.Sdk\Beanstream\obj\Release\Beanstream.dll
