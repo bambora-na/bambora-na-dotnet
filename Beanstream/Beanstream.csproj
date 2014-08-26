@@ -74,7 +74,6 @@
     <Compile Include="Data\IWebCommandExecuter.cs" />
     <Compile Include="APIs\PaymentsAPI.cs" />
     <Compile Include="Requests\HttpsWebRequest.cs" />
-    <Compile Include="APIs\ProfilesAPI.cs" />
     <Compile Include="Requests\Credentials.cs" />
     <Compile Include="Requests\RequestObject.cs" />
     <Compile Include="Responses\CardResponse.cs" />
