@@ -88,6 +88,8 @@
     <Compile Include="Domain\CustomFields.cs" />
     <Compile Include="Responses\InteracRedirectResponse.cs" />
     <Compile Include="Requests\ExecuteWebRequest.cs" />
+    <Compile Include="APIs\ReportingAPI.cs" />
+    <Compile Include="Domain\Transaction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
