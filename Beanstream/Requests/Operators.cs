@@ -20,20 +20,32 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
+using System;
 
-namespace Beanstream.Api.SDK
+/// <summary>
+/// Operators used for querying transations using the Reporting API.
+/// </summary>
+using System.ComponentModel;
+
+
+namespace Beanstream
 {
-	internal class BeanstreamUrls
+	public enum Operators
 	{
-		public static string BaseUrl = "https://{p}.beanstream.com/api";
-		public static string BasePaymentsUrl = BaseUrl + "/{v}/payments";
-		public static string BaseProfilesUrl = BaseUrl + "/{v}/profiles";
-		public static string PreAuthCompletionsUrl = BasePaymentsUrl + "/{id}/completions";
-		public static string ReturnsUrl = BasePaymentsUrl + "/{id}/returns";
-		public static string VoidsUrl =  BasePaymentsUrl + "/{id}/void";
-		public static string GetPaymentUrl =  BasePaymentsUrl + "/{id}";
-		public static string ContinuationsUrl = BasePaymentsUrl + "/{md}/continue";
-		public static string ProfileUri = "/{id}";
-		public static string CardsUri = ProfileUri+"/cards";
+		[Description("%3D")]
+		Equals, 
+
+		[Description("%3C")]
+		LessThan, 
+
+		[Description("%3E")]
+		GreaterThan,
+
+		[Description("%3C%3D")]
+		LessThanEquals, 
+
+		[Description("%3e%3D")]
+		GreaterThanEqual
 	}
 }
+

@@ -20,20 +20,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
+using System;
+using Newtonsoft.Json;
 
-namespace Beanstream.Api.SDK
+namespace Beanstream
 {
-	internal class BeanstreamUrls
+	public class MyStringEnumConverter : Newtonsoft.Json.Converters.StringEnumConverter
 	{
-		public static string BaseUrl = "https://{p}.beanstream.com/api";
-		public static string BasePaymentsUrl = BaseUrl + "/{v}/payments";
-		public static string BaseProfilesUrl = BaseUrl + "/{v}/profiles";
-		public static string PreAuthCompletionsUrl = BasePaymentsUrl + "/{id}/completions";
-		public static string ReturnsUrl = BasePaymentsUrl + "/{id}/returns";
-		public static string VoidsUrl =  BasePaymentsUrl + "/{id}/void";
-		public static string GetPaymentUrl =  BasePaymentsUrl + "/{id}";
-		public static string ContinuationsUrl = BasePaymentsUrl + "/{md}/continue";
-		public static string ProfileUri = "/{id}";
-		public static string CardsUri = ProfileUri+"/cards";
+		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+		{
+			if (value is Action)
+			{
+				//writer.WriteValue();// or something else
+				return;
+			}
+
+			base.WriteJson(writer, value, serializer);
+		}
 	}
 }
+

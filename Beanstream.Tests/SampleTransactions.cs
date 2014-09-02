@@ -38,7 +38,7 @@ namespace Beanstream.Api.SDK.Tests
 	public class SampleTransactions
 	{
 
-		private static int orderNum = 220; // used so we can have unique order #'s for each transaction
+		private static int orderNum = 237; // used so we can have unique order #'s for each transaction
 
 
 
@@ -47,13 +47,14 @@ namespace Beanstream.Api.SDK.Tests
 			Console.WriteLine ("BEGIN running sample transactions");
 
 			// Payments API
-			SampleTransactions.ProcessPayment ();
+			/*SampleTransactions.ProcessPayment ();
 			SampleTransactions.ProcessReturns ();
 			SampleTransactions.ProcessPreauthorization ();
 			SampleTransactions.ProcessVoids ();
 			SampleTransactions.ProcessTokenPayment ();
 			SampleTransactions.ProcessPhysicalPayments (); // you need these options (cash and cheque) enabled on your merchant account first
-			//SampleTransactions.ProcessInterac ();
+			//SampleTransactions.ProcessInterac ();*/
+			SampleTransactions.GetTransaction ();
 
 			Console.WriteLine ("final order number: " + orderNum); // used so we can have unique order #'s for each transaction
 			Console.WriteLine ("FINISHED running sample transactions");
@@ -326,6 +327,36 @@ namespace Beanstream.Api.SDK.Tests
 			);
 			Console.WriteLine ("Cheque Payment id: " + response.TransactionId + ", " + response.Message+"\n");
 
+		}
+
+
+		public static void GetTransaction() {
+			Console.WriteLine ("Getting Transaction... ");
+
+			Gateway beanstream = new Gateway () {
+				MerchantId = 300200578,
+				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ApiVersion = "1"
+			};
+
+			/*PaymentResponse response = beanstream.Payments.MakePayment (
+				new CardPaymentRequest {
+					Amount = 100.00,
+					OrderNumber = orderNum++.ToString(),
+					Card = new Card {
+						Name = "John Doe",
+						Number = "5100000010001004",
+						ExpiryMonth = "12",
+						ExpiryYear = "18",
+						Cvd = "123"
+					}
+				}
+			);
+			Console.WriteLine ("Payment id: " + response.TransactionId + ", " + response.Message+"\n");
+			*/
+			//beanstream.Payments.Void ("10000326", 100);
+			//beanstream.Reporting.GetTransaction ("10000326");
+			Console.WriteLine (Operators.Equals+", "+Operators.GreaterThan+", "+Operators.LessThan+", "+Operators.GreaterThanEqual+", "+Operators.LessThanEquals);
 		}
 
 	}

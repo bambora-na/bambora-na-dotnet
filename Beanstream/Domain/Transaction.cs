@@ -22,113 +22,72 @@
 //
 using System;
 using Newtonsoft.Json;
+using Beanstream.Api.SDK.Domain;
+using System.Collections.Generic;
 
-/// <summary>
-/// A query result representing a single transaction.
-/// </summary>
 namespace Beanstream
 {
 	public class Transaction
 	{
-		[JsonProperty(PropertyName = "row_id")]
-		public int RowId {get; set;}
+		[JsonProperty(PropertyName = "id")]
+		public string Id { get; set; }
 
-		[JsonProperty(PropertyName = "trn_id")]
-		public int TransactionId {get; set;}
-
-		[JsonProperty(PropertyName = "trn_date_time")]
-		public String DateTime {get; set;}
-
-		[JsonProperty(PropertyName = "trn_type")]
-		public String Type {get; set;}
-
-		[JsonProperty(PropertyName = "trn_order_number")]
-		public String OrderNumber {get; set;}
-
-		[JsonProperty(PropertyName = "trn_masked_card")]
-		public int MaskedMard {get; set;}
-
-		[JsonProperty(PropertyName = "trn_amount")]
-		public double Amount {get; set;}
-
-		[JsonProperty(PropertyName = "trn_returns")]
-		public double Returns {get; set;}
-
-		[JsonProperty(PropertyName = "trn_completions")]
-		public double Completions {get; set;}
-
-		[JsonProperty(PropertyName = "trn_voided")]
-		public String Voided {get; set;}
-
-		[JsonProperty(PropertyName = "trn_response")]
-		public int Response{get; set;}
-
-		[JsonProperty(PropertyName = "trn_card_type")]
-		public String CardType {get; set;}
+		[JsonProperty(PropertyName = "approved")]
+		public string Approved { get; set; }
 
 		[JsonProperty(PropertyName = "message_id")]
-		public String MessageId {get; set;}
+		public string MessageId { get; set; }
 
-		[JsonProperty(PropertyName = "message_text")]
-		public String MessageText {get; set;}
+		[JsonProperty(PropertyName = "message")]
+		public string Message { get; set; }
 
-		[JsonProperty(PropertyName = "trn_card_owner")]
-		public String CardOwner {get; set;}
+		[JsonProperty(PropertyName = "auth_code")]
+		public string AuthCode { get; set; }
 
-		[JsonProperty(PropertyName = "b_name")]
-		public String BillingName {get; set;}
+		[JsonProperty(PropertyName = "created")]
+		public DateTime Created { get; set; }
 
-		[JsonProperty(PropertyName = "b_email")]
-		public String BillingEmail {get; set;}
+		[JsonProperty(PropertyName = "amount")]
+		public string Amount { get; set; }
 
-		[JsonProperty(PropertyName = "b_phone")]
-		public String BillingPhone {get; set;}
+		[JsonProperty(PropertyName = "order_number")]
+		public string OrderNumber { get; set; }
 
-		[JsonProperty(PropertyName = "b_address1")]
-		public String BillingAddress1  {get; set;}
+		[JsonProperty(PropertyName = "type")]
+		public string Type { get; set; }
 
-		[JsonProperty(PropertyName = "b_address2")]
-		public String b_address2 {get; set;}
+		[JsonProperty(PropertyName = "comments")]
+		public string Comments { get; set; }
 
-		[JsonProperty(PropertyName = "b_city")]
-		public String BillingCity {get; set;}
+		[JsonProperty(PropertyName = "batch_number")]
+		public string BatchNumber { get; set; }
 
-		[JsonProperty(PropertyName = "b_province")]
-		public String BillingProvince {get; set;}
+		[JsonProperty(PropertyName = "total_refunds")]
+		public string TotalRefunds { get; set; }
 
-		[JsonProperty(PropertyName = "b_postal")]
-		public String BillingPostal {get; set;}
+		[JsonProperty(PropertyName = "total_completions")]
+		public string TotalCompletions { get; set; }
 
-		[JsonProperty(PropertyName = "b_country")]
-		public String BillingCountry {get; set;}
+		[JsonProperty(PropertyName = "payment_method")]
+		public string PaymentMethod { get; set; }
 
-		[JsonProperty(PropertyName = "s_name")]
-		public String ShippingName {get; set;}
+		[JsonProperty(PropertyName = "card")]
+		public Card Card { get; set; }
 
-		[JsonProperty(PropertyName = "s_email")]
-		public String ShippingEmail {get; set;}
+		[JsonProperty(PropertyName = "billing")]
+		public BillingAddress Billing { get; set; }
 
-		[JsonProperty(PropertyName = "s_phone")]
-		public String ShippingPhone {get; set;}
+		[JsonProperty(PropertyName = "shipping")]
+		public ShippingAddress Shipping { get; set; }
 
-		[JsonProperty(PropertyName = "s_address1")]
-		public String ShippingAddress1 {get; set;}
+		[JsonProperty(PropertyName = "custom")]
+		public CustomFields CustomFields { get; set; }
 
-		[JsonProperty(PropertyName = "s_address2")]
-		public String ShippingAddress2 {get; set;}
+		[JsonProperty(PropertyName = "adjusted_by")]
+		public IList<Adjustment> Adjustments { get; set; }
 
-		[JsonProperty(PropertyName = "s_city")]
-		public String ShippingCity {get; set;}
-
-		[JsonProperty(PropertyName = "s_province")]
-		public String ShippingProvince {get; set;}
-
-		[JsonProperty(PropertyName = "s_postal")]
-		public String ShippingPostal {get; set;}
-
-		[JsonProperty(PropertyName = "s_postal")]
-		public String ShippingCountry {get; set;}
-
+		[JsonProperty(PropertyName = "links", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public IList<Link> Links { get; set; }
 	}
 }
 

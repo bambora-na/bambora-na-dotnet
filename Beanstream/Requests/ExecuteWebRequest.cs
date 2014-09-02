@@ -57,19 +57,20 @@ namespace Beanstream.Api.SDK.Requests
 				httpRequest.Headers.Add("Authorization", GetAuthorizationHeaderString(_requestObject.Credentials));
 			httpRequest.ContentType = "application/json";
 
-			var data = JsonConvert.SerializeObject(
-				_requestObject.Data,
-				Formatting.Indented,
-				new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore } // ignore null values
-			);
+			Console.WriteLine ("URL: "+Url);
 
-			// useful to examine output
-			//Console.WriteLine ("URL: "+Url);
-			//Console.WriteLine ("Request Data:\n"+data);
+			if (_requestObject.Data != null) {
+				var data = JsonConvert.SerializeObject (
+			           _requestObject.Data,
+			           Formatting.Indented,
+			           new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore } // ignore null values
+		         );
+					
+				//Console.WriteLine ("Request Data:\n"+data); // useful to examine output
 
-			using (var writer = new StreamWriter(request.GetRequestStream()))
-			{
-				writer.Write(data);
+				using (var writer = new StreamWriter (request.GetRequestStream ())) {
+					writer.Write (data);
+				}
 			}
 		}
 

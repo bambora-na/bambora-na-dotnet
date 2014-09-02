@@ -107,11 +107,14 @@ namespace Beanstream.Api.SDK.Requests
 			var code = -1;
 			var category = -1;
 			if (data != null) {
-				JToken json = JObject.Parse(data);
-				if ( json != null && json.SelectToken("code") != null )
-					code = Convert.ToInt32( json.SelectToken("code") );
-				if ( json != null && json.SelectToken("category") != null )
-					category = Convert.ToInt32( json.SelectToken("category") );
+				try {
+					JToken json = JObject.Parse(data);
+					if ( json != null && json.SelectToken("code") != null )
+						code = Convert.ToInt32( json.SelectToken("code") );
+					if ( json != null && json.SelectToken("category") != null )
+						category = Convert.ToInt32( json.SelectToken("category") );
+				} catch (Exception e) {
+				}
 			}
 
 			switch (statusCode)

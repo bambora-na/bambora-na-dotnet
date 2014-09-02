@@ -95,6 +95,20 @@ namespace Beanstream.Api.SDK
 		}
 
 
+		private ReportingAPI _reporting;
+
+		public ReportingAPI Reporting 
+		{ 
+			get { 
+				if (_reporting == null)
+					_reporting = new ReportingAPI ();
+				_reporting.Configuration = Configuration;
+				if (WebCommandExecuter != null)
+					_payments.WebCommandExecuter = WebCommandExecuter;
+				return _reporting;
+			} 
+		}
+
 		public static void ThrowIfNullArgument(object value, string name)
 		{
 			if (value == null)

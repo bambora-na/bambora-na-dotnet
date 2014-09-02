@@ -22,6 +22,10 @@
 //
 using System;
 using Beanstream.Api.SDK.Data;
+using Beanstream.Api.SDK.Requests;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace Beanstream.Api.SDK
 {
@@ -38,7 +42,56 @@ namespace Beanstream.Api.SDK
 			set { _webCommandExecuter = value; }
 		}
 
-		public 
+		public Transaction GetTransaction(string paymentId) {
+
+			string url = BeanstreamUrls.GetPaymentUrl
+				.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
+				.Replace("{p}", String.IsNullOrEmpty(_configuration.Platform) ? "www" : _configuration.Platform)
+				.Replace("{id}", paymentId);
+
+
+			HttpsWebRequest req = new HttpsWebRequest () {
+				MerchantId = _configuration.MerchantId,
+				Passcode = _configuration.ApiPasscode,
+				WebCommandExecutor = _webCommandExecuter
+			};
+
+
+			string response = req.ProcessTransaction (HttpMethod.Get, url);
+
+			return JsonConvert.DeserializeObject<Transaction>(response);
+		}
+
+		public IList<TransactionRecord> Query(string reportName, DateTime startDate, DateTime endDate, int startRow, int endRow, params Criteria[] criteria) {
+
+			string url = BeanstreamUrls.GetPaymentUrl
+				.Replace ("{v}", String.IsNullOrEmpty (_configuration.Version) ? "v1" : "v" + _configuration.Version)
+				.Replace ("{p}", String.IsNullOrEmpty (_configuration.Platform) ? "www" : _configuration.Platform);
+
+
+			HttpsWebRequest req = new HttpsWebRequest () {
+				MerchantId = _configuration.MerchantId,
+				Passcode = _configuration.ApiPasscode,
+				WebCommandExecutor = _webCommandExecuter
+			};
+
+			var query = new 
+			{
+				name = reportName,
+				start_date = startDate,
+				nd_date = endDate,   
+				start_row = startRow,
+				end_row = endRow,
+				criteria = criteria
+			};
+
+			string response = req.ProcessTransaction (HttpMethod.Post, url);
+			Console.WriteLine ("\n\n"+response+"\n\n");
+			return null;
+			//return JsonConvert.DeserializeObject<Transaction>(response);
+		}
+
+
 
 	}
 }

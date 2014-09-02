@@ -20,20 +20,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
+using System;
+using Newtonsoft.Json;
 
-namespace Beanstream.Api.SDK
+namespace Beanstream
 {
-	internal class BeanstreamUrls
+	public class Adjustment
 	{
-		public static string BaseUrl = "https://{p}.beanstream.com/api";
-		public static string BasePaymentsUrl = BaseUrl + "/{v}/payments";
-		public static string BaseProfilesUrl = BaseUrl + "/{v}/profiles";
-		public static string PreAuthCompletionsUrl = BasePaymentsUrl + "/{id}/completions";
-		public static string ReturnsUrl = BasePaymentsUrl + "/{id}/returns";
-		public static string VoidsUrl =  BasePaymentsUrl + "/{id}/void";
-		public static string GetPaymentUrl =  BasePaymentsUrl + "/{id}";
-		public static string ContinuationsUrl = BasePaymentsUrl + "/{md}/continue";
-		public static string ProfileUri = "/{id}";
-		public static string CardsUri = ProfileUri+"/cards";
+		[JsonProperty(PropertyName = "id")]
+		public string Id { get; set; }
+
+		[JsonProperty(PropertyName = "type")]
+		public string Type { get; set; }
+
+		[JsonProperty(PropertyName = "approval")]
+		public string Approval { get; set; }
+
+		[JsonProperty(PropertyName = "message")]
+		public string Message { get; set; }
+
+		[JsonProperty(PropertyName = "amount")]
+		public string Amount { get; set; }
+
+		[JsonProperty(PropertyName = "created")]
+		public DateTime Created { get; set; }
+
+		[JsonProperty(PropertyName = "url")]
+		public string Url { get; set; }
 	}
 }
+
