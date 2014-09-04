@@ -335,7 +335,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
 				ApiVersion = "1"
 			};
 
@@ -356,7 +356,24 @@ namespace Beanstream.Api.SDK.Tests
 			*/
 			//beanstream.Payments.Void ("10000326", 100);
 			//beanstream.Reporting.GetTransaction ("10000326");
-			Console.WriteLine (Operators.Equals+", "+Operators.GreaterThan+", "+Operators.LessThan+", "+Operators.GreaterThanEqual+", "+Operators.LessThanEquals);
+			beanstream.Reporting.Query (  
+				DateTime.Now.Subtract(TimeSpan.FromDays(5)), 
+				DateTime.Now, 
+				1, 
+				100, 
+				new Criteria[]{
+					new Criteria() {
+						Field = QueryFields.TransactionId, 
+						Operator = Operators.GreaterThanEqual, 
+						Value = "1000"
+					},
+					new Criteria() {
+						Field = QueryFields.TransactionId, 
+						Operator = Operators.LessThanEqual, 
+						Value = "99999999"
+					}
+				}
+			);
 		}
 
 	}

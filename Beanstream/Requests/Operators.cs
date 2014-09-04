@@ -26,6 +26,7 @@ using System;
 /// Operators used for querying transations using the Reporting API.
 /// </summary>
 using System.ComponentModel;
+using Newtonsoft.Json;
 
 
 namespace Beanstream
@@ -42,10 +43,13 @@ namespace Beanstream
 		GreaterThan,
 
 		[Description("%3C%3D")]
-		LessThanEquals, 
+		LessThanEqual, 
 
 		[Description("%3e%3D")]
-		GreaterThanEqual
+		GreaterThanEqual,
+
+		[Description("START%20WITH")]
+		StartWith
 	}
 }
 

@@ -62,9 +62,28 @@ namespace Beanstream.Api.SDK
 			return JsonConvert.DeserializeObject<Transaction>(response);
 		}
 
-		public IList<TransactionRecord> Query(string reportName, DateTime startDate, DateTime endDate, int startRow, int endRow, params Criteria[] criteria) {
+		/// <summary>
+		/// Query for transaction data. You must specify a start date and an end date, as well as search criteria.
+		/// You also specify the start row and end row for paging since the search will limit the number of returned results to 1000.
+		/// </summary>
+		/// <param name="reportName">Report name. </param>
+		/// <param name="startDate">Start date.</param>
+		/// <param name="endDate">End date.</param>
+		/// <param name="startRow">Start row.</param>
+		/// <param name="endRow">End row.</param>
+		/// <param name="criteria">Criteria.</param>
+		public IList<TransactionRecord> Query(DateTime startDate, DateTime endDate, int startRow, int endRow, params Criteria[] criteria) {
 
-			string url = BeanstreamUrls.GetPaymentUrl
+			if (endDate == null || startDate == null)
+				throw new ArgumentNullException ("Start Date and End Date cannot be null!");
+			if (endDate < startDate)
+				throw new ArgumentException ("End Date cannot be less than Start Date!");
+			if (endRow < startRow)
+				throw new ArgumentException ("End Row cannot be less than Start Row!");
+			if (endRow - startRow > 1000)
+				throw new ArgumentException ("You cannot query more than 1000 rows at a time!");
+
+			string url = BeanstreamUrls.ReportsUrl
 				.Replace ("{v}", String.IsNullOrEmpty (_configuration.Version) ? "v1" : "v" + _configuration.Version)
 				.Replace ("{p}", String.IsNullOrEmpty (_configuration.Platform) ? "www" : _configuration.Platform);
 
@@ -77,15 +96,20 @@ namespace Beanstream.Api.SDK
 
 			var query = new 
 			{
-				name = reportName,
+				name = "Search",
 				start_date = startDate,
-				nd_date = endDate,   
+				end_date = endDate,   
 				start_row = startRow,
 				end_row = endRow,
 				criteria = criteria
 			};
-
-			string response = req.ProcessTransaction (HttpMethod.Post, url);
+			var data = JsonConvert.SerializeObject (
+				query,
+				Formatting.Indented,
+				new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore } // ignore null values
+			);
+			Console.WriteLine (data);
+			string response = req.ProcessTransaction (HttpMethod.Post, url, query);
 			Console.WriteLine ("\n\n"+response+"\n\n");
 			return null;
 			//return JsonConvert.DeserializeObject<Transaction>(response);

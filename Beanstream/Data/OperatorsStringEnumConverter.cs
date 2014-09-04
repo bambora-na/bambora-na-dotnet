@@ -22,20 +22,36 @@
 //
 using System;
 using Newtonsoft.Json;
+using System.Reflection;
+using System.ComponentModel;
 
+/// <summary>
+/// Writes out the Operator Enum's attribute descriptions instead of the default value.
+/// We Want to write a URL encoded version of the operators.
+/// </summary>
 namespace Beanstream
 {
-	public class MyStringEnumConverter : Newtonsoft.Json.Converters.StringEnumConverter
+	public class OperatorsStringEnumConverter : Newtonsoft.Json.Converters.StringEnumConverter
 	{
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 		{
-			if (value is Action)
+			if (value is Operators)
 			{
-				//writer.WriteValue();// or something else
-				return;
-			}
+				FieldInfo fi = value.GetType().GetField(value.ToString());
 
-			base.WriteJson(writer, value, serializer);
+				DescriptionAttribute[] attributes =
+					(DescriptionAttribute[])fi.GetCustomAttributes(
+						typeof(DescriptionAttribute),
+						false);
+
+				if (attributes != null &&
+					attributes.Length > 0)
+					writer.WriteValue( attributes[0].Description );
+				else
+					writer.WriteValue( value.ToString() );
+			}
+			else
+				base.WriteJson(writer, value, serializer);
 		}
 	}
 }

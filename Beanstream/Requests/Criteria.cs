@@ -27,9 +27,11 @@ namespace Beanstream
 {
 	public class Criteria
 	{
+		[JsonConverter(typeof(QueryFieldStringEnumConverter))]
 		[JsonProperty(PropertyName = "field")]
-		public int Field { get; set; }
+		public QueryFields Field { get; set; }
 
+		[JsonConverter(typeof(OperatorsStringEnumConverter))]
 		[JsonProperty(PropertyName = "operator")]
 		public Operators Operator { get; set; }
 
