@@ -40,10 +40,16 @@ namespace Beanstream
 		public DateTime DateTime {get; set;}
 
 		[JsonProperty(PropertyName = "trn_type")]
-		public String Type {get; set;}
+		public string Type {get; set;}
 
 		[JsonProperty(PropertyName = "trn_order_number")]
-		public String OrderNumber {get; set;}
+		public string OrderNumber {get; set;}
+
+		[JsonProperty(PropertyName = "trn_payment_method")]
+		public string PaymentMethod {get; set;}
+
+		[JsonProperty(PropertyName = "trn_comments")]
+		public string Comments {get; set;}
 
 		[JsonProperty(PropertyName = "trn_masked_card")]
 		public int MaskedMard {get; set;}
@@ -58,77 +64,118 @@ namespace Beanstream
 		public double Completions {get; set;}
 
 		[JsonProperty(PropertyName = "trn_voided")]
-		public String Voided {get; set;}
+		public string Voided {get; set;}
 
 		[JsonProperty(PropertyName = "trn_response")]
 		public int Response{get; set;}
 
 		[JsonProperty(PropertyName = "trn_card_type")]
-		public String CardType {get; set;}
+		public string CardType {get; set;}
+
+		[JsonProperty(PropertyName = "trn_batch_no")]
+		public int BatchNumber {get; set;}
+
+		[JsonProperty(PropertyName = "trn_avs_result")]
+		public string AVSResult {get; set;}
+
+		[JsonProperty(PropertyName = "trn_cvd_result")]
+		public int CVDResult {get; set;}
+
+		[JsonProperty(PropertyName = "trn_card_expiry")]
+		public string CardExpiry {get; set;}
 
 		[JsonProperty(PropertyName = "message_id")]
-		public String MessageId {get; set;}
+		public string MessageId {get; set;}
 
 		[JsonProperty(PropertyName = "message_text")]
-		public String MessageText {get; set;}
+		public string MessageText {get; set;}
 
 		[JsonProperty(PropertyName = "trn_card_owner")]
-		public String CardOwner {get; set;}
+		public string CardOwner {get; set;}
+
+		[JsonProperty(PropertyName = "trn_ip")]
+		public string IPAddress {get; set;}
+
+		[JsonProperty(PropertyName = "trn_approval_code")]
+		public string ApprovalCode {get; set;}
+
+		[JsonProperty(PropertyName = "trn_reference")]
+		public int Reference {get; set;}
 
 		[JsonProperty(PropertyName = "b_name")]
-		public String BillingName {get; set;}
+		public string BillingName {get; set;}
 
 		[JsonProperty(PropertyName = "b_email")]
-		public String BillingEmail {get; set;}
+		public string BillingEmail {get; set;}
 
 		[JsonProperty(PropertyName = "b_phone")]
-		public String BillingPhone {get; set;}
+		public string BillingPhone {get; set;}
 
 		[JsonProperty(PropertyName = "b_address1")]
-		public String BillingAddress1  {get; set;}
+		public string BillingAddress1  {get; set;}
 
 		[JsonProperty(PropertyName = "b_address2")]
-		public String b_address2 {get; set;}
+		public string b_address2 {get; set;}
 
 		[JsonProperty(PropertyName = "b_city")]
-		public String BillingCity {get; set;}
+		public string BillingCity {get; set;}
 
 		[JsonProperty(PropertyName = "b_province")]
-		public String BillingProvince {get; set;}
+		public string BillingProvince {get; set;}
 
 		[JsonProperty(PropertyName = "b_postal")]
-		public String BillingPostal {get; set;}
+		public string BillingPostal {get; set;}
 
 		[JsonProperty(PropertyName = "b_country")]
-		public String BillingCountry {get; set;}
+		public string BillingCountry {get; set;}
 
 		[JsonProperty(PropertyName = "s_name")]
-		public String ShippingName {get; set;}
+		public string ShippingName {get; set;}
 
 		[JsonProperty(PropertyName = "s_email")]
-		public String ShippingEmail {get; set;}
+		public string ShippingEmail {get; set;}
 
 		[JsonProperty(PropertyName = "s_phone")]
-		public String ShippingPhone {get; set;}
+		public string ShippingPhone {get; set;}
 
 		[JsonProperty(PropertyName = "s_address1")]
-		public String ShippingAddress1 {get; set;}
+		public string ShippingAddress1 {get; set;}
 
 		[JsonProperty(PropertyName = "s_address2")]
-		public String ShippingAddress2 {get; set;}
+		public string ShippingAddress2 {get; set;}
 
 		[JsonProperty(PropertyName = "s_city")]
-		public String ShippingCity {get; set;}
+		public string ShippingCity {get; set;}
 
 		[JsonProperty(PropertyName = "s_province")]
-		public String ShippingProvince {get; set;}
+		public string ShippingProvince {get; set;}
 
 		[JsonProperty(PropertyName = "s_postal")]
-		public String ShippingPostal {get; set;}
+		public string ShippingPostal {get; set;}
 
-		[JsonProperty(PropertyName = "s_postal")]
-		public String ShippingCountry {get; set;}
+		[JsonProperty(PropertyName = "s_country")]
+		public string ShippingCountry {get; set;}
 
+		[JsonProperty(PropertyName = "ref1")]
+		public string Ref1 {get; set;}
+
+		[JsonProperty(PropertyName = "ref2")]
+		public string Ref2 {get; set;}
+
+		[JsonProperty(PropertyName = "ref3")]
+		public string Ref3 {get; set;}
+
+		[JsonProperty(PropertyName = "ref4")]
+		public string Ref4 {get; set;}
+
+		[JsonProperty(PropertyName = "product_name")]
+		public string ProductName {get; set;}
+
+		[JsonProperty(PropertyName = "product_id")]
+		public string ProductId {get; set;}
+
+		[JsonProperty(PropertyName = "customer_code")]
+		public string CustomerCode {get; set;}
 	}
 }
 

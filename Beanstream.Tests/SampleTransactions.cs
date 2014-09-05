@@ -31,6 +31,7 @@ using System.Net;
 using Newtonsoft.Json;
 using System.IO;
 using Beanstream.Api.SDK.Domain;
+using System.Collections.Generic;
 
 namespace Beanstream.Api.SDK.Tests
 {
@@ -356,7 +357,7 @@ namespace Beanstream.Api.SDK.Tests
 			*/
 			//beanstream.Payments.Void ("10000326", 100);
 			//beanstream.Reporting.GetTransaction ("10000326");
-			beanstream.Reporting.Query (  
+			List<TransactionRecord> records = beanstream.Reporting.Query (  
 				DateTime.Now.Subtract(TimeSpan.FromDays(5)), 
 				DateTime.Now, 
 				1, 
@@ -374,7 +375,10 @@ namespace Beanstream.Api.SDK.Tests
 					}
 				}
 			);
+
+			Console.WriteLine ("Num records: " + records.Count);
 		}
+
 
 	}
 }

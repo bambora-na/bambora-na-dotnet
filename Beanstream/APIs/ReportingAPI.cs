@@ -72,7 +72,7 @@ namespace Beanstream.Api.SDK
 		/// <param name="startRow">Start row.</param>
 		/// <param name="endRow">End row.</param>
 		/// <param name="criteria">Criteria.</param>
-		public IList<TransactionRecord> Query(DateTime startDate, DateTime endDate, int startRow, int endRow, params Criteria[] criteria) {
+		public List<TransactionRecord> Query(DateTime startDate, DateTime endDate, int startRow, int endRow, params Criteria[] criteria) {
 
 			if (endDate == null || startDate == null)
 				throw new ArgumentNullException ("Start Date and End Date cannot be null!");
@@ -110,12 +110,16 @@ namespace Beanstream.Api.SDK
 			);
 			Console.WriteLine (data);
 			string response = req.ProcessTransaction (HttpMethod.Post, url, query);
-			Console.WriteLine ("\n\n"+response+"\n\n");
-			return null;
-			//return JsonConvert.DeserializeObject<Transaction>(response);
+			//Console.WriteLine ("\n\n"+response+"\n\n");
+
+			Records records = JsonConvert.DeserializeObject<Records>(response);
+
+			return records.records;
 		}
 
-
+		class Records {
+			public List<TransactionRecord> records { get; set; }
+		}
 
 	}
 }
