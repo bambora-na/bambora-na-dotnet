@@ -33,8 +33,9 @@ namespace Beanstream.Api.SDK
 	public class Configuration
 	{
 		public int MerchantId { get; set;}
-		public string ApiPasscode { get; set;}
-		public string ProfilesPasscode { get; set;}
+		public string PaymentsApiPasscode { get; set;}
+		public string ReportingApiPasscode { get; set;}
+		public string ProfilesApiPasscode { get; set;}
 		public string Version { get; set;}
 		public string Platform { get; set; }
 

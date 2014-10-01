@@ -61,7 +61,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
 			};
 			beanstream.WebCommandExecuter = _executer.Object;
@@ -81,7 +81,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
 			};
 			beanstream.WebCommandExecuter = _executer.Object;
@@ -103,7 +103,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
 			};
 			beanstream.WebCommandExecuter = _executer.Object;
@@ -125,7 +125,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
 			};
 			beanstream.WebCommandExecuter = _executer.Object;
@@ -147,7 +147,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
 			};
 			beanstream.WebCommandExecuter = _executer.Object;
@@ -169,7 +169,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
 			};
 			beanstream.WebCommandExecuter = _executer.Object;
@@ -191,7 +191,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
 			};
 			beanstream.WebCommandExecuter = _executer.Object;
@@ -213,7 +213,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
 			};
 			beanstream.WebCommandExecuter = _executer.Object;

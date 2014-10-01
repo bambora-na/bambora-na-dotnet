@@ -24,6 +24,10 @@ using System;
 using Newtonsoft.Json;
 using Beanstream.Api.SDK.Domain;
 
+/// <summary>
+/// Process a Credit Card payment. Along with the regular payment request parameters
+/// it also takes in a Card.
+/// </summary>
 namespace Beanstream.Api.SDK.Requests
 {
 	public class CardPaymentRequest : PaymentRequest

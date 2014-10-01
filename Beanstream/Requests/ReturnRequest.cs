@@ -24,6 +24,9 @@ using System;
 using Beanstream.Api.SDK.Requests;
 using Newtonsoft.Json;
 
+/// <summary>
+/// Return a payment for a partial or full amount.
+/// </summary>
 namespace Beanstream.Api.SDK.Requests
 {
 	public class ReturnRequest

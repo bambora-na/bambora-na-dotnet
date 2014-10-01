@@ -28,7 +28,7 @@ using Newtonsoft.Json;
 /// </summary>
 namespace Beanstream.Api.SDK.Domain
 {
-	public abstract class Address
+	public class Address
 	{
 		[JsonProperty(PropertyName = "name")]
 		public string Name { get; set; }

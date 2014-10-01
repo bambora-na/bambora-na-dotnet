@@ -39,10 +39,6 @@ namespace Beanstream.Api.SDK.Tests
 	public class SampleTransactions
 	{
 
-		private static int orderNum = 237; // used so we can have unique order #'s for each transaction
-
-
-
 		public static void Main(string[] args) {
 
 			Console.WriteLine ("BEGIN running sample transactions");
@@ -55,9 +51,10 @@ namespace Beanstream.Api.SDK.Tests
 			SampleTransactions.ProcessTokenPayment ();
 			SampleTransactions.ProcessPhysicalPayments (); // you need these options (cash and cheque) enabled on your merchant account first
 			//SampleTransactions.ProcessInterac ();*/
-			SampleTransactions.GetTransaction ();
-
-			Console.WriteLine ("final order number: " + orderNum); // used so we can have unique order #'s for each transaction
+			//SampleTransactions.GetTransaction ();
+			SampleTransactions.CreateAndDeleteProfile ();
+			//SampleTransactions.GetProfile ();
+			//SampleTransactions.UpdateProfile ();
 			Console.WriteLine ("FINISHED running sample transactions");
 		}
 
@@ -71,14 +68,14 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
 			};
 
 			PaymentResponse response = beanstream.Payments.MakePayment (
 				new CardPaymentRequest {
 					Amount = 100.00,
-					OrderNumber = orderNum++.ToString(),
+					OrderNumber = getRandomOrderId("test"),
 					Card = new Card {
 						Name = "John Doe",
 						Number = "5100000010001004",
@@ -99,7 +96,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
 			};
 
@@ -107,7 +104,7 @@ namespace Beanstream.Api.SDK.Tests
 			PaymentResponse response = beanstream.Payments.MakePayment (
 				new CardPaymentRequest {
 					Amount = 40.00,
-					OrderNumber = orderNum++.ToString(),
+					OrderNumber = getRandomOrderId("test"),
 					Card = new Card {
 						Name = "John Doe",
 						Number = "5100000010001004",
@@ -125,7 +122,7 @@ namespace Beanstream.Api.SDK.Tests
 				response.TransactionId,
 				new ReturnRequest {
 					Amount = 40.00,
-					OrderNumber = orderNum.ToString()
+					OrderNumber = getRandomOrderId("test")
 				}
 			);
 
@@ -140,13 +137,13 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
 			};
 
 			CardPaymentRequest paymentRequest = new CardPaymentRequest {
 				Amount = 100.00,
-				OrderNumber = orderNum++.ToString(),
+				OrderNumber = getRandomOrderId("test"),
 				Card = new Card {
 					Name = "John Doe",
 					Number = "5100000010001004",
@@ -186,7 +183,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
 			};
 
@@ -194,7 +191,7 @@ namespace Beanstream.Api.SDK.Tests
 			PaymentResponse response = beanstream.Payments.MakePayment (
 				new CardPaymentRequest {
 					Amount = 30.00,
-					OrderNumber = orderNum++.ToString(),
+					OrderNumber = getRandomOrderId("test"),
 					Card = new Card {
 						Name = "John Doe",
 						Number = "5100000010001004",
@@ -230,7 +227,7 @@ namespace Beanstream.Api.SDK.Tests
 			PaymentResponse response = beanstream.Payments.MakePayment (
 				new InteracPaymentRequest {
 					amount = "100.00",
-					order_number = orderNum++.ToString()
+					order_number = getRandomOrderId("test")
 				}
 			);
 			Console.WriteLine ("Interac Payment id: " + response.id + ", " + response.message+"\n");
@@ -270,7 +267,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
 			};
 
@@ -278,7 +275,7 @@ namespace Beanstream.Api.SDK.Tests
 				new TokenPaymentRequest () 
 				{
 					Amount = 30,
-					OrderNumber = orderNum++.ToString(),
+					OrderNumber = getRandomOrderId("test"),
 					Token = new Token {
 						Code = token.Token,
 						Name = "John Doe"
@@ -303,7 +300,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
 			};
 
@@ -312,7 +309,7 @@ namespace Beanstream.Api.SDK.Tests
 			PaymentResponse response = beanstream.Payments.MakePayment (
 				new CashPaymentRequest () {
 					Amount = 50.00,
-					OrderNumber = orderNum++.ToString()
+					OrderNumber = getRandomOrderId("test")
 				}
 			);
 			Console.WriteLine ("Cash Payment id: " + response.TransactionId + ", " + response.Message+"\n");
@@ -323,7 +320,7 @@ namespace Beanstream.Api.SDK.Tests
 			response = beanstream.Payments.MakePayment (
 				new ChequePaymentRequest () {
 					Amount = 30.00,
-					OrderNumber = orderNum++.ToString()
+					OrderNumber = getRandomOrderId("test")
 				}
 			);
 			Console.WriteLine ("Cheque Payment id: " + response.TransactionId + ", " + response.Message+"\n");
@@ -336,14 +333,15 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
 				ApiVersion = "1"
 			};
 
-			/*PaymentResponse response = beanstream.Payments.MakePayment (
+			PaymentResponse response = beanstream.Payments.MakePayment (
 				new CardPaymentRequest {
 					Amount = 100.00,
-					OrderNumber = orderNum++.ToString(),
+					OrderNumber = getRandomOrderId("test"),
 					Card = new Card {
 						Name = "John Doe",
 						Number = "5100000010001004",
@@ -353,10 +351,25 @@ namespace Beanstream.Api.SDK.Tests
 					}
 				}
 			);
+
+			beanstream.Payments.Void (response.TransactionId, 100);
+			beanstream.Reporting.GetTransaction (response.TransactionId);
+
 			Console.WriteLine ("Payment id: " + response.TransactionId + ", " + response.Message+"\n");
-			*/
-			//beanstream.Payments.Void ("10000326", 100);
-			//beanstream.Reporting.GetTransaction ("10000326");
+		}
+
+
+		private static void QueryTransactions() {
+
+			Console.WriteLine ("Query Transaction... ");
+
+			Gateway beanstream = new Gateway () {
+				MerchantId = 300200578,
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
+				ApiVersion = "1"
+			};
+
 			List<TransactionRecord> records = beanstream.Reporting.Query (  
 				DateTime.Now.Subtract(TimeSpan.FromDays(5)), 
 				DateTime.Now, 
@@ -380,6 +393,147 @@ namespace Beanstream.Api.SDK.Tests
 		}
 
 
+
+
+		private static void CreateAndDeleteProfile() {
+			Console.WriteLine ("Creating Payment Profile... ");
+
+			Gateway beanstream = new Gateway () {
+				MerchantId = 300200578,
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+			};
+
+			ProfileResponse response = beanstream.Profiles.CreateProfile (
+				new Card() {
+					Name = "Jane Doe",
+					Number = "5100000010001004",
+					ExpiryMonth = "12",
+					ExpiryYear = "18",
+					Cvd = "123"
+				}, 
+				new Address() {
+					Name = "Jane Doe",
+					AddressLine1 = "123 Fake St.",
+					City = "victoria",
+					Province = "bc",
+					Country = "ca",
+					PostalCode = "v9t2g6",
+					PhoneNumber = "12501234567",
+					EmailAddress = "test@beanstream.com"
+				},
+				null); // no custom fields
+			Console.WriteLine ("Created profile with ID: " + response.CustomerCode);
+
+			// delete it so when we create a profile again with the same card we won't get an error
+			response = beanstream.Profiles.DeleteProfile (response.CustomerCode);
+		}
+
+
+		private static void GetProfile() {
+			Console.WriteLine ("Creating Payment Profile... ");
+
+			Gateway beanstream = new Gateway () {
+				MerchantId = 300200578,
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+			};
+
+			ProfileResponse response = beanstream.Profiles.CreateProfile (
+				new Card() {
+					Name = "Jane Doe",
+					Number = "5100000010001004",
+					ExpiryMonth = "12",
+					ExpiryYear = "18",
+					Cvd = "123"
+				}, 
+				new Address() {
+					Name = "Jane Doe",
+					AddressLine1 = "123 Fake St.",
+					City = "victoria",
+					Province = "bc",
+					Country = "ca",
+					PostalCode = "v9t2g6",
+					PhoneNumber = "12501234567",
+					EmailAddress = "test@beanstream.com"
+				},
+				null); // no custom fields
+			Console.WriteLine ("Created profile with ID: " + response.CustomerCode);
+
+
+			PaymentProfile profile = beanstream.Profiles.GetProfile (response.CustomerCode);
+			Console.WriteLine ("get profile: " + profile.CustomerCode);
+			// delete it so when we create a profile again with the same card we won't get an error
+		}
+
+		private static void UpdateProfile() {
+			Console.WriteLine ("Creating Payment Profile... ");
+
+			Gateway beanstream = new Gateway () {
+				MerchantId = 300200578,
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+			};
+
+			ProfileResponse response = beanstream.Profiles.CreateProfile (
+				new Card() {
+					Name = "Jane Doe",
+					Number = "5100000010001004",
+					ExpiryMonth = "12",
+					ExpiryYear = "18",
+					Cvd = "123"
+				}, 
+				new Address() {
+					Name = "Jane Doe",
+					AddressLine1 = "123 Fake St.",
+					City = "victoria",
+					Province = "bc",
+					Country = "ca",
+					PostalCode = "v9t2g6",
+					PhoneNumber = "12501234567",
+					EmailAddress = "test@beanstream.com"
+				},
+				null); // no custom fields
+			Console.WriteLine ("Created profile with ID: " + response.CustomerCode);
+
+
+			PaymentProfile profile = beanstream.Profiles.GetProfile (response.CustomerCode);
+			Console.WriteLine ("Profile.billing.city: " + profile.Billing.City);
+
+
+			Console.WriteLine ("Updating profile's billing address: city");
+			profile.Billing.City = "penticton";
+			profile.CustomerCode = response.CustomerCode;
+			beanstream.Profiles.UpdateProfile (profile);
+
+
+			profile = beanstream.Profiles.GetProfile (response.CustomerCode);
+			Console.WriteLine ("Profile.billing.city: " + profile.Billing.City);
+			// delete it so when we create a profile again with the same card we won't get an error
+		}
+
+
+
+
+
+
+		private static int counter = 0;
+
+		private static string getRandomOrderId(string prefix) {
+			DateTime datetime = DateTime.Now;
+			double seconds = (datetime - new DateTime(1970, 1, 1).ToLocalTime()).TotalSeconds;
+			counter++;
+			string orderId = "" + prefix +"_"+counter+"_"+seconds ;
+			if (orderId.Length > 30)
+				orderId = orderId.Substring (0, 29);
+			return orderId;
+		}
 	}
 }
 

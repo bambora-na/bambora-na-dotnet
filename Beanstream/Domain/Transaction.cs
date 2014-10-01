@@ -75,10 +75,10 @@ namespace Beanstream
 		public Card Card { get; set; }
 
 		[JsonProperty(PropertyName = "billing")]
-		public BillingAddress Billing { get; set; }
+		public Address Billing { get; set; }
 
 		[JsonProperty(PropertyName = "shipping")]
-		public ShippingAddress Shipping { get; set; }
+		public Address Shipping { get; set; }
 
 		[JsonProperty(PropertyName = "custom")]
 		public CustomFields CustomFields { get; set; }

@@ -69,7 +69,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
 				ApiVersion = "1"
 			};
@@ -92,7 +92,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
 				ApiVersion = "1"
 			};
@@ -115,7 +115,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
 				ApiVersion = "1"
 			};
@@ -138,7 +138,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
 				ApiVersion = "1"
 			};
@@ -161,7 +161,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
 				ApiVersion = "1"
 			};
@@ -184,7 +184,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
 				ApiVersion = "1"
 			};
@@ -207,7 +207,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
 				ApiVersion = "1"
 			};
@@ -231,7 +231,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
 				ApiVersion = "1"
 			};
@@ -254,7 +254,7 @@ namespace Beanstream.Api.SDK.Tests
 				.Throws(new CommunicationException("API exception occured", null));
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
-				ApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
 				ApiVersion = "1"
 			};

@@ -21,14 +21,20 @@
 // THE SOFTWARE.
 //
 using System;
+using Newtonsoft.Json;
 
-/// <summary>
-/// A Shipping Address that can be used for you to know where to ship a product to.
-/// </summary>
-namespace Beanstream.Api.SDK.Domain
+namespace Beanstream.Api.SDK
 {
-	public class ShippingAddress : Address
+	public class ProfileResponse
 	{
+		[JsonProperty(PropertyName = "code")]
+		public string Code { get; set; }
+
+		[JsonProperty(PropertyName = "message")]
+		public string Message { get; set; }
+
+		[JsonProperty(PropertyName = "customer_code")]
+		public string CustomerCode { get; set; }
 
 	}
 }

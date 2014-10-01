@@ -51,11 +51,42 @@ namespace Beanstream.Api.SDK
 		public int MerchantId { get; set; }
 
 		/// <summary>
-		/// The API Key (Passcode) for accessing the API.
+		/// The API Key (Passcode) for accessing the payments API.
 		/// </summary>
-		public string ApiKey { get; set; }
+		public string PaymentsApiKey { 
+			set 
+			{ 
+				Configuration.PaymentsApiPasscode = value;
+			}
+			get {
+				return Configuration.PaymentsApiPasscode;
+			}
+		}
 
-		public string ProfilesApiKey { get; set; }
+		/// <summary>
+		/// The API Key (Passcode) for accessing the reporting API.
+		/// </summary>
+		public string ReportingApiKey { 
+			set 
+			{ 
+				Configuration.ReportingApiPasscode = value;
+			}
+			get {
+				return Configuration.ReportingApiPasscode;
+			}
+		}
+
+		/// <summary>
+		/// The API Key (Passcode) for accessing the profiles API.
+		/// </summary>
+		public string ProfilesApiKey { 
+			set { 
+				Configuration.ProfilesApiPasscode = value;
+			}
+			get {
+				return Configuration.ProfilesApiPasscode;
+			}
+		}
 
 		/// <summary>
 		/// The api version to use
@@ -67,13 +98,14 @@ namespace Beanstream.Api.SDK
 
 		public Configuration Configuration {
 			get {
-				if (_configuration == null)
-					_configuration = new Configuration {
-						MerchantId = this.MerchantId,
-						ApiPasscode = ApiKey,
-						ProfilesPasscode = ProfilesApiKey,
-						Version = ApiVersion
-					};
+				if (_configuration == null) {
+					_configuration = new Configuration ();
+					_configuration.MerchantId = this.MerchantId;
+					_configuration.PaymentsApiPasscode = PaymentsApiKey;
+					_configuration.ReportingApiPasscode = ReportingApiKey;
+					_configuration.ProfilesApiPasscode = ProfilesApiKey;
+					_configuration.Version = ApiVersion;
+				}
 				return _configuration;
 			}
 		}
@@ -104,10 +136,28 @@ namespace Beanstream.Api.SDK
 					_reporting = new ReportingAPI ();
 				_reporting.Configuration = Configuration;
 				if (WebCommandExecuter != null)
-					_payments.WebCommandExecuter = WebCommandExecuter;
+					_reporting.WebCommandExecuter = WebCommandExecuter;
 				return _reporting;
 			} 
 		}
+
+
+
+		private ProfilesAPI _profiles;
+
+		public ProfilesAPI Profiles 
+		{ 
+			get { 
+				if (_profiles == null)
+					_profiles = new ProfilesAPI ();
+				_profiles.Configuration = Configuration;
+				if (WebCommandExecuter != null)
+					_profiles.WebCommandExecuter = WebCommandExecuter;
+				return _profiles;
+			} 
+		}
+
+
 
 		public static void ThrowIfNullArgument(object value, string name)
 		{
@@ -116,7 +166,6 @@ namespace Beanstream.Api.SDK
 				throw new System.ArgumentNullException(name);
 			}
 		}
-
 	}
 
 }

@@ -88,7 +88,7 @@ namespace Beanstream.Api.SDK
 
 			HttpsWebRequest req = new HttpsWebRequest () {
 				MerchantId = _configuration.MerchantId,
-				Passcode = _configuration.ApiPasscode,
+				Passcode = _configuration.PaymentsApiPasscode,
 				WebCommandExecutor = _webCommandExecuter
 			};
 
@@ -96,7 +96,7 @@ namespace Beanstream.Api.SDK
 			paymentRequest.MerchantId = _configuration.MerchantId;
 
 			string response = req.ProcessTransaction (HttpMethod.Post, url, paymentRequest);
-			//Console.WriteLine ("\n\n"+response+"\n\n");
+
 			return JsonConvert.DeserializeObject<PaymentResponse>(response);
 
 		}
@@ -121,7 +121,7 @@ namespace Beanstream.Api.SDK
 
 			HttpsWebRequest req = new HttpsWebRequest () {
 				MerchantId = _configuration.MerchantId,
-				Passcode = _configuration.ApiPasscode,
+				Passcode = _configuration.PaymentsApiPasscode,
 				WebCommandExecutor = _webCommandExecuter
 			};
 			returnRequest.MerchantId = _configuration.MerchantId.ToString();
@@ -153,7 +153,7 @@ namespace Beanstream.Api.SDK
 
 			HttpsWebRequest req = new HttpsWebRequest () {
 				MerchantId = _configuration.MerchantId,
-				Passcode = _configuration.ApiPasscode,
+				Passcode = _configuration.PaymentsApiPasscode,
 				WebCommandExecutor = _webCommandExecuter
 			};
 			returnRequest.MerchantId = _configuration.MerchantId.ToString();
@@ -184,7 +184,7 @@ namespace Beanstream.Api.SDK
 
 			HttpsWebRequest req = new HttpsWebRequest () {
 				MerchantId = _configuration.MerchantId,
-				Passcode = _configuration.ApiPasscode,
+				Passcode = _configuration.PaymentsApiPasscode,
 				WebCommandExecutor = _webCommandExecuter
 			};
 			returnRequest.MerchantId = _configuration.MerchantId.ToString();
@@ -217,7 +217,7 @@ namespace Beanstream.Api.SDK
 
 			HttpsWebRequest req = new HttpsWebRequest () {
 				MerchantId = _configuration.MerchantId,
-				Passcode = _configuration.ApiPasscode,
+				Passcode = _configuration.PaymentsApiPasscode,
 				WebCommandExecutor = _webCommandExecuter
 			};
 
@@ -281,7 +281,7 @@ namespace Beanstream.Api.SDK
 
 			HttpsWebRequest req = new HttpsWebRequest () {
 				MerchantId = _configuration.MerchantId,
-				Passcode = _configuration.ApiPasscode,
+				Passcode = _configuration.PaymentsApiPasscode,
 				WebCommandExecutor = _webCommandExecuter
 			};
 
@@ -333,7 +333,7 @@ namespace Beanstream.Api.SDK
 
 			HttpsWebRequest req = new HttpsWebRequest () {
 				MerchantId = _configuration.MerchantId,
-				Passcode = _configuration.ApiPasscode,
+				Passcode = _configuration.PaymentsApiPasscode,
 				WebCommandExecutor = _webCommandExecuter
 			};
 

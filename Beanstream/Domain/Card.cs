@@ -33,10 +33,9 @@ namespace Beanstream.Api.SDK.Domain
 		[JsonProperty(PropertyName = "complete", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
 		public bool? Complete { get; set; }
 
-		// card ID is used for storing cards on a payment profile
-		[JsonProperty(PropertyName = "card_id", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-		public string CardId { get; set; }
-
+		/// <summary>
+		/// For payment profiles, identified if this card is DEF (default) or SEC (secondary)
+		/// </summary>
 		[JsonProperty(PropertyName = "function", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
 		public string Function { get; set; }
 
@@ -55,8 +54,12 @@ namespace Beanstream.Api.SDK.Domain
 		[JsonProperty(PropertyName = "cvd", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
 		public string Cvd { get; set; }
 
-		[JsonProperty(PropertyName = "card_type")]
-		public string CardType { get; set; }
+		/// <summary>
+		/// Identifies VI (visa) MA (mastercard) etc.
+		/// </summary>
+		/// <value>The type.</value>
+		[JsonProperty(PropertyName = "type")]
+		public string Type { get; set; }
 
 
 		public Card () {

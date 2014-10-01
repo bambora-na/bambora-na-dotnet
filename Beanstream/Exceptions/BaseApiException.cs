@@ -58,7 +58,7 @@ namespace Beanstream.Api.SDK.Exceptions
 		private readonly int _code;
 
 		protected BaseApiException(HttpStatusCode statusCode, string response, int category, int code)
-			:base (statusCode.ToString()+":    "+response)
+			:base (statusCode.ToString()+", category: "+category+", code: "+code+":    "+response)
 		{
 			_response = response;
 			_statusCode =  statusCode;
