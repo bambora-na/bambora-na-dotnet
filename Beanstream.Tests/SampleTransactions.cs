@@ -44,17 +44,17 @@ namespace Beanstream.Api.SDK.Tests
 			Console.WriteLine ("BEGIN running sample transactions");
 
 			// Payments API
-			/*SampleTransactions.ProcessPayment ();
+			SampleTransactions.ProcessPayment ();
 			SampleTransactions.ProcessReturns ();
 			SampleTransactions.ProcessPreauthorization ();
 			SampleTransactions.ProcessVoids ();
 			SampleTransactions.ProcessTokenPayment ();
 			SampleTransactions.ProcessPhysicalPayments (); // you need these options (cash and cheque) enabled on your merchant account first
-			//SampleTransactions.ProcessInterac ();*/
-			//SampleTransactions.GetTransaction ();
+			//SampleTransactions.ProcessInterac ();
+			SampleTransactions.GetTransaction ();
 			SampleTransactions.CreateAndDeleteProfile ();
-			//SampleTransactions.GetProfile ();
-			//SampleTransactions.UpdateProfile ();
+			SampleTransactions.GetProfile ();
+			SampleTransactions.UpdateProfile ();
 			Console.WriteLine ("FINISHED running sample transactions");
 		}
 
@@ -428,7 +428,7 @@ namespace Beanstream.Api.SDK.Tests
 			Console.WriteLine ("Created profile with ID: " + response.CustomerCode);
 
 			// delete it so when we create a profile again with the same card we won't get an error
-			response = beanstream.Profiles.DeleteProfile (response.CustomerCode);
+			beanstream.Profiles.DeleteProfile (response.CustomerCode);
 		}
 
 
@@ -468,6 +468,7 @@ namespace Beanstream.Api.SDK.Tests
 			PaymentProfile profile = beanstream.Profiles.GetProfile (response.CustomerCode);
 			Console.WriteLine ("get profile: " + profile.CustomerCode);
 			// delete it so when we create a profile again with the same card we won't get an error
+			beanstream.Profiles.DeleteProfile (response.CustomerCode);
 		}
 
 		private static void UpdateProfile() {
@@ -516,6 +517,7 @@ namespace Beanstream.Api.SDK.Tests
 			profile = beanstream.Profiles.GetProfile (response.CustomerCode);
 			Console.WriteLine ("Profile.billing.city: " + profile.Billing.City);
 			// delete it so when we create a profile again with the same card we won't get an error
+			beanstream.Profiles.DeleteProfile (response.CustomerCode);
 		}
 
 

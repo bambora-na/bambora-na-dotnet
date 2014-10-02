@@ -52,12 +52,12 @@ namespace Beanstream.Api.SDK.Requests
 				throw new InvalidOperationException("URL AuthType not supported: " + Url.Scheme);
 			}
 
-			httpRequest.Method = _requestObject.Method.ToString();
+			httpRequest.Method = _requestObject.Method.ToString().ToUpper();
 			if (_requestObject.Credentials != null) // we might use this for a no auth connection
 				httpRequest.Headers.Add("Authorization", GetAuthorizationHeaderString(_requestObject.Credentials));
 			httpRequest.ContentType = "application/json";
 			//Console.WriteLine("auth: "+GetAuthorizationHeaderString(_requestObject.Credentials));
-			Console.WriteLine ("URL: "+httpRequest.Method.ToUpper()+" "+Url);
+			//Console.WriteLine ("URL: "+httpRequest.Method.ToUpper()+" "+Url);
 
 			if (_requestObject.Data != null) {
 				var data = JsonConvert.SerializeObject (
@@ -66,7 +66,7 @@ namespace Beanstream.Api.SDK.Requests
 			           new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore } // ignore null values
 		         );
 					
-				Console.WriteLine ("Request Data:\n"+data); // useful to examine output
+				//Console.WriteLine ("Request Data:\n"+data); // useful to examine output
 
 				using (var writer = new StreamWriter (request.GetRequestStream ())) {
 					writer.Write (data);

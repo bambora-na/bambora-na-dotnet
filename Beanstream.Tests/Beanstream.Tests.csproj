@@ -57,10 +57,10 @@
     <Compile Include="WhenRetuningAPayment.cs" />
     <Compile Include="WhenVoidingAPayment.cs" />
     <Compile Include="WhenRetuningAnUnreferencedCardPayment.cs" />
-    <Compile Include="WhenRetuningAnUnreferencedSwipePayment %28copy%29.cs" />
     <Compile Include="WhenPreAuthACardPayment.cs" />
     <Compile Include="WhenPreAuthATokenPayment.cs" />
     <Compile Include="WhenCompletingPreAuth.cs" />
+    <Compile Include="WhenRetuningAnUnreferencedSwipePayment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
