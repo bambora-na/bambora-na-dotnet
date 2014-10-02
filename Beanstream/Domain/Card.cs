@@ -61,6 +61,7 @@ namespace Beanstream.Api.SDK.Domain
 		[JsonProperty(PropertyName = "type")]
 		public string Type { get; set; }
 
+		public int id { get; set; }
 
 		public Card () {
 			Complete = true;

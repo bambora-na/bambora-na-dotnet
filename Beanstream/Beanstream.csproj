@@ -98,6 +98,8 @@
     <Compile Include="APIs\ProfilesAPI.cs" />
     <Compile Include="Domain\PaymentProfile.cs" />
     <Compile Include="Responses\ProfileResponse.cs" />
+    <Compile Include="Responses\ProfileCardsResponse.cs" />
+    <Compile Include="Responses\ProfileGetCardResponse.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

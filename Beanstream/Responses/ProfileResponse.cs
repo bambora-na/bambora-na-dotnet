@@ -34,7 +34,7 @@ namespace Beanstream.Api.SDK
 		public string Message { get; set; }
 
 		[JsonProperty(PropertyName = "customer_code")]
-		public string CustomerCode { get; set; }
+		public string Id { get; set; }
 
 	}
 }

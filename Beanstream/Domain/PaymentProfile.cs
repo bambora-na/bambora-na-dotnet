@@ -30,7 +30,7 @@ namespace Beanstream.Api.SDK
 	public class PaymentProfile
 	{
 		[JsonProperty(PropertyName = "customer_code")]
-		public string CustomerCode { get; set; }
+		public string Id { get; set; }
 
 		[JsonProperty(PropertyName = "modified_date")]
 		public DateTime ModifiedDate { get; set; }
@@ -65,8 +65,20 @@ namespace Beanstream.Api.SDK
 		/// </summary>
 		/// <returns>The cards.</returns>
 		/// <param name="gateway">Gateway.</param>
-		public List<Card> getCards(ProfilesAPI api) {
-			return api.GetCards (CustomerCode);
+		public IList<Card> getCards(ProfilesAPI api) {
+			return api.GetCards (Id);
+		}
+
+		/// <summary>
+		/// Get a card from a profile. Card intex starts at 1.
+		/// For example if you have 3 cards on the profile to get the 2nd card you would pass
+		/// in card id = 2
+		/// </summary>
+		/// <returns>The card for the specified card id</returns>
+		/// <param name="api">API.</param>
+		/// <param name="cardId">Card identifier.</param>
+		public Card getCard(ProfilesAPI api, int cardId) {
+			return api.GetCard (Id, cardId);
 		}
 
 		/// <summary>
@@ -75,16 +87,16 @@ namespace Beanstream.Api.SDK
 		/// <returns>The card.</returns>
 		/// <param name="card">Card.</param>
 		/// <param name="gateway">Gateway.</param>
-		public ProfileResponse AddCard(Card card, ProfilesAPI api) {
-			return api.AddCard (CustomerCode, card);
+		public ProfileResponse AddCard(ProfilesAPI api, Card card) {
+			return api.AddCard (Id, card);
 		}
 
-		public ProfileResponse UpdateCard(Card card, ProfilesAPI api) {
-			return api.UpdateCard (CustomerCode, card);
+		public ProfileResponse UpdateCard(ProfilesAPI api, Card card) {
+			return api.UpdateCard (Id, card);
 		}
 
-		public ProfileResponse RemoveCard(Card card, ProfilesAPI api) {
-			return api.RemoveCard (CustomerCode, card);
+		public ProfileResponse RemoveCard(ProfilesAPI api, int cardId) {
+			return api.RemoveCard (Id, cardId);
 		}
 	}
 }

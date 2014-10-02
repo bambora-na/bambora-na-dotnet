@@ -35,6 +35,6 @@ namespace Beanstream.Api.SDK
 		public static string ContinuationsUrl = BasePaymentsUrl + "/{md}/continue";
 		public static string ReportsUrl =  BaseUrl + "/{v}/reports";
 		public static string ProfileUri = "/{id}";
-		public static string CardsUri = ProfileUri+"/cards";
+		public static string CardsUrl = BaseProfilesUrl+ProfileUri+"/cards";
 	}
 }

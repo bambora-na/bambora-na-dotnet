@@ -43,7 +43,26 @@ namespace Beanstream.Api.SDK
 			set { _webCommandExecuter = value; }
 		}
 
-		public ProfileResponse CreateProfile(Card card, Address billingAddress, CustomFields customFields) {
+		public ProfileResponse CreateProfile(Card card, Address billingAddress) {
+			return CreateProfile (card, billingAddress, null, null, null);
+		}
+
+		public ProfileResponse CreateProfile(Card card, Address billingAddress, CustomFields customFields, string language, string comment) {
+
+			Gateway.ThrowIfNullArgument (card, "card");
+			Gateway.ThrowIfNullArgument (card.Number, "card.number");
+			Gateway.ThrowIfNullArgument (card.Name, "card.name");
+			Gateway.ThrowIfNullArgument (card.ExpiryMonth, "card.expiryMonth");
+			Gateway.ThrowIfNullArgument (card.ExpiryYear, "card.expiryYear");
+
+			Gateway.ThrowIfNullArgument (billingAddress, "billingAddress");
+			Gateway.ThrowIfNullArgument (billingAddress.Name, "billingAddress.name");
+			Gateway.ThrowIfNullArgument (billingAddress.EmailAddress, "billingAddress.emailAddress");
+			Gateway.ThrowIfNullArgument (billingAddress.PhoneNumber, "billingAddress.phoneNumber");
+			Gateway.ThrowIfNullArgument (billingAddress.AddressLine1, "billingAddress.addressLine1");
+			Gateway.ThrowIfNullArgument (billingAddress.City, "billingAddress.city");
+			Gateway.ThrowIfNullArgument (billingAddress.Province, "billingAddress.province/state");
+			Gateway.ThrowIfNullArgument (billingAddress.Country, "billingAddress.country");
 
 			string url = BeanstreamUrls.BaseProfilesUrl
 				.Replace ("{v}", String.IsNullOrEmpty (_configuration.Version) ? "v1" : "v" + _configuration.Version)
@@ -82,7 +101,9 @@ namespace Beanstream.Api.SDK
 			};
 
 			string response = req.ProcessTransaction (HttpMethod.Get, url);
-			return JsonConvert.DeserializeObject<PaymentProfile>(response);
+			PaymentProfile profile = JsonConvert.DeserializeObject<PaymentProfile>(response);
+			profile.Id = profileId;
+			return profile;
 		}
 
 		public ProfileResponse DeleteProfile(string profileId) {
@@ -108,7 +129,7 @@ namespace Beanstream.Api.SDK
 			string url = BeanstreamUrls.BaseProfilesUrl
 				.Replace("{v}", String.IsNullOrEmpty(_configuration.Version) ? "v1" : "v"+_configuration.Version)
 				.Replace("{p}", String.IsNullOrEmpty(_configuration.Platform) ? "www" : _configuration.Platform)
-				+"/"+profile.CustomerCode;
+				+"/"+profile.Id;
 
 
 			HttpsWebRequest req = new HttpsWebRequest () {
@@ -130,25 +151,116 @@ namespace Beanstream.Api.SDK
 		}
 
 
-		public List<Card> GetCards(string profileId) {
-			// always get a fresh copy of the profile when retrieving data
-			PaymentProfile paymentProfile = GetProfile (profileId);
+		public IList<Card> GetCards(string profileId) {
 
-			paymentProfile.getCards (this);
-			return null; // TODO
+			string url = BeanstreamUrls.CardsUrl
+				.Replace ("{v}", String.IsNullOrEmpty (_configuration.Version) ? "v1" : "v" + _configuration.Version)
+				.Replace ("{p}", String.IsNullOrEmpty (_configuration.Platform) ? "www" : _configuration.Platform)
+				.Replace ("{id}", profileId);
+
+			HttpsWebRequest req = new HttpsWebRequest () {
+				MerchantId = _configuration.MerchantId,
+				Passcode = _configuration.ProfilesApiPasscode,
+				WebCommandExecutor = _webCommandExecuter
+			};
+
+			string response = req.ProcessTransaction (HttpMethod.Get, url);
+			ProfileCardsResponse cardResponse = JsonConvert.DeserializeObject<ProfileCardsResponse>(response);
+			if (cardResponse.Cards != null) {
+				int id = 1;
+				foreach (Card c in cardResponse.Cards) {
+					c.id = id++; // give it the ID since that is not persisted nor retrieved
+				}
+			}
+			return cardResponse.Cards;
 		}
 
-		public ProfileResponse AddCard(string profileId, Card card) {
-			return null; // TODO
+		public Card GetCard(string profileId, int cardId) {
+
+			string url = BeanstreamUrls.CardsUrl
+				.Replace ("{v}", String.IsNullOrEmpty (_configuration.Version) ? "v1" : "v" + _configuration.Version)
+				.Replace ("{p}", String.IsNullOrEmpty (_configuration.Platform) ? "www" : _configuration.Platform)
+				.Replace ("{id}", profileId)
+				+"/"+cardId;
+
+			HttpsWebRequest req = new HttpsWebRequest () {
+				MerchantId = _configuration.MerchantId,
+				Passcode = _configuration.ProfilesApiPasscode,
+				WebCommandExecutor = _webCommandExecuter
+			};
+
+			string response = req.ProcessTransaction (HttpMethod.Get, url);
+			Console.WriteLine ("card response: " + response);
+			ProfileGetCardResponse cardResponse = JsonConvert.DeserializeObject<ProfileGetCardResponse>(response);
+			if (cardResponse.Cards == null)
+				return null;
+			cardResponse.Cards [0].id = cardId; // give it the ID since that is not persisted nor retrieved
+			return cardResponse.Cards[0];
 		}
 
 		public ProfileResponse UpdateCard(string profileId, Card card) {
-			return null; // TODO
+
+			string url = BeanstreamUrls.CardsUrl
+				.Replace ("{v}", String.IsNullOrEmpty (_configuration.Version) ? "v1" : "v" + _configuration.Version)
+				.Replace ("{p}", String.IsNullOrEmpty (_configuration.Platform) ? "www" : _configuration.Platform)
+				.Replace ("{id}", profileId)
+			             + "/" + card.id;
+
+			HttpsWebRequest req = new HttpsWebRequest () {
+				MerchantId = _configuration.MerchantId,
+				Passcode = _configuration.ProfilesApiPasscode,
+				WebCommandExecutor = _webCommandExecuter
+			};
+
+			// the json wants to be wrapped in a 'card' group
+			var c = new {
+				card
+			};
+
+			string response = req.ProcessTransaction (HttpMethod.Put, url, c);
+			return JsonConvert.DeserializeObject<ProfileResponse>(response);
 		}
 
-		public ProfileResponse RemoveCard(string profileId, Card card) {
-			return null; // TODO
+		public ProfileResponse AddCard(string profileId, Card card) {
+
+			string url = BeanstreamUrls.CardsUrl
+				.Replace ("{v}", String.IsNullOrEmpty (_configuration.Version) ? "v1" : "v" + _configuration.Version)
+				.Replace ("{p}", String.IsNullOrEmpty (_configuration.Platform) ? "www" : _configuration.Platform)
+				.Replace ("{id}", profileId);
+
+			HttpsWebRequest req = new HttpsWebRequest () {
+				MerchantId = _configuration.MerchantId,
+				Passcode = _configuration.ProfilesApiPasscode,
+				WebCommandExecutor = _webCommandExecuter
+			};
+
+			// the json wants to be wrapped in a 'card' group
+			var c = new {
+				card
+			};
+
+			string response = req.ProcessTransaction (HttpMethod.Post, url, c);
+			return JsonConvert.DeserializeObject<ProfileResponse>(response);
 		}
+
+		public ProfileResponse RemoveCard(string profileId, int cardId) {
+
+			string url = BeanstreamUrls.CardsUrl
+				.Replace ("{v}", String.IsNullOrEmpty (_configuration.Version) ? "v1" : "v" + _configuration.Version)
+				.Replace ("{p}", String.IsNullOrEmpty (_configuration.Platform) ? "www" : _configuration.Platform)
+				.Replace ("{id}", profileId)
+				+"/"+cardId;
+
+			HttpsWebRequest req = new HttpsWebRequest () {
+				MerchantId = _configuration.MerchantId,
+				Passcode = _configuration.ProfilesApiPasscode,
+				WebCommandExecutor = _webCommandExecuter
+			};
+
+			string response = req.ProcessTransaction (HttpMethod.Delete, url);
+			return JsonConvert.DeserializeObject<ProfileResponse>(response);
+		}
+
 
 	}
 }

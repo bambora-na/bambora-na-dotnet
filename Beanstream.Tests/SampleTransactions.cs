@@ -44,7 +44,7 @@ namespace Beanstream.Api.SDK.Tests
 			Console.WriteLine ("BEGIN running sample transactions");
 
 			// Payments API
-			SampleTransactions.ProcessPayment ();
+			/*SampleTransactions.ProcessPayment ();
 			SampleTransactions.ProcessReturns ();
 			SampleTransactions.ProcessPreauthorization ();
 			SampleTransactions.ProcessVoids ();
@@ -55,6 +55,10 @@ namespace Beanstream.Api.SDK.Tests
 			SampleTransactions.CreateAndDeleteProfile ();
 			SampleTransactions.GetProfile ();
 			SampleTransactions.UpdateProfile ();
+			SampleTransactions.AddAndRemoveCardFromProfile ();
+			SampleTransactions.GetAllCardsFromProfile ();
+			SampleTransactions.GetCardFromProfile ();*/
+			SampleTransactions.UpdateCardInProfile ();
 			Console.WriteLine ("FINISHED running sample transactions");
 		}
 
@@ -423,12 +427,11 @@ namespace Beanstream.Api.SDK.Tests
 					PostalCode = "v9t2g6",
 					PhoneNumber = "12501234567",
 					EmailAddress = "test@beanstream.com"
-				},
-				null); // no custom fields
-			Console.WriteLine ("Created profile with ID: " + response.CustomerCode);
+				});
+			Console.WriteLine ("Created profile with ID: " + response.Id);
 
 			// delete it so when we create a profile again with the same card we won't get an error
-			beanstream.Profiles.DeleteProfile (response.CustomerCode);
+			beanstream.Profiles.DeleteProfile (response.Id);
 		}
 
 
@@ -460,15 +463,14 @@ namespace Beanstream.Api.SDK.Tests
 					PostalCode = "v9t2g6",
 					PhoneNumber = "12501234567",
 					EmailAddress = "test@beanstream.com"
-				},
-				null); // no custom fields
-			Console.WriteLine ("Created profile with ID: " + response.CustomerCode);
+				});
+			Console.WriteLine ("Created profile with ID: " + response.Id);
 
 
-			PaymentProfile profile = beanstream.Profiles.GetProfile (response.CustomerCode);
-			Console.WriteLine ("get profile: " + profile.CustomerCode);
+			PaymentProfile profile = beanstream.Profiles.GetProfile (response.Id);
+			Console.WriteLine ("get profile: " + profile.Id);
 			// delete it so when we create a profile again with the same card we won't get an error
-			beanstream.Profiles.DeleteProfile (response.CustomerCode);
+			beanstream.Profiles.DeleteProfile (response.Id);
 		}
 
 		private static void UpdateProfile() {
@@ -499,29 +501,234 @@ namespace Beanstream.Api.SDK.Tests
 					PostalCode = "v9t2g6",
 					PhoneNumber = "12501234567",
 					EmailAddress = "test@beanstream.com"
-				},
-				null); // no custom fields
-			Console.WriteLine ("Created profile with ID: " + response.CustomerCode);
+				});
+			Console.WriteLine ("Created profile with ID: " + response.Id);
 
 
-			PaymentProfile profile = beanstream.Profiles.GetProfile (response.CustomerCode);
+			PaymentProfile profile = beanstream.Profiles.GetProfile (response.Id);
 			Console.WriteLine ("Profile.billing.city: " + profile.Billing.City);
 
 
 			Console.WriteLine ("Updating profile's billing address: city");
 			profile.Billing.City = "penticton";
-			profile.CustomerCode = response.CustomerCode;
 			beanstream.Profiles.UpdateProfile (profile);
 
 
-			profile = beanstream.Profiles.GetProfile (response.CustomerCode);
+			profile = beanstream.Profiles.GetProfile (response.Id);
 			Console.WriteLine ("Profile.billing.city: " + profile.Billing.City);
 			// delete it so when we create a profile again with the same card we won't get an error
-			beanstream.Profiles.DeleteProfile (response.CustomerCode);
+			beanstream.Profiles.DeleteProfile (response.Id);
 		}
 
 
+		private static void AddAndRemoveCardFromProfile() {
+			Console.WriteLine ("Adding Card to Profile... ");
 
+			Gateway beanstream = new Gateway () {
+				MerchantId = 300200578,
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+			};
+
+			ProfileResponse response = beanstream.Profiles.CreateProfile (
+				new Card() {
+					Name = "Jane Doe",
+					Number = "5100000010001004",
+					ExpiryMonth = "12",
+					ExpiryYear = "18",
+					Cvd = "123"
+				}, 
+				new Address() {
+					Name = "Jane Doe",
+					AddressLine1 = "123 Fake St.",
+					City = "victoria",
+					Province = "bc",
+					Country = "ca",
+					PostalCode = "v9t2g6",
+					PhoneNumber = "12501234567",
+					EmailAddress = "test@beanstream.com"
+				}); 
+			Console.WriteLine ("Created profile with ID: " + response.Id);
+
+
+
+			PaymentProfile profile = beanstream.Profiles.GetProfile (response.Id);
+
+			response = profile.AddCard (beanstream.Profiles, new Card {
+				Name = "Jane Doe",
+				Number = "4030000010001234",
+				ExpiryMonth = "03",
+				ExpiryYear = "22",
+				Cvd = "123"
+			});
+			Console.WriteLine ("Added card to profile");
+
+			// delete the card
+			response = profile.RemoveCard (beanstream.Profiles, 2); // delete card #2
+
+			Console.WriteLine ("Removed card from profile");
+
+			// delete it so when we create a profile again with the same card we won't get an error
+			beanstream.Profiles.DeleteProfile (response.Id);
+		}
+
+
+		private static void GetAllCardsFromProfile() {
+			Console.WriteLine ("Get all Cards from Profile... ");
+
+			Gateway beanstream = new Gateway () {
+				MerchantId = 300200578,
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+			};
+
+			ProfileResponse response = beanstream.Profiles.CreateProfile (
+				new Card() {
+					Name = "Jane Doe",
+					Number = "5100000010001004",
+					ExpiryMonth = "12",
+					ExpiryYear = "18",
+					Cvd = "123"
+				}, 
+				new Address() {
+					Name = "Jane Doe",
+					AddressLine1 = "123 Fake St.",
+					City = "victoria",
+					Province = "bc",
+					Country = "ca",
+					PostalCode = "v9t2g6",
+					PhoneNumber = "12501234567",
+					EmailAddress = "test@beanstream.com"
+				}); 
+			Console.WriteLine ("Created profile with ID: " + response.Id);
+
+
+			PaymentProfile profile = beanstream.Profiles.GetProfile (response.Id);
+
+			response = profile.AddCard (beanstream.Profiles, new Card {
+				Name = "Jane Doe",
+				Number = "4030000010001234",
+				ExpiryMonth = "03",
+				ExpiryYear = "22",
+				Cvd = "123"
+			});
+			Console.WriteLine ("Added card to profile");
+
+			// get all cards
+			IList<Card> cards = profile.getCards (beanstream.Profiles);
+			Console.WriteLine ("Retrieved " + cards.Count + " cards from profile.");
+			Console.WriteLine ("Card 1 expiry year: " + cards[0].ExpiryYear);
+			Console.WriteLine ("Card 2 expiry year: " + cards[1].ExpiryYear);
+
+
+			// delete it so when we create a profile again with the same card we won't get an error
+			beanstream.Profiles.DeleteProfile (response.Id);
+		}
+
+		private static void GetCardFromProfile() {
+			Console.WriteLine ("Get a Card from a Profile... ");
+
+			Gateway beanstream = new Gateway () {
+				MerchantId = 300200578,
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+			};
+
+			ProfileResponse response = beanstream.Profiles.CreateProfile (
+				new Card() {
+					Name = "Jane Doe",
+					Number = "5100000010001004",
+					ExpiryMonth = "12",
+					ExpiryYear = "18",
+					Cvd = "123"
+				}, 
+				new Address() {
+					Name = "Jane Doe",
+					AddressLine1 = "123 Fake St.",
+					City = "victoria",
+					Province = "bc",
+					Country = "ca",
+					PostalCode = "v9t2g6",
+					PhoneNumber = "12501234567",
+					EmailAddress = "test@beanstream.com"
+				}); 
+			Console.WriteLine ("Created profile with ID: " + response.Id);
+
+
+			PaymentProfile profile = beanstream.Profiles.GetProfile (response.Id);
+
+			response = profile.AddCard (beanstream.Profiles, new Card {
+				Name = "Jane Doe",
+				Number = "4030000010001234",
+				ExpiryMonth = "03",
+				ExpiryYear = "22",
+				Cvd = "123"
+			});
+			Console.WriteLine ("Added card to profile");
+
+			// get card
+			Card card = profile.getCard (beanstream.Profiles, 2);
+			Console.WriteLine ("Retrieved card with expiry year: " + card.ExpiryYear);
+
+
+			// delete it so when we create a profile again with the same card we won't get an error
+			beanstream.Profiles.DeleteProfile (response.Id);
+		}
+
+
+		private static void UpdateCardInProfile() {
+			Console.WriteLine ("Update a Card in a Profile... ");
+
+			Gateway beanstream = new Gateway () {
+				MerchantId = 300200578,
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+			};
+
+			ProfileResponse response = beanstream.Profiles.CreateProfile (
+				new Card() {
+					Name = "Jane Doe",
+					Number = "5100000010001004",
+					ExpiryMonth = "12",
+					ExpiryYear = "18",
+					Cvd = "123"
+				}, 
+				new Address() {
+					Name = "Jane Doe",
+					AddressLine1 = "123 Fake St.",
+					City = "victoria",
+					Province = "bc",
+					Country = "ca",
+					PostalCode = "v9t2g6",
+					PhoneNumber = "12501234567",
+					EmailAddress = "test@beanstream.com"
+				}); 
+			Console.WriteLine ("Created profile with ID: " + response.Id);
+
+
+			PaymentProfile profile = beanstream.Profiles.GetProfile (response.Id);
+
+			// get card
+			Card card = profile.getCard (beanstream.Profiles, 1);
+			Console.WriteLine ("Retrieved card with expiry year: " + card.ExpiryYear);
+			card.ExpiryYear = "20";
+			card.Number = "4030000010001234";
+			profile.UpdateCard (beanstream.Profiles, card);
+
+			card = profile.getCard (beanstream.Profiles, 1);
+			Console.WriteLine ("Retrieved updated card with expiry year: " + card.ExpiryYear);
+
+			// delete it so when we create a profile again with the same card we won't get an error
+			beanstream.Profiles.DeleteProfile (response.Id);
+		}
 
 
 
