@@ -30,7 +30,7 @@ namespace Beanstream
 {
 	public class ProfileCardsResponse : ProfileResponse
 	{
-		[JsonProperty(PropertyName = "cards")]
+		[JsonProperty(PropertyName = "card")]
 		public IList<Card> Cards {get; set;}
 	}
 }

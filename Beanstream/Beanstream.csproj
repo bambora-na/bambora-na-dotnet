@@ -98,7 +98,6 @@
     <Compile Include="APIs\ProfilesAPI.cs" />
     <Compile Include="Responses\ProfileResponse.cs" />
     <Compile Include="Responses\ProfileCardsResponse.cs" />
-    <Compile Include="Responses\ProfileGetCardResponse.cs" />
     <Compile Include="Requests\ProfilePaymentRequest.cs" />
     <Compile Include="Domain\PaymentProfile.cs" />
     <Compile Include="Domain\PaymentProfileField.cs" />

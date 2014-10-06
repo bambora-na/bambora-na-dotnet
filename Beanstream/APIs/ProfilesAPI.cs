@@ -142,7 +142,7 @@ namespace Beanstream.Api.SDK
 			};
 
 			string response = req.ProcessTransaction (HttpMethod.Post, url, profile);
-			Console.WriteLine (response);
+
 			return JsonConvert.DeserializeObject<ProfileResponse>(response);
 		}
 
@@ -247,6 +247,7 @@ namespace Beanstream.Api.SDK
 
 			string response = req.ProcessTransaction (HttpMethod.Get, url);
 			ProfileCardsResponse cardResponse = JsonConvert.DeserializeObject<ProfileCardsResponse>(response);
+
 			if (cardResponse.Cards != null) {
 				int id = 1;
 				foreach (Card c in cardResponse.Cards) {
@@ -279,8 +280,8 @@ namespace Beanstream.Api.SDK
 			};
 
 			string response = req.ProcessTransaction (HttpMethod.Get, url);
-			Console.WriteLine ("card response: " + response);
-			ProfileGetCardResponse cardResponse = JsonConvert.DeserializeObject<ProfileGetCardResponse>(response);
+
+			ProfileCardsResponse cardResponse = JsonConvert.DeserializeObject<ProfileCardsResponse>(response);
 			if (cardResponse.Cards == null)
 				return null;
 			cardResponse.Cards [0].id = cardId; // give it the ID since that is not persisted nor retrieved

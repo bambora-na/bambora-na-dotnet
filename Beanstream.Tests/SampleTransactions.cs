@@ -44,7 +44,7 @@ namespace Beanstream.Api.SDK.Tests
 			Console.WriteLine ("BEGIN running sample transactions");
 
 			// Payments API
-			SampleTransactions.ProcessPayment ();
+			/*SampleTransactions.ProcessPayment ();
 			SampleTransactions.ProcessReturns ();
 			SampleTransactions.ProcessPreauthorization ();
 			SampleTransactions.ProcessVoids ();
@@ -57,7 +57,7 @@ namespace Beanstream.Api.SDK.Tests
 			SampleTransactions.ProfileTakePayment ();
 			SampleTransactions.GetProfile ();
 			SampleTransactions.UpdateProfile ();
-			SampleTransactions.AddAndRemoveCardFromProfile ();
+			*/SampleTransactions.AddAndRemoveCardFromProfile ();
 			SampleTransactions.GetAllCardsFromProfile ();
 			SampleTransactions.GetCardFromProfile ();
 			SampleTransactions.UpdateCardInProfile ();
