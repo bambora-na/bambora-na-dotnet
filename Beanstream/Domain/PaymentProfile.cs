@@ -37,10 +37,18 @@ namespace Beanstream.Api.SDK
 
 		/// <summary>
 		/// The default card on the profile. To get all the cards call paymentProfile.getCards().
+		/// Instead you can create a profile with a Token.
 		/// </summary>
 		/// <value>The card.</value>
 		[JsonProperty(PropertyName = "card")]
 		public Card Card { get; set; }
+
+		/// <summary>
+		/// You can create a Profile with a token OR a credit card (using the Card field).
+		/// </summary>
+		/// <value>The token.</value>
+		[JsonProperty(PropertyName = "token")]
+		public Token Token { get; set; }
 
 		[JsonProperty(PropertyName = "billing")]
 		public Address Billing { get; set; }

@@ -24,13 +24,26 @@ using System;
 using Beanstream.Api.SDK.Requests;
 using Newtonsoft.Json;
 using Beanstream.Api.SDK;
+using Beanstream.Api.SDK.Domain;
 
 namespace Beanstream
 {
 	public class ProfilePaymentRequest : PaymentRequest
 	{
+		/// <summary>
+		/// Make a payment with a saved profile if you have saved
+		/// credit card information in it.
+		/// </summary>
+		/// <value>The payment profile field containing the profile ID and the card ID (1, 2, 3...)</value>
 		[JsonProperty(PropertyName = "payment_profile")]
 		public PaymentProfileField PaymentProfile { get; set; }
+
+		/// <summary>
+		/// You can make a 1-time purchase with a token using an existing profile.
+		/// </summary>
+		/// <value>The token.</value>
+		[JsonProperty(PropertyName = "token")]
+		public Token Token { get; set; }
 
 		public ProfilePaymentRequest() {
 			PaymentMethod = PaymentMethods.payment_profile.ToString ();
