@@ -44,7 +44,7 @@ namespace Beanstream.Api.SDK.Tests
 			Console.WriteLine ("BEGIN running sample transactions");
 
 			// Payments API
-			/*SampleTransactions.ProcessPayment ();
+			SampleTransactions.ProcessPayment ();
 			SampleTransactions.ProcessReturns ();
 			SampleTransactions.ProcessPreauthorization ();
 			SampleTransactions.ProcessVoids ();
@@ -53,13 +53,14 @@ namespace Beanstream.Api.SDK.Tests
 			//SampleTransactions.ProcessInterac ();
 			SampleTransactions.GetTransaction ();
 			SampleTransactions.CreateAndDeleteProfile ();
-			*/SampleTransactions.ProfileTakePayment ();/*
+			SampleTransactions.CreateProfileWithToken ();
+			SampleTransactions.ProfileTakePayment ();
 			SampleTransactions.GetProfile ();
 			SampleTransactions.UpdateProfile ();
 			SampleTransactions.AddAndRemoveCardFromProfile ();
 			SampleTransactions.GetAllCardsFromProfile ();
 			SampleTransactions.GetCardFromProfile ();
-			SampleTransactions.UpdateCardInProfile ();*/
+			SampleTransactions.UpdateCardInProfile ();
 			Console.WriteLine ("FINISHED running sample transactions");
 		}
 
@@ -418,6 +419,55 @@ namespace Beanstream.Api.SDK.Tests
 					ExpiryMonth = "12",
 					ExpiryYear = "18",
 					Cvd = "123"
+				}, 
+				new Address() {
+					Name = "Jane Doe",
+					AddressLine1 = "123 Fake St.",
+					City = "victoria",
+					Province = "bc",
+					Country = "ca",
+					PostalCode = "v9t2g6",
+					PhoneNumber = "12501234567",
+					EmailAddress = "test@beanstream.com"
+				});
+			Console.WriteLine ("Created profile with ID: " + response.Id);
+
+			// delete it so when we create a profile again with the same card we won't get an error
+			beanstream.Profiles.DeleteProfile (response.Id);
+		}
+
+		private static void CreateProfileWithToken() {
+			Console.WriteLine ("Creating Payment Profile with a Legato Token... ");
+
+			Gateway beanstream = new Gateway () {
+				MerchantId = 300200578,
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+			};
+
+			string url = "https://www.beanstream.com/scripts/tokenization/tokens";
+			var data = new {
+				number = "5100000010001004",
+				expiry_month = "12",
+				expiry_year = "18",
+				cvd = "123"
+			};
+
+			var requestInfo = new RequestObject(HttpMethod.Post, url, null, data);
+			var command = new ExecuteWebRequest (requestInfo);
+			WebCommandExecuter executer = new WebCommandExecuter ();
+			var result = executer.ExecuteCommand (command);
+
+			LegatoTokenResponse token = JsonConvert.DeserializeObject<LegatoTokenResponse>(result.Response);
+
+			// You can create a profile with a token instead of a card.
+			// It will save the billing informatio, but the token is still single-use
+			ProfileResponse response = beanstream.Profiles.CreateProfile (
+				new Token() {
+					Name = "Jane Doe",
+					Code = token.Token
 				}, 
 				new Address() {
 					Name = "Jane Doe",

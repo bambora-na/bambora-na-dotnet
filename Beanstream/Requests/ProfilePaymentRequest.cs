@@ -38,12 +38,6 @@ namespace Beanstream
 		[JsonProperty(PropertyName = "payment_profile")]
 		public PaymentProfileField PaymentProfile { get; set; }
 
-		/// <summary>
-		/// You can make a 1-time purchase with a token using an existing profile.
-		/// </summary>
-		/// <value>The token.</value>
-		[JsonProperty(PropertyName = "token")]
-		public Token Token { get; set; }
 
 		public ProfilePaymentRequest() {
 			PaymentMethod = PaymentMethods.payment_profile.ToString ();
