@@ -23,7 +23,7 @@
 using System;
 
 /// <summary>
-/// Operators used for querying transations using the Reporting API.
+/// Operators used for querying transactions using the Reporting API.
 /// </summary>
 using System.ComponentModel;
 using Newtonsoft.Json;
