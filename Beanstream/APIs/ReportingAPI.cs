@@ -90,7 +90,7 @@ namespace Beanstream.Api.SDK
 
 			HttpsWebRequest req = new HttpsWebRequest () {
 				MerchantId = _configuration.MerchantId,
-				Passcode = _configuration.PaymentsApiPasscode,
+				Passcode = _configuration.ReportingApiPasscode,
 				WebCommandExecutor = _webCommandExecuter
 			};
 
@@ -103,12 +103,7 @@ namespace Beanstream.Api.SDK
 				end_row = endRow,
 				criteria = criteria
 			};
-			var data = JsonConvert.SerializeObject (
-				query,
-				Formatting.Indented,
-				new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore } // ignore null values
-			);
-			Console.WriteLine (data);
+
 			string response = req.ProcessTransaction (HttpMethod.Post, url, query);
 			//Console.WriteLine ("\n\n"+response+"\n\n");
 

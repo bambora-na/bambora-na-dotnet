@@ -32,8 +32,8 @@ namespace Beanstream.Api.SDK.Requests
 		[JsonProperty(PropertyName = "payment_method")]
 		public string PaymentMethod { get; set; }
 
-		[JsonProperty(PropertyName = "merchant_id")]
-		public int MerchantId { get; set; }
+		//[JsonProperty(PropertyName = "merchant_id")]
+		//public int MerchantId { get; set; }
 
 		[JsonProperty(PropertyName = "order_number")]
 		public string OrderNumber { get; set; }

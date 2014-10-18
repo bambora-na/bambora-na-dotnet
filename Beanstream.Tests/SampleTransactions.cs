@@ -52,6 +52,7 @@ namespace Beanstream.Api.SDK.Tests
 			SampleTransactions.ProcessPhysicalPayments (); // you need these options (cash and cheque) enabled on your merchant account first
 			//SampleTransactions.ProcessInterac ();
 			SampleTransactions.GetTransaction ();
+			*/SampleTransactions.QueryTransactions();/*
 			SampleTransactions.CreateAndDeleteProfile ();
 			*/SampleTransactions.CreateProfileWithToken ();/*
 			SampleTransactions.ProfileTakePayment ();
@@ -419,7 +420,7 @@ namespace Beanstream.Api.SDK.Tests
 					ExpiryMonth = "12",
 					ExpiryYear = "18",
 					Cvd = "123"
-				}, 
+				},
 				new Address() {
 					Name = "Jane Doe",
 					AddressLine1 = "123 Fake St.",

@@ -23,6 +23,9 @@
 using System;
 using Newtonsoft.Json;
 
+/// <summary>
+/// Search criteria used when querying for transaction records.
+/// </summary>
 namespace Beanstream
 {
 	public class Criteria

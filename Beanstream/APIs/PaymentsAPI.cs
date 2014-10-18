@@ -92,9 +92,6 @@ namespace Beanstream.Api.SDK
 				WebCommandExecutor = _webCommandExecuter
 			};
 
-				
-			paymentRequest.MerchantId = _configuration.MerchantId;
-
 			string response = req.ProcessTransaction (HttpMethod.Post, url, paymentRequest);
 
 			return JsonConvert.DeserializeObject<PaymentResponse>(response);
