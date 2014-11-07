@@ -137,6 +137,7 @@ namespace Beanstream.Api.SDK
 
 			var profile = new {
 				card = card,
+				token = token,
 				billing = billingAddress,
 				custom = customFields
 			};

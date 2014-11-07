@@ -52,8 +52,9 @@ namespace Beanstream.Api.SDK.Tests
 			SampleTransactions.ProcessPhysicalPayments (); // you need these options (cash and cheque) enabled on your merchant account first
 			//SampleTransactions.ProcessInterac ();
 			SampleTransactions.GetTransaction ();
+			*/SampleTransactions.QueryTransactions();/*
 			SampleTransactions.CreateAndDeleteProfile ();
-			SampleTransactions.CreateProfileWithToken ();
+			*/SampleTransactions.CreateProfileWithToken ();/*
 			SampleTransactions.ProfileTakePayment ();
 			SampleTransactions.GetProfile ();
 			SampleTransactions.UpdateProfile ();
@@ -61,7 +62,9 @@ namespace Beanstream.Api.SDK.Tests
 			SampleTransactions.GetAllCardsFromProfile ();
 			SampleTransactions.GetCardFromProfile ();
 			*/SampleTransactions.UpdateCardInProfile ();/*
-			Console.WriteLine ("FINISHED running sample transactions");*/
+			Console.WriteLine ("FINISHED running sample transactions");
+			SampleTransactions.UpdateCardInProfile ();*/
+			Console.WriteLine ("FINISHED running sample transactions");
 		}
 
 
@@ -419,7 +422,7 @@ namespace Beanstream.Api.SDK.Tests
 					ExpiryMonth = "12",
 					ExpiryYear = "18",
 					Cvd = "123"
-				}, 
+				},
 				new Address() {
 					Name = "Jane Doe",
 					AddressLine1 = "123 Fake St.",
@@ -461,6 +464,7 @@ namespace Beanstream.Api.SDK.Tests
 			var result = executer.ExecuteCommand (command);
 
 			LegatoTokenResponse token = JsonConvert.DeserializeObject<LegatoTokenResponse>(result.Response);
+			Console.WriteLine ("Retrieved Legato Token: "+token.Token);
 
 			// You can create a profile with a token instead of a card.
 			// It will save the billing informatio, but the token is still single-use
@@ -717,7 +721,6 @@ namespace Beanstream.Api.SDK.Tests
 			Console.WriteLine ("Retrieved " + cards.Count + " cards from profile.");
 			Console.WriteLine ("Card 1 expiry year: " + cards[0].ExpiryYear);
 			Console.WriteLine ("Card 2 expiry year: " + cards[1].ExpiryYear);
-
 
 			// delete it so when we create a profile again with the same card we won't get an error
 			beanstream.Profiles.DeleteProfile (response.Id);

@@ -124,6 +124,7 @@ namespace Beanstream.Api.SDK
 			returnRequest.MerchantId = _configuration.MerchantId.ToString();
 
 			string response = req.ProcessTransaction (HttpMethod.Post, url, returnRequest);
+			Console.WriteLine (response);
 			return JsonConvert.DeserializeObject<PaymentResponse>(response);
 
 		}
