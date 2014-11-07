@@ -308,6 +308,9 @@ namespace Beanstream.Api.SDK
 				WebCommandExecutor = _webCommandExecuter
 			};
 
+			if (card.Number.Contains ("X") )
+				card.Number = null; // when a card is returned from the server the number will be masked with X's. We don't want to submit that back.
+
 			// the json wants to be wrapped in a 'card' group
 			var c = new {
 				card

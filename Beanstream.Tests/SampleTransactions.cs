@@ -57,11 +57,11 @@ namespace Beanstream.Api.SDK.Tests
 			SampleTransactions.ProfileTakePayment ();
 			SampleTransactions.GetProfile ();
 			SampleTransactions.UpdateProfile ();
-			*/SampleTransactions.AddAndRemoveCardFromProfile ();
+			SampleTransactions.AddAndRemoveCardFromProfile ();
 			SampleTransactions.GetAllCardsFromProfile ();
 			SampleTransactions.GetCardFromProfile ();
-			SampleTransactions.UpdateCardInProfile ();
-			Console.WriteLine ("FINISHED running sample transactions");
+			*/SampleTransactions.UpdateCardInProfile ();/*
+			Console.WriteLine ("FINISHED running sample transactions");*/
 		}
 
 
@@ -814,9 +814,8 @@ namespace Beanstream.Api.SDK.Tests
 			Card card = profile.getCard (beanstream.Profiles, 1);
 			Console.WriteLine ("Retrieved card with expiry year: " + card.ExpiryYear);
 			card.ExpiryYear = "20";
-			card.Number = "4030000010001234";
 			profile.UpdateCard (beanstream.Profiles, card);
-
+			Console.WriteLine ("Updated card expiry");
 			card = profile.getCard (beanstream.Profiles, 1);
 			Console.WriteLine ("Retrieved updated card with expiry year: " + card.ExpiryYear);
 
