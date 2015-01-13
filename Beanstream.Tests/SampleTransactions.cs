@@ -33,18 +33,24 @@ using System.IO;
 using Beanstream.Api.SDK.Domain;
 using System.Collections.Generic;
 
+/**
+ * An integration test showing the capabilities of the SDK.
+ */
+using NUnit.Framework;
+
+
 namespace Beanstream.Api.SDK.Tests
 {
-
+	[TestFixture]
 	public class SampleTransactions
 	{
 
-		public static void Main(string[] args) {
+		/*public static void Main(string[] args) {
 
 			Console.WriteLine ("BEGIN running sample transactions");
 
 			// Payments API
-			/*SampleTransactions.ProcessPayment ();
+			SampleTransactions.ProcessPayment ();
 			SampleTransactions.ProcessReturns ();
 			SampleTransactions.ProcessPreauthorization ();
 			SampleTransactions.ProcessVoids ();
@@ -52,26 +58,24 @@ namespace Beanstream.Api.SDK.Tests
 			SampleTransactions.ProcessPhysicalPayments (); // you need these options (cash and cheque) enabled on your merchant account first
 			//SampleTransactions.ProcessInterac ();
 			SampleTransactions.GetTransaction ();
-			*/SampleTransactions.QueryTransactions();/*
+			SampleTransactions.QueryTransactions();
 			SampleTransactions.CreateAndDeleteProfile ();
-			*/SampleTransactions.CreateProfileWithToken ();/*
+			SampleTransactions.CreateProfileWithToken ();
 			SampleTransactions.ProfileTakePayment ();
 			SampleTransactions.GetProfile ();
 			SampleTransactions.UpdateProfile ();
 			SampleTransactions.AddAndRemoveCardFromProfile ();
 			SampleTransactions.GetAllCardsFromProfile ();
 			SampleTransactions.GetCardFromProfile ();
-			*/SampleTransactions.UpdateCardInProfile ();/*
+			SampleTransactions.UpdateCardInProfile ();
 			Console.WriteLine ("FINISHED running sample transactions");
-			SampleTransactions.UpdateCardInProfile ();*/
-			Console.WriteLine ("FINISHED running sample transactions");
-		}
+		}*/
 
 
 
-
-
-		static void ProcessPayment() {
+		// returns the transaction ID
+		[Test]
+		static string ProcessPayment() {
 
 			Console.WriteLine ("Processing Payment... ");
 
@@ -94,11 +98,17 @@ namespace Beanstream.Api.SDK.Tests
 					}
 				}
 			);
+
 			Console.WriteLine ("Payment id: " + response.TransactionId + ", " + response.Message+"\n");
 
+			Assert.IsNotEmpty (response.TransactionId);
+			Assert.AreEqual ("Approved", response.Message);
+			Assert.AreEqual ("P", response.TransType);
+
+			return response.TransactionId;
 		}
 
-
+		[Test]
 		static void ProcessReturns() {
 
 			Console.WriteLine ("Processing Returns... ");
@@ -125,6 +135,9 @@ namespace Beanstream.Api.SDK.Tests
 			);
 			Console.WriteLine ("Return Payment id: " + response.TransactionId);
 
+			Assert.IsNotEmpty (response.TransactionId);
+			Assert.AreEqual ("Approved", response.Message);
+			Assert.AreEqual ("P", response.TransType);
 
 			// return the purchase
 			response = beanstream.Payments.Return (
@@ -136,10 +149,15 @@ namespace Beanstream.Api.SDK.Tests
 			);
 
 			Console.WriteLine ("Return result: " + response.TransactionId + ", " + response.Message+"\n" );
+
+			Assert.IsNotEmpty (response.TransactionId);
+			Assert.AreEqual ("Approved", response.Message);
+			Assert.AreEqual ("R", response.TransType);
+
 		}
 
 
-
+		[Test]
 		static void ProcessPreauthorization() {
 
 			Console.WriteLine ("Processing Pre-auth payments... ");
@@ -177,11 +195,18 @@ namespace Beanstream.Api.SDK.Tests
 
 			Console.WriteLine ("Pre-auth Payment id: " + response.TransactionId + ", " + response.Message);
 
+			Assert.IsNotEmpty (response.TransactionId);
+			Assert.AreEqual ("Approved", response.Message);
+			Assert.AreEqual ("PA", response.TransType);
 
 			// complete the pre-auth and get the money from the customer
 			response = beanstream.Payments.PreAuthCompletion ( response.TransactionId, 60.00 );
 
 			Console.WriteLine ("Pre-auth result: " + response.TransactionId + ", " + response.Message+"\n" );
+
+			Assert.IsNotEmpty (response.TransactionId);
+			Assert.AreEqual ("Approved", response.Message);
+			Assert.AreEqual ("PAC", response.TransType);
 		}
 
 
@@ -212,11 +237,19 @@ namespace Beanstream.Api.SDK.Tests
 			);
 			Console.WriteLine ("Void Payment id: " + response.TransactionId);
 
+			Assert.IsNotEmpty (response.TransactionId);
+			Assert.AreEqual ("Approved", response.Message);
+			Assert.AreEqual ("P", response.TransType);
+
 
 			// void the purchase
 			response = beanstream.Payments.Void (response.TransactionId, 30); // void the $30 amount
 
 			Console.WriteLine ("Void result: " + response.TransactionId + ", " + response.Message+"\n");
+
+			Assert.IsNotEmpty (response.TransactionId);
+			Assert.AreEqual ("Approved", response.Message);
+			Assert.AreEqual ("VP", response.TransType);
 		}
 
 		//TODO this is being implemented
@@ -280,7 +313,7 @@ namespace Beanstream.Api.SDK.Tests
 				ApiVersion = "1"
 			};
 
-			PaymentResponse paymentResponse = beanstream.Payments.MakePayment (
+			PaymentResponse response = beanstream.Payments.MakePayment (
 				new TokenPaymentRequest () 
 				{
 					Amount = 30,
@@ -292,7 +325,11 @@ namespace Beanstream.Api.SDK.Tests
 				}
 			);
 
-			Console.WriteLine ("Token payment result: " + paymentResponse.TransactionId + ", " + paymentResponse.Message+"\n");
+			Console.WriteLine ("Token payment result: " + response.TransactionId + ", " + response.Message+"\n");
+
+			Assert.IsNotEmpty (response.TransactionId);
+			Assert.AreEqual ("Approved", response.Message);
+			Assert.AreEqual ("P", response.TransType);
 		}
 
 
@@ -323,6 +360,10 @@ namespace Beanstream.Api.SDK.Tests
 			);
 			Console.WriteLine ("Cash Payment id: " + response.TransactionId + ", " + response.Message+"\n");
 
+			Assert.IsNotEmpty (response.TransactionId);
+			Assert.AreEqual ("Approved", response.Message);
+			Assert.AreEqual ("P", response.TransType);
+
 
 			Console.WriteLine ("Processing Cheque Payment... ");
 			// process cheque payment
@@ -334,6 +375,9 @@ namespace Beanstream.Api.SDK.Tests
 			);
 			Console.WriteLine ("Cheque Payment id: " + response.TransactionId + ", " + response.Message+"\n");
 
+			Assert.IsNotEmpty (response.TransactionId);
+			Assert.AreEqual ("Approved", response.Message);
+			Assert.AreEqual ("P", response.TransType);
 		}
 
 
@@ -362,15 +406,30 @@ namespace Beanstream.Api.SDK.Tests
 			);
 
 			beanstream.Payments.Void (response.TransactionId, 100);
-			beanstream.Reporting.GetTransaction (response.TransactionId);
+			Transaction trans = beanstream.Reporting.GetTransaction (response.TransactionId);
 
 			Console.WriteLine ("Payment id: " + response.TransactionId + ", " + response.Message+"\n");
+
+			Assert.IsNotEmpty (response.TransactionId);
+			Assert.AreEqual ("Approved", response.Message);
+			Assert.AreEqual ("P", response.TransType);
+			Assert.NotNull (trans.Adjustments);
+			Assert.AreEqual (1, trans.Adjustments.Count);
+
+			// look for the void payment, there should only be one adjustment
+			foreach (Adjustment adj in trans.Adjustments) {
+				Assert.AreEqual ("VP", adj.Type);
+			}
+
 		}
 
 
 		private static void QueryTransactions() {
 
 			Console.WriteLine ("Query Transaction... ");
+
+			// create a payment so we have something to query for
+			string transId = ProcessPayment ();
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
@@ -380,15 +439,15 @@ namespace Beanstream.Api.SDK.Tests
 			};
 
 			List<TransactionRecord> records = beanstream.Reporting.Query (  
-				DateTime.Now.Subtract(TimeSpan.FromDays(5)), 
-				DateTime.Now, 
+				DateTime.Now.Subtract(TimeSpan.FromMinutes(1)), 
+				DateTime.Now.Add(TimeSpan.FromMinutes(5)), 
 				1, 
-				100, 
+				1000, 
 				new Criteria[]{
 					new Criteria() {
 						Field = QueryFields.TransactionId, 
 						Operator = Operators.GreaterThanEqual, 
-						Value = "1000"
+						Value = "1"
 					},
 					new Criteria() {
 						Field = QueryFields.TransactionId, 
@@ -399,6 +458,16 @@ namespace Beanstream.Api.SDK.Tests
 			);
 
 			Console.WriteLine ("Num records: " + records.Count);
+
+			Assert.IsNotEmpty (records);
+			Assert.NotNull (transId);
+
+			bool found = false;
+			foreach (TransactionRecord record in records) {
+				if (record.TransactionId.ToString().Equals (transId))
+					found = true;
+			}
+			Assert.True (found); // we need to make sure we found our transaction
 		}
 
 
@@ -435,8 +504,14 @@ namespace Beanstream.Api.SDK.Tests
 				});
 			Console.WriteLine ("Created profile with ID: " + response.Id);
 
+			Assert.IsNotNull (response);
+			Assert.AreEqual ("Operation Successful", response.Message);
+
+
 			// delete it so when we create a profile again with the same card we won't get an error
-			beanstream.Profiles.DeleteProfile (response.Id);
+			response = beanstream.Profiles.DeleteProfile (response.Id);
+			Assert.IsNotNull (response);
+			Assert.AreEqual ("Operation Successful", response.Message);
 		}
 
 		private static void CreateProfileWithToken() {
@@ -467,7 +542,7 @@ namespace Beanstream.Api.SDK.Tests
 			Console.WriteLine ("Retrieved Legato Token: "+token.Token);
 
 			// You can create a profile with a token instead of a card.
-			// It will save the billing informatio, but the token is still single-use
+			// It will save the billing information, but the token is still single-use
 			ProfileResponse response = beanstream.Profiles.CreateProfile (
 				new Token() {
 					Name = "Jane Doe",
@@ -484,6 +559,9 @@ namespace Beanstream.Api.SDK.Tests
 					EmailAddress = "test@beanstream.com"
 				});
 			Console.WriteLine ("Created profile with ID: " + response.Id);
+
+			Assert.IsNotNull (response);
+			Assert.AreEqual ("Operation Successful", response.Message);
 
 			// delete it so when we create a profile again with the same card we won't get an error
 			beanstream.Profiles.DeleteProfile (response.Id);
@@ -520,7 +598,10 @@ namespace Beanstream.Api.SDK.Tests
 				});
 			Console.WriteLine ("Created profile with ID: " + response.Id);
 
-			beanstream.Payments.MakePayment (new ProfilePaymentRequest() {
+			Assert.IsNotNull (response);
+			Assert.AreEqual ("Operation Successful", response.Message);
+
+			PaymentResponse payment = beanstream.Payments.MakePayment (new ProfilePaymentRequest() {
 				Amount = 40.95,
 				OrderNumber = getRandomOrderId("profile"),
 				PaymentProfile = new PaymentProfileField() {
@@ -528,6 +609,11 @@ namespace Beanstream.Api.SDK.Tests
 					CustomerCode = response.Id
 				}
 			});
+
+			Assert.IsNotNull (payment);
+			Assert.AreEqual ("Approved", payment.Message);
+			Assert.AreEqual ("P", payment.TransType);
+
 			// delete it so when we create a profile again with the same card we won't get an error
 			beanstream.Profiles.DeleteProfile (response.Id);
 		}
@@ -564,9 +650,15 @@ namespace Beanstream.Api.SDK.Tests
 				});
 			Console.WriteLine ("Created profile with ID: " + response.Id);
 
+			Assert.IsNotNull (response);
+			Assert.AreEqual ("Operation Successful", response.Message);
 
 			PaymentProfile profile = beanstream.Profiles.GetProfile (response.Id);
-			Console.WriteLine ("get profile: " + profile.Id);
+			Assert.IsNotNull (profile);
+			Assert.AreEqual (response.Id, profile.Id);
+			Assert.AreEqual ("Jane Doe", profile.Billing.Name);
+			Console.WriteLine ("got profile: " + profile.Id);
+
 			// delete it so when we create a profile again with the same card we won't get an error
 			beanstream.Profiles.DeleteProfile (response.Id);
 		}
@@ -601,7 +693,8 @@ namespace Beanstream.Api.SDK.Tests
 					EmailAddress = "test@beanstream.com"
 				});
 			Console.WriteLine ("Created profile with ID: " + response.Id);
-
+			Assert.IsNotNull (response);
+			Assert.AreEqual ("Operation Successful", response.Message);
 
 			PaymentProfile profile = beanstream.Profiles.GetProfile (response.Id);
 			Console.WriteLine ("Profile.billing.city: " + profile.Billing.City);
@@ -609,10 +702,14 @@ namespace Beanstream.Api.SDK.Tests
 
 			Console.WriteLine ("Updating profile's billing address: city");
 			profile.Billing.City = "penticton";
-			beanstream.Profiles.UpdateProfile (profile);
-
+			response = beanstream.Profiles.UpdateProfile (profile);
+			Assert.IsNotNull (response);
+			Assert.AreEqual ("Operation Successful", response.Message);
 
 			profile = beanstream.Profiles.GetProfile (response.Id);
+			Assert.IsNotNull (profile);
+			Assert.AreEqual (response.Id, profile.Id);
+			Assert.AreEqual ("penticton", profile.Billing.City);
 			Console.WriteLine ("Profile.billing.city: " + profile.Billing.City);
 			// delete it so when we create a profile again with the same card we won't get an error
 			beanstream.Profiles.DeleteProfile (response.Id);
@@ -649,7 +746,8 @@ namespace Beanstream.Api.SDK.Tests
 					EmailAddress = "test@beanstream.com"
 				}); 
 			Console.WriteLine ("Created profile with ID: " + response.Id);
-
+			Assert.IsNotNull (response);
+			Assert.AreEqual ("Operation Successful", response.Message);
 
 
 			PaymentProfile profile = beanstream.Profiles.GetProfile (response.Id);
@@ -662,9 +760,13 @@ namespace Beanstream.Api.SDK.Tests
 				Cvd = "123"
 			});
 			Console.WriteLine ("Added card to profile");
+			Assert.IsNotNull (response);
+			Assert.AreEqual ("Operation Successful", response.Message);
 
 			// delete the card
 			response = profile.RemoveCard (beanstream.Profiles, 2); // delete card #2
+			Assert.IsNotNull (response);
+			Assert.AreEqual ("Operation Successful", response.Message);
 
 			Console.WriteLine ("Removed card from profile");
 
@@ -703,7 +805,8 @@ namespace Beanstream.Api.SDK.Tests
 					EmailAddress = "test@beanstream.com"
 				}); 
 			Console.WriteLine ("Created profile with ID: " + response.Id);
-
+			Assert.IsNotNull (response);
+			Assert.AreEqual ("Operation Successful", response.Message);
 
 			PaymentProfile profile = beanstream.Profiles.GetProfile (response.Id);
 
@@ -715,9 +818,13 @@ namespace Beanstream.Api.SDK.Tests
 				Cvd = "123"
 			});
 			Console.WriteLine ("Added card to profile");
+			Assert.IsNotNull (response);
+			Assert.AreEqual ("Operation Successful", response.Message);
 
 			// get all cards
 			IList<Card> cards = profile.getCards (beanstream.Profiles);
+			Assert.NotNull (cards);
+			Assert.AreEqual (2, cards.Count);
 			Console.WriteLine ("Retrieved " + cards.Count + " cards from profile.");
 			Console.WriteLine ("Card 1 expiry year: " + cards[0].ExpiryYear);
 			Console.WriteLine ("Card 2 expiry year: " + cards[1].ExpiryYear);
@@ -756,7 +863,8 @@ namespace Beanstream.Api.SDK.Tests
 					EmailAddress = "test@beanstream.com"
 				}); 
 			Console.WriteLine ("Created profile with ID: " + response.Id);
-
+			Assert.IsNotNull (response);
+			Assert.AreEqual ("Operation Successful", response.Message);
 
 			PaymentProfile profile = beanstream.Profiles.GetProfile (response.Id);
 
@@ -768,11 +876,14 @@ namespace Beanstream.Api.SDK.Tests
 				Cvd = "123"
 			});
 			Console.WriteLine ("Added card to profile");
+			Assert.IsNotNull (response);
+			Assert.AreEqual ("Operation Successful", response.Message);
 
 			// get card
 			Card card = profile.getCard (beanstream.Profiles, 2);
 			Console.WriteLine ("Retrieved card with expiry year: " + card.ExpiryYear);
-
+			Assert.NotNull (card);
+			Assert.AreEqual ("403000XXXXXX1234", card.Number);
 
 			// delete it so when we create a profile again with the same card we won't get an error
 			beanstream.Profiles.DeleteProfile (response.Id);
@@ -809,17 +920,23 @@ namespace Beanstream.Api.SDK.Tests
 					EmailAddress = "test@beanstream.com"
 				}); 
 			Console.WriteLine ("Created profile with ID: " + response.Id);
-
+			Assert.IsNotNull (response);
+			Assert.AreEqual ("Operation Successful", response.Message);
 
 			PaymentProfile profile = beanstream.Profiles.GetProfile (response.Id);
+			Assert.IsNotNull (profile);
 
 			// get card
 			Card card = profile.getCard (beanstream.Profiles, 1);
 			Console.WriteLine ("Retrieved card with expiry year: " + card.ExpiryYear);
+			Assert.IsNotNull (card);
+			Assert.AreEqual ("18", card.ExpiryYear);
 			card.ExpiryYear = "20";
 			profile.UpdateCard (beanstream.Profiles, card);
 			Console.WriteLine ("Updated card expiry");
 			card = profile.getCard (beanstream.Profiles, 1);
+			Assert.IsNotNull (card);
+			Assert.AreEqual ("20", card.ExpiryYear);
 			Console.WriteLine ("Retrieved updated card with expiry year: " + card.ExpiryYear);
 
 			// delete it so when we create a profile again with the same card we won't get an error
