@@ -15,7 +15,7 @@ Before you begin making purchases, you need to create a Beanstream API object. I
 ```c#
 Beanstream beanstream = new Beanstream () {
 	MerchantId = YOUR_MERCHANT_ID,
-	ApiKey = "YOUR_API_KEY",
+	PaymentsApiKey = "YOUR_API_KEY",
 	ApiVersion = "1"
 };
 ```
