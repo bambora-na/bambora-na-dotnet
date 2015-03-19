@@ -25,10 +25,10 @@ Beanstream beanstream = new Beanstream () {
 Perform a credit card purchase.
 
 ```c#
-beanstream.Payments.MakeCardPayment (
+PaymentResponse response = beanstream.Payments.MakePayment (
 	new CardPaymentRequest {
 		Amount = 100.00,
-		OrderNumber = orderNum++.ToString(),
+		OrderNumber = "myRandomOrderId0001",
 		Card = new Card {
 			Name = "John Doe",
 			Number = "5100000010001004",
