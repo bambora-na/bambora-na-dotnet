@@ -5,7 +5,7 @@ Integration with Beanstream’s payments gateway is a simple, flexible solution.
 
 You can choose between a straightforward payment requiring very few parameters; or, you can customize a feature-rich integration.
 
-In addition to credit card transactions, Canadian merchants can process INTERAC payments. To assist as a centralized record of all your sales, we also accept cash and cheque transactions.
+To assist as a centralized record of all your sales, we also accept cash and cheque transactions.
 
 For very detailed information on the Payments API, look at the Beanstream developer portal's [documentation](http://developer.beanstream.com/documentation/take-payments/purchases-pre-authorizations/).
 
