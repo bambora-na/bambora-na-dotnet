@@ -30,7 +30,7 @@ namespace Beanstream
 		[JsonProperty(PropertyName = "customer_code")]
 		public string CustomerCode { get; set; }
 
-		[JsonProperty(PropertyName = "card")]
+		[JsonProperty(PropertyName = "card_id")]
 		public int CardId { get; set; }
 
 		public PaymentProfileField() {
