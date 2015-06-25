@@ -45,12 +45,13 @@ namespace Beanstream.Api.SDK.Tests
 	public class SampleTransactions
 	{
 
-		/*public static void Main(string[] args) {
+		public static void Main(string[] args) {
 
 			Console.WriteLine ("BEGIN running sample transactions");
 
 			// Payments API
-			SampleTransactions.ProcessPayment ();
+			//SampleTransactions.ProcessPayment ();
+			/*SampleTransactions.ProcessDeclinedPayment ();
 			SampleTransactions.ProcessReturns ();
 			SampleTransactions.ProcessPreauthorization ();
 			SampleTransactions.ProcessVoids ();
@@ -61,20 +62,18 @@ namespace Beanstream.Api.SDK.Tests
 			SampleTransactions.QueryTransactions();
 			SampleTransactions.CreateAndDeleteProfile ();
 			SampleTransactions.CreateProfileWithToken ();
-			SampleTransactions.ProfileTakePayment ();
+			*/SampleTransactions.ProfileTakePayment ();/*
 			SampleTransactions.GetProfile ();
 			SampleTransactions.UpdateProfile ();
 			SampleTransactions.AddAndRemoveCardFromProfile ();
 			SampleTransactions.GetAllCardsFromProfile ();
 			SampleTransactions.GetCardFromProfile ();
-			SampleTransactions.UpdateCardInProfile ();
+			SampleTransactions.UpdateCardInProfile ();*/
 			Console.WriteLine ("FINISHED running sample transactions");
-		}*/
+		}
 
 
 
-		// returns the transaction ID
-		[Test]
 		static string ProcessPayment() {
 
 			Console.WriteLine ("Processing Payment... ");
@@ -106,6 +105,45 @@ namespace Beanstream.Api.SDK.Tests
 			Assert.AreEqual ("P", response.TransType);
 
 			return response.TransactionId;
+		}
+
+		[Test]
+		static void ProcessDeclinedPayment() {
+
+			Console.WriteLine ("Processing Payment... ");
+
+			Gateway beanstream = new Gateway () {
+				MerchantId = 300200578,
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ApiVersion = "1"
+			};
+
+			try {
+				PaymentResponse response = beanstream.Payments.MakePayment (
+					new CardPaymentRequest {
+						Amount = 100.00,
+						OrderNumber = getRandomOrderId("test"),
+						Card = new Card {
+							Name = "John Doe",
+							Number = "4003050500040005",
+							ExpiryMonth = "12",
+							ExpiryYear = "18",
+							Cvd = "123"
+						}
+					}
+				);
+
+
+			} catch (RedirectionException ex) {
+				// Redirect the user to the URL returned in the exception.
+				// This is used for Interac and 3d Secure
+			} catch (BaseApiException ex) {
+				// all other errors are caught here.
+				// Be careful not to return very detailed error messages to the users. This info
+				// can be used maliciously for "carding" (testing a lot of stolen card numbers to see
+				// what ones are valid).
+				Console.WriteLine ("There was an error processing your request. Please try again or use a different card.");
+			}
 		}
 
 		[Test]
@@ -598,6 +636,15 @@ namespace Beanstream.Api.SDK.Tests
 				});
 			Console.WriteLine ("Created profile with ID: " + response.Id);
 
+			// add a 2nd card
+			response = beanstream.Profiles.AddCard (response.Id, new Card () {
+				Name = "Jane Doe",
+				Number = "4030000010001234",
+				ExpiryMonth = "04",
+				ExpiryYear = "19",
+				Cvd = "123"
+			});
+				
 			Assert.IsNotNull (response);
 			Assert.AreEqual ("Operation Successful", response.Message);
 
@@ -605,14 +652,15 @@ namespace Beanstream.Api.SDK.Tests
 				Amount = 40.95,
 				OrderNumber = getRandomOrderId("profile"),
 				PaymentProfile = new PaymentProfileField() {
-					CardId = 1,
+					CardId = 2,
 					CustomerCode = response.Id
 				}
 			});
-
+			Console.WriteLine (payment.Message);
 			Assert.IsNotNull (payment);
 			Assert.AreEqual ("Approved", payment.Message);
 			Assert.AreEqual ("P", payment.TransType);
+			Assert.AreEqual ("VI", payment.Card.CardType);
 
 			// delete it so when we create a profile again with the same card we won't get an error
 			beanstream.Profiles.DeleteProfile (response.Id);

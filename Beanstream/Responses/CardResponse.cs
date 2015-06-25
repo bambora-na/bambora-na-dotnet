@@ -49,6 +49,9 @@ namespace Beanstream.Api.SDK
 		[JsonProperty(PropertyName = "cvd_result", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
 		public string CvdResult { get; set; }
 
+		[JsonProperty(PropertyName = "card_type", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public string CardType { get; set; }
+
 	}
 }
 

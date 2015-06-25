@@ -69,7 +69,7 @@ namespace Beanstream.Api.SDK
 
 		
 		[JsonProperty(PropertyName = "card", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-		public Card Card { get; set; }
+		public CardResponse Card { get; set; }
 
 		//TODO being implemented
 		//[JsonProperty(PropertyName = "swipe", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
