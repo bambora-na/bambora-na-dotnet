@@ -106,6 +106,7 @@ namespace Beanstream.Api.SDK.Requests
 
 			var code = -1;
 			var category = -1;
+			var message = "";
 			if (data != null) {
 				if (response.ContentType.Equals("application/json") ) Console.WriteLine ("card response: " + response);{
 					try {
@@ -114,6 +115,8 @@ namespace Beanstream.Api.SDK.Requests
 							code = Convert.ToInt32( json.SelectToken("code") );
 						if ( json != null && json.SelectToken("category") != null )
 							category = Convert.ToInt32( json.SelectToken("category") );
+						if ( json != null && json.SelectToken("message") != null )
+							message = json.SelectToken("message").ToString();
 					} catch (Exception e) {
 						// data is not json and not in the format we expect
 					}
@@ -123,28 +126,28 @@ namespace Beanstream.Api.SDK.Requests
 			switch (statusCode)
 			{
 				case HttpStatusCode.Found: // 302
-					return new RedirectionException(statusCode, data, category, code); // Used for redirection response in 3DS, Masterpass and Interac Online requests
+					return new RedirectionException(statusCode, data, message, category, code); // Used for redirection response in 3DS, Masterpass and Interac Online requests
 
 				case HttpStatusCode.BadRequest: // 400
-					return new InvalidRequestException(statusCode, data, category, code); // Often missing a required parameter
+					return new InvalidRequestException(statusCode, data, message, category, code); // Often missing a required parameter
 
 				case HttpStatusCode.Unauthorized: // 401
-					return new UnauthorizedException(statusCode, data, category, code); // authentication exception
+					return new UnauthorizedException(statusCode, data, message, category, code); // authentication exception
 
 				case HttpStatusCode.PaymentRequired: // 402
-					return new BusinessRuleException(statusCode, data, category, code); // Request failed business requirements or rejected by processor/bank
+					return new BusinessRuleException(statusCode, data, message, category, code); // Request failed business requirements or rejected by processor/bank
 
 				case HttpStatusCode.Forbidden: // 403
-					return new ForbiddenException(statusCode, data, category, code); // authorization failure
+					return new ForbiddenException(statusCode, data, message, category, code); // authorization failure
 					
 				case HttpStatusCode.MethodNotAllowed: // 405
-					return new InvalidRequestException(statusCode, data, category, code); // Sending the wrong HTTP Method
+					return new InvalidRequestException(statusCode, data, message, category, code); // Sending the wrong HTTP Method
 
 				case HttpStatusCode.UnsupportedMediaType: // 415
-					return new InvalidRequestException(statusCode, data, category, code); // Sending an incorrect Content-Type
+					return new InvalidRequestException(statusCode, data, message, category, code); // Sending an incorrect Content-Type
 
 				default:
-					return new InternalServerException(statusCode, data, category, code);
+					return new InternalServerException(statusCode, data, message, category, code);
 			}
 		}
 

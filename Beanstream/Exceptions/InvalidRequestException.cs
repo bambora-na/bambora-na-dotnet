@@ -30,16 +30,33 @@ using System.Net;
 ///  405 - Method not allowed - Sending the wrong HTTP Method
 ///  415 - Unsupported Media Type - Sending an incorrect Content-Type
 /// 
-/// This error should not occur while in a production environment. If it occurs the developer
-/// has done something wrong and the cardholder or merchant getting this message should contact the developer
-/// of the software.
+/// This error can occur while in a production environment. It will be thrown if a card is declined or if
+/// invalid card info is entered. It can also be thrown by developer-induced formatting errors. The
+/// UserFacingMessage will tell the card holder what happened.
 /// </summary>
 namespace Beanstream.Api.SDK.Exceptions
 {
 	public class InvalidRequestException : BaseApiException
 	{
-		public InvalidRequestException(HttpStatusCode statusCode, string response, int category, int code)
-			: base(statusCode, response, category, code)
+		public InvalidRequestException(HttpStatusCode statusCode, string response, string message, int category, int code)
+			: base(statusCode, response, message, category, code)
 		{ }
+
+		new public bool IsUserError() {
+			if (Category == 1)
+				return true;
+			else if (Category == 3 && Code == 52)
+				return true;
+			else
+				return false;
+		}
+
+		new public string UserFacingMessage ()
+		{
+			if (IsUserError())
+				return ResponseMessage;
+			else
+				return base.UserFacingMessage();
+		}
 	}
 }

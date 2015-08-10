@@ -33,8 +33,8 @@ namespace Beanstream.Api.SDK.Exceptions
 {
 	public class ForbiddenException : BaseApiException
 	{
-		public ForbiddenException(HttpStatusCode statusCode, string response, int category, int code)
-			: base(statusCode, response, category, code)
+		public ForbiddenException(HttpStatusCode statusCode, string response, string message, int category, int code)
+			: base(statusCode, response, message, category, code)
 		{ }
 	}
 }

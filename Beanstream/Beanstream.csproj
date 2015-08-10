@@ -60,7 +60,6 @@
     <Compile Include="Domain\Card.cs" />
     <Compile Include="Responses\IResponse.cs" />
     <Compile Include="Responses\PaymentResponse.cs" />
-    <Compile Include="Requests\CardPaymentRequest.cs" />
     <Compile Include="Requests\TokenPaymentRequest.cs" />
     <Compile Include="Domain\Token.cs" />
     <Compile Include="Domain\Link.cs" />
@@ -77,6 +76,7 @@
     <Compile Include="Responses\CardResponse.cs" />
     <Compile Include="Responses\InteracPurchaseResponse.cs" />
     <Compile Include="Responses\LegatoTokenResponse.cs" />
+    <Compile Include="Requests\CardPaymentRequest.cs" />
     <Compile Include="Requests\InteracRedirectRequest.cs" />
     <Compile Include="Requests\CashPaymentRequest.cs" />
     <Compile Include="Requests\ChequePaymentRequest.cs" />

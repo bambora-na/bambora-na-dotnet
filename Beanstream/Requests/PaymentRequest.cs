@@ -61,6 +61,7 @@ namespace Beanstream.Api.SDK.Requests
 
 		[JsonProperty(PropertyName = "custom")]
 		public CustomFields CustomFields { get; set; }
+
 	}
 }
 

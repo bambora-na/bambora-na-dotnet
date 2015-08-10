@@ -26,7 +26,7 @@ using Newtonsoft.Json;
 namespace Beanstream.Api.SDK
 {
 	/// <summary>
-	/// The result of storing a card on a payment profile.
+	/// The result of storing a card on a payment profile or from a credit card purchase.
 	/// </summary>
 	public class CardResponse
 	{

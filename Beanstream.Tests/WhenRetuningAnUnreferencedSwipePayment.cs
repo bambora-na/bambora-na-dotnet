@@ -102,7 +102,7 @@ namespace Beanstream.Api.SDK.Tests
 			// Arrange
 
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-							.Throws(new ForbiddenException(HttpStatusCode.Forbidden, "", 1, 0));
+							.Throws(new ForbiddenException(HttpStatusCode.Forbidden, "", "", 1, 0));
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
@@ -124,7 +124,7 @@ namespace Beanstream.Api.SDK.Tests
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new UnauthorizedException(HttpStatusCode.Unauthorized, "", 1, 0));
+				.Throws(new UnauthorizedException(HttpStatusCode.Unauthorized, "", "", 1, 0));
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
@@ -146,7 +146,7 @@ namespace Beanstream.Api.SDK.Tests
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new BusinessRuleException(HttpStatusCode.PaymentRequired, "", 1, 0));
+				.Throws(new BusinessRuleException(HttpStatusCode.PaymentRequired, "", "", 1, 0));
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
@@ -168,7 +168,7 @@ namespace Beanstream.Api.SDK.Tests
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new InvalidRequestException(HttpStatusCode.PaymentRequired, "", 1, 0));
+				.Throws(new InvalidRequestException(HttpStatusCode.PaymentRequired, "", "", 1, 0));
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,
@@ -190,7 +190,7 @@ namespace Beanstream.Api.SDK.Tests
 		{
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
-				.Throws(new InternalServerException(HttpStatusCode.InternalServerError, "", 1, 0));
+				.Throws(new InternalServerException(HttpStatusCode.InternalServerError, "", "", 1, 0));
 
 			Gateway beanstream = new Gateway () {
 				MerchantId = 300200578,

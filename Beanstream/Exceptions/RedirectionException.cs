@@ -32,8 +32,8 @@ namespace Beanstream.Api.SDK.Exceptions
 {
 	public class RedirectionException : BaseApiException
 	{
-		public RedirectionException(HttpStatusCode statusCode, string response, int category, int code)
-			: base(statusCode, response, category, code)
+		public RedirectionException(HttpStatusCode statusCode, string response, string message, int category, int code)
+			: base(statusCode, response, message, category, code)
 		{ }
 	}
 }

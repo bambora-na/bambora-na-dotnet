@@ -50,9 +50,9 @@ namespace Beanstream.Api.SDK.Tests
 			Console.WriteLine ("BEGIN running sample transactions");
 
 			// Payments API
-			//SampleTransactions.ProcessPayment ();
-			/*SampleTransactions.ProcessDeclinedPayment ();
-			SampleTransactions.ProcessReturns ();
+			SampleTransactions.ProcessPayment ();
+			SampleTransactions.ProcessDeclinedPayment ();
+			/*SampleTransactions.ProcessReturns ();
 			SampleTransactions.ProcessPreauthorization ();
 			SampleTransactions.ProcessVoids ();
 			SampleTransactions.ProcessTokenPayment ();
@@ -62,7 +62,7 @@ namespace Beanstream.Api.SDK.Tests
 			SampleTransactions.QueryTransactions();
 			SampleTransactions.CreateAndDeleteProfile ();
 			SampleTransactions.CreateProfileWithToken ();
-			*/SampleTransactions.ProfileTakePayment ();/*
+			SampleTransactions.ProfileTakePayment ();
 			SampleTransactions.GetProfile ();
 			SampleTransactions.UpdateProfile ();
 			SampleTransactions.AddAndRemoveCardFromProfile ();
@@ -83,7 +83,7 @@ namespace Beanstream.Api.SDK.Tests
 				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
 				ApiVersion = "1"
 			};
-
+					
 			PaymentResponse response = beanstream.Payments.MakePayment (
 				new CardPaymentRequest {
 					Amount = 100.00,
@@ -125,7 +125,7 @@ namespace Beanstream.Api.SDK.Tests
 						OrderNumber = getRandomOrderId("test"),
 						Card = new Card {
 							Name = "John Doe",
-							Number = "4003050500040005",
+							Number = "4003050500040005", // a test card that will decline
 							ExpiryMonth = "12",
 							ExpiryYear = "18",
 							Cvd = "123"
@@ -137,12 +137,16 @@ namespace Beanstream.Api.SDK.Tests
 			} catch (RedirectionException ex) {
 				// Redirect the user to the URL returned in the exception.
 				// This is used for Interac and 3d Secure
+			} catch (InvalidRequestException ex) {
+				// something was wrong with the card info or it was declined. Send a message
+				// to the card holder.
+				Console.WriteLine(ex.ResponseMessage);
 			} catch (BaseApiException ex) {
 				// all other errors are caught here.
 				// Be careful not to return very detailed error messages to the users. This info
 				// can be used maliciously for "carding" (testing a lot of stolen card numbers to see
 				// what ones are valid).
-				Console.WriteLine ("There was an error processing your request. Please try again or use a different card.");
+				Console.WriteLine(ex.ResponseMessage);
 			}
 		}
 

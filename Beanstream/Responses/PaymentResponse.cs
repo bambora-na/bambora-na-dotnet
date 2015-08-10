@@ -35,9 +35,9 @@ namespace Beanstream.Api.SDK
 		[JsonProperty(PropertyName = "id")]
 		public string TransactionId { get; set; }
 
-		
+
 		[JsonProperty(PropertyName = "approved")]
-		public string Approved { get; set; }
+		protected string Approved { get; set; }
 
 		
 		[JsonProperty(PropertyName = "message_id")]
@@ -78,6 +78,7 @@ namespace Beanstream.Api.SDK
 		
 		[JsonProperty(PropertyName = "links", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
 		public IList<Link> Links { get; set; }
+
 
 	}
 }
