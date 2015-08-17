@@ -114,15 +114,7 @@ namespace Beanstream.Api.SDK
 				Gateway.ThrowIfNullArgument (token.Name, "token.name");
 				Gateway.ThrowIfNullArgument (token.Code, "token.code");
 			}
-
-			Gateway.ThrowIfNullArgument (billingAddress, "billingAddress");
-			Gateway.ThrowIfNullArgument (billingAddress.Name, "billingAddress.name");
-			Gateway.ThrowIfNullArgument (billingAddress.EmailAddress, "billingAddress.emailAddress");
-			Gateway.ThrowIfNullArgument (billingAddress.PhoneNumber, "billingAddress.phoneNumber");
-			Gateway.ThrowIfNullArgument (billingAddress.AddressLine1, "billingAddress.addressLine1");
-			Gateway.ThrowIfNullArgument (billingAddress.City, "billingAddress.city");
-			Gateway.ThrowIfNullArgument (billingAddress.Province, "billingAddress.province/state");
-			Gateway.ThrowIfNullArgument (billingAddress.Country, "billingAddress.country");
+				
 
 			string url = BeanstreamUrls.BaseProfilesUrl
 				.Replace ("{v}", String.IsNullOrEmpty (_configuration.Version) ? "v1" : "v" + _configuration.Version)
