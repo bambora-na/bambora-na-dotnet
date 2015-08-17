@@ -99,10 +99,29 @@ namespace Beanstream.Api.SDK
 			return api.AddCard (Id, card);
 		}
 
+		/// <summary>
+		/// Add a tokenized card to this payment profile
+		/// </summary>
+		/// <returns>The card.</returns>
+		/// <param name="token">Token.</param>
+		public ProfileResponse AddCard(ProfilesAPI api, Token token) {
+			return api.AddCard (Id, token);
+		}
+
+		/// <summary>
+		/// Update a single card on this payment profile
+		/// </summary>
+		/// <returns>Update response.</returns>
+		/// <param name="card">Card.</param>
 		public ProfileResponse UpdateCard(ProfilesAPI api, Card card) {
 			return api.UpdateCard (Id, card);
 		}
 
+		/// <summary>
+		/// Delete a card on this payment profile
+		/// </summary>
+		/// <returns>Delete response.</returns>
+		/// <param name="card">CardId.</param>
 		public ProfileResponse RemoveCard(ProfilesAPI api, int cardId) {
 			return api.RemoveCard (Id, cardId);
 		}

@@ -354,6 +354,38 @@ namespace Beanstream.Api.SDK
 		}
 
 		/// <summary>
+		/// Add a new tokenized card to the profile. It gets appended to the end of the list of cards.
+		/// Make sure your Merchant account can support more cards. The default amount is 1.
+		/// You can change this limit in the online Members area for Merchants located at:
+		/// https://www.beanstream.com/admin/sDefault.asp
+		/// and heading to Configuration -> Payment Profile Configuration
+		/// </summary>
+		/// <returns>The response</returns>
+		/// <param name="profileId">Profile identifier.</param>
+		/// <param name="card">Card.</param>
+		public ProfileResponse AddCard(string profileId, Token token) {
+
+			string url = BeanstreamUrls.CardsUrl
+				.Replace ("{v}", String.IsNullOrEmpty (_configuration.Version) ? "v1" : "v" + _configuration.Version)
+				.Replace ("{p}", String.IsNullOrEmpty (_configuration.Platform) ? "www" : _configuration.Platform)
+				.Replace ("{id}", profileId);
+
+			HttpsWebRequest req = new HttpsWebRequest () {
+				MerchantId = _configuration.MerchantId,
+				Passcode = _configuration.ProfilesApiPasscode,
+				WebCommandExecutor = _webCommandExecuter
+			};
+
+			// the json wants to be wrapped in a 'token' group
+			var c = new {
+				token
+			};
+
+			string response = req.ProcessTransaction (HttpMethod.Post, url, c);
+			return JsonConvert.DeserializeObject<ProfileResponse>(response);
+		}
+
+		/// <summary>
 		/// Removes the card from the profile.
 		/// Card IDs are their index in getCards(), starting a 1 and going up: 1, 2, 3, 4...
 		/// </summary>

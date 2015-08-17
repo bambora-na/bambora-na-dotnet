@@ -33,9 +33,14 @@ namespace Beanstream
 		[JsonProperty(PropertyName = "card_id")]
 		public int CardId { get; set; }
 
+		[JsonProperty(PropertyName = "complete")]
+		public bool Complete { get; set; }
+
 		public PaymentProfileField() {
 			CardId = 1; // 1+
+			Complete = true;
 		}
+
 	}
 }
 

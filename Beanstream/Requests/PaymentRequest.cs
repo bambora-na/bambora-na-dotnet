@@ -27,7 +27,7 @@ using Beanstream.Api.SDK.Domain;
 
 namespace Beanstream.Api.SDK.Requests
 {
-	public abstract class PaymentRequest
+	public class PaymentRequest
 	{
 		[JsonProperty(PropertyName = "payment_method")]
 		public string PaymentMethod { get; set; }

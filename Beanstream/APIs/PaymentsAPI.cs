@@ -261,6 +261,27 @@ namespace Beanstream.Api.SDK
 
 			Gateway.ThrowIfNullArgument (paymentRequest, "paymentRequest");
 
+			paymentRequest.Token.Complete = false;
+
+			return PreAuthInternal (paymentRequest);
+		}
+
+		/// <summary>
+		/// Pre-authorize a payment. Use this if you want to know if a customer has sufficient funds
+		/// before processing a payment. A real-world example of this is pre-authorizing at the gas pump
+		/// for $100 before you fill up, then end up only using $60 of gas; the customer is only charged
+		/// $60. The final payment is used with PreAuthCompletion().
+		/// 
+		/// The PreAuth is used with tokenized payments with a token generated from the Legato Javascript service.
+		/// </summary>
+		/// <returns>The response, in particular the payment ID that is needed to complete the purchase.</returns>
+		/// <param name="paymentRequest">Payment request.</param>
+		public PaymentResponse PreAuth(ProfilePaymentRequest paymentRequest) {
+
+			Gateway.ThrowIfNullArgument (paymentRequest, "paymentRequest");
+
+			paymentRequest.PaymentProfile.Complete = false;
+
 			return PreAuthInternal (paymentRequest);
 		}
 
@@ -303,7 +324,10 @@ namespace Beanstream.Api.SDK
 		/// <param name="amount">Amount to process</param>
 		public PaymentResponse PreAuthCompletion(string paymentId, double amount) {
 
-			return PreAuthCompletion (paymentId, amount, null);
+			PaymentRequest pr = new PaymentRequest ();
+			pr.Amount = amount;
+
+			return PreAuthCompletion (paymentId, pr);
 		}
 
 		/// <summary>
@@ -319,7 +343,7 @@ namespace Beanstream.Api.SDK
 		/// <param name="paymentId">Payment identifier obtained from the Pre-Auth request.</param>
 		/// <param name="amount">Amount to process</param>
 		/// <param name="orderNumber">Optional order number</param>
-		public PaymentResponse PreAuthCompletion(string paymentId, double amount, string orderNumber) {
+		public PaymentResponse PreAuthCompletion(string paymentId, PaymentRequest paymentRequest) {
 
 			Gateway.ThrowIfNullArgument (paymentId, "paymentId");
 
@@ -335,14 +359,7 @@ namespace Beanstream.Api.SDK
 				WebCommandExecutor = _webCommandExecuter
 			};
 
-			var Completion = new 
-			{
-				merchant_id = _configuration.MerchantId,
-				amount = amount,
-				order_number = orderNumber
-			};
-
-			string response = req.ProcessTransaction (HttpMethod.Post, url, Completion);
+			string response = req.ProcessTransaction (HttpMethod.Post, url, paymentRequest);
 			return JsonConvert.DeserializeObject<PaymentResponse>(response);
 		}
 
