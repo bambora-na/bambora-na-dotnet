@@ -118,7 +118,7 @@ namespace Beanstream.Api.SDK
 
 			string url = BeanstreamUrls.BaseProfilesUrl
 				.Replace ("{v}", String.IsNullOrEmpty (_configuration.Version) ? "v1" : "v" + _configuration.Version)
-				.Replace ("{p}", String.IsNullOrEmpty (_configuration.Platform) ? "www" : _configuration.Platform);;
+				.Replace ("{p}", String.IsNullOrEmpty (_configuration.Platform) ? "www" : _configuration.Platform);
 
 
 			HttpsWebRequest req = new HttpsWebRequest () {
