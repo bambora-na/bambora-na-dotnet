@@ -23,6 +23,9 @@
 using System;
 using Newtonsoft.Json;
 
+/// <summary>
+/// Details on a transaction that has been adjusted.
+/// </summary>
 namespace Beanstream
 {
 	public class Adjustment

@@ -25,6 +25,7 @@ using Newtonsoft.Json;
 
 /// <summary>
 /// Extra result data from a payment request.
+/// All fields are optional and can be up to 256 characters in length.
 /// </summary>
 namespace Beanstream.Api.SDK.Domain
 {

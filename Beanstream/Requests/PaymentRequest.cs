@@ -29,36 +29,75 @@ namespace Beanstream.Api.SDK.Requests
 {
 	public class PaymentRequest
 	{
+		/// <summary>
+		/// This is set automatically by the PaymentsAPI class. You do not need to set it.
+		/// </summary>
 		[JsonProperty(PropertyName = "payment_method")]
 		public string PaymentMethod { get; set; }
 
-		//[JsonProperty(PropertyName = "merchant_id")]
-		//public int MerchantId { get; set; }
-
+		/// <summary>
+		/// Include a unique order reference number. 30 alphanumeric (a/n) characters.
+		/// Optional
+		/// </summary>
 		[JsonProperty(PropertyName = "order_number")]
 		public string OrderNumber { get; set; }
 
+		/// <summary>
+		/// In the format 0.00. Max 2 decimal places. Max 9 digits total.
+		/// </summary>
 		[JsonProperty(PropertyName = "amount")]
 		public Double Amount { get; set; }
 
+		/// <summary>
+		/// 3 characters, either ENG or FRE.
+		/// Optional
+		/// </summary>
 		[JsonProperty(PropertyName = "language")]
 		public string Language { get; set; }
 
+		/// <summary>
+		/// Optional field for terminal payments
+		/// </summary>
+		/// <value>The terminal URL.</value>
 		[JsonProperty(PropertyName = "term_url")]
 		public string TerminalUrl { get; set; }
 
+		/// <summary>
+		/// IP address of the customer.
+		/// Optional.
+		/// </summary>
+		/// <value>The customer ip.</value>
 		[JsonProperty(PropertyName = "customer_ip")]
 		public string CustomerIp { get; set; }
 
+		/// <summary>
+		/// Gets or sets the comments. 256 characters
+		/// Optional.
+		/// </summary>
+		/// <value>The comments.</value>
 		[JsonProperty(PropertyName = "comments")]
 		public string Comments { get; set; }
 
+		/// <summary>
+		/// Billing address.
+		/// Optional
+		/// </summary>
+		/// <value>The billing.</value>
 		[JsonProperty(PropertyName = "billing")]
 		public Address Billing { get; set; }
 
+		/// <summary>
+		/// Shipping address of the customer.
+		/// Optional
+		/// </summary>
+		/// <value>The shipping.</value>
 		[JsonProperty(PropertyName = "shipping")]
 		public Address Shipping { get; set; }
 
+		/// <summary>
+		/// Optional
+		/// </summary>
+		/// <value>The custom fields.</value>
 		[JsonProperty(PropertyName = "custom")]
 		public CustomFields CustomFields { get; set; }
 
