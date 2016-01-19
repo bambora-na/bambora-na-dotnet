@@ -13,7 +13,7 @@ For very detailed information on the Payments API, look at the Beanstream develo
 Before you begin making purchases, you need to create a Beanstream API object. It holds your user credentials and provides access to the various APIs.
 
 ```c#
-Beanstream beanstream = new Beanstream () {
+Gateway beanstream = new Gateway () {
 	MerchantId = YOUR_MERCHANT_ID,
 	PaymentsApiKey = "YOUR_API_KEY",
 	ApiVersion = "1"
