@@ -108,7 +108,7 @@ namespace Beanstream.Api.SDK.Requests
 			var category = -1;
 			var message = "";
 			if (data != null) {
-				if (response.ContentType.Equals("application/json") ) Console.WriteLine ("card response: " + response);{
+				if (response.ContentType.Contains("application/json") ) {
 					try {
 						JToken json = JObject.Parse(data);
 						if ( json != null && json.SelectToken("code") != null )
