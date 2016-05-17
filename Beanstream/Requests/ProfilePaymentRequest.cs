@@ -26,7 +26,7 @@ using Newtonsoft.Json;
 using Beanstream.Api.SDK;
 using Beanstream.Api.SDK.Domain;
 
-namespace Beanstream
+namespace Beanstream.Api.SDK.Requests
 {
 	public class ProfilePaymentRequest : PaymentRequest
 	{
