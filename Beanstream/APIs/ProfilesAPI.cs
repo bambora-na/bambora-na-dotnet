@@ -242,10 +242,6 @@ namespace Beanstream.Api.SDK
 			ProfileCardsResponse cardResponse = JsonConvert.DeserializeObject<ProfileCardsResponse>(response);
 
 			if (cardResponse.Cards != null) {
-				int id = 1;
-				foreach (Card c in cardResponse.Cards) {
-					c.id = id++; // give it the ID since that is not persisted nor retrieved
-				}
 				return cardResponse.Cards;
 			} else 
 				return new List<Card>(); // empty list with no cards
@@ -277,7 +273,7 @@ namespace Beanstream.Api.SDK
 			ProfileCardsResponse cardResponse = JsonConvert.DeserializeObject<ProfileCardsResponse>(response);
 			if (cardResponse.Cards == null)
 				return null;
-			cardResponse.Cards [0].id = cardId; // give it the ID since that is not persisted nor retrieved
+			
 			return cardResponse.Cards[0];
 		}
 
@@ -293,7 +289,7 @@ namespace Beanstream.Api.SDK
 				.Replace ("{v}", String.IsNullOrEmpty (_configuration.Version) ? "v1" : "v" + _configuration.Version)
 				.Replace ("{p}", String.IsNullOrEmpty (_configuration.Platform) ? "www" : _configuration.Platform)
 				.Replace ("{id}", profileId)
-			             + "/" + card.id;
+			             + "/" + card.Id;
 
 			HttpsWebRequest req = new HttpsWebRequest () {
 				MerchantId = _configuration.MerchantId,

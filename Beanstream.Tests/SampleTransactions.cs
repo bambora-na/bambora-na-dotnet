@@ -950,6 +950,8 @@ namespace Beanstream.Api.SDK.Tests
 			IList<Card> cards = profile.getCards (beanstream.Profiles);
 			Assert.NotNull (cards);
 			Assert.AreEqual (2, cards.Count);
+			Assert.AreEqual (1, cards[0].Id);
+			Assert.AreEqual (2, cards[1].Id);
 			Console.WriteLine ("Retrieved " + cards.Count + " cards from profile.");
 			Console.WriteLine ("Card 1 expiry year: " + cards[0].ExpiryYear);
 			Console.WriteLine ("Card 2 expiry year: " + cards[1].ExpiryYear);

@@ -105,7 +105,7 @@ namespace Beanstream.Api.SDK
 			};
 
 			string response = req.ProcessTransaction (HttpMethod.Post, url, query);
-			//Console.WriteLine ("\n\n"+response+"\n\n");
+			Console.WriteLine ("\n\n"+response+"\n\n");
 
 			Records records = JsonConvert.DeserializeObject<Records>(response);
 

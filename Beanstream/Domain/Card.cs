@@ -85,7 +85,9 @@ namespace Beanstream.Api.SDK.Domain
 		/// <summary>
 		/// Card ID. You do not set this. It is set when using Payment Profiles and identified the card ID for that profile. Card IDs range from 1 to 5.
 		/// </summary>
-		public int id { get; set; }
+		/// 
+		[JsonProperty(PropertyName = "card_id")]
+		public int Id { get; set; }
 
 		public Card () {
 			Complete = true;
