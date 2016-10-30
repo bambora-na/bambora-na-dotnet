@@ -79,7 +79,7 @@ namespace Beanstream.Api.SDK.Domain
 		/// Identifies VI (visa) MA (mastercard) etc.
 		/// You do not have to set this value, the API will set it for you based on the BIN of the card number.
 		/// </summary>
-		[JsonProperty(PropertyName = "type")]
+		[JsonProperty(PropertyName = "card_type")]
 		public string Type { get; set; }
 
 		/// <summary>
