@@ -484,7 +484,8 @@ namespace Beanstream.Api.SDK.Tests
 				DateTime.Now.Subtract(TimeSpan.FromMinutes(1)), 
 				DateTime.Now.Add(TimeSpan.FromMinutes(5)), 
 				1, 
-				1000, 
+				100, 
+				"-07:00",
 				new Criteria[]{
 					new Criteria() {
 						Field = QueryFields.TransactionId, 
@@ -510,6 +511,29 @@ namespace Beanstream.Api.SDK.Tests
 					found = true;
 			}
 			Assert.True (found); // we need to make sure we found our transaction
+
+			// Test 2
+			// search and find NO records, get a 404
+			Boolean got404 = false;
+			try {
+				records = beanstream.Reporting.Query (  
+					DateTime.Now.Subtract(TimeSpan.FromMinutes(1)), 
+					DateTime.Now.Add(TimeSpan.FromMinutes(5)), 
+					1, 
+					1000, 
+					new Criteria[]{
+						new Criteria() {
+							Field = QueryFields.TransactionId, 
+							Operator = Operators.LessThan, 
+							Value = "1"
+						}
+					}
+				);
+			} catch(BaseApiException ex) {
+				if (ex.StatusCode == 404)
+					got404 = true;
+			}
+			Assert.True (got404);
 		}
 
 

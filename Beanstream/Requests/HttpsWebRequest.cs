@@ -139,7 +139,10 @@ namespace Beanstream.Api.SDK.Requests
 
 				case HttpStatusCode.Forbidden: // 403
 					return new ForbiddenException(statusCode, data, message, category, code); // authorization failure
-					
+
+				case HttpStatusCode.NotFound: // 404
+					return new NotFoundException(statusCode, data, message, category, code); // item(s) not found
+
 				case HttpStatusCode.MethodNotAllowed: // 405
 					return new InvalidRequestException(statusCode, data, message, category, code); // Sending the wrong HTTP Method
 
