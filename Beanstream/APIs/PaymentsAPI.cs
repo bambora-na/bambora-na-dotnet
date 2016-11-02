@@ -203,7 +203,7 @@ namespace Beanstream.Api.SDK
 		/// </summary>
 		/// <returns>The return result</returns>
 		/// <param name="paymentId">Payment identifier from a previous transaction.</param>
-		public PaymentResponse Void(string paymentId, double amount) {
+		public PaymentResponse Void(string paymentId, decimal amount) {
 
 			Gateway.ThrowIfNullArgument (paymentId, "paymentId");
 
@@ -322,7 +322,7 @@ namespace Beanstream.Api.SDK
 		/// <returns>Response to the payment</returns>
 		/// <param name="paymentId">Payment identifier obtained from the Pre-Auth request.</param>
 		/// <param name="amount">Amount to process</param>
-		public PaymentResponse PreAuthCompletion(string paymentId, double amount) {
+		public PaymentResponse PreAuthCompletion(string paymentId, decimal amount) {
 
 			PaymentRequest pr = new PaymentRequest ();
 			pr.Amount = amount;

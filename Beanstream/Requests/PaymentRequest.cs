@@ -46,7 +46,7 @@ namespace Beanstream.Api.SDK.Requests
 		/// In the format 0.00. Max 2 decimal places. Max 9 digits total.
 		/// </summary>
 		[JsonProperty(PropertyName = "amount")]
-		public Double Amount { get; set; }
+		public decimal Amount { get; set; }
 
 		/// <summary>
 		/// 3 characters, either ENG or FRE.

@@ -86,7 +86,7 @@ namespace Beanstream.Api.SDK.Tests
 					
 			PaymentResponse response = beanstream.Payments.MakePayment (
 				new CardPaymentRequest {
-					Amount = 100.00,
+					Amount = 100.00M,
 					OrderNumber = getRandomOrderId("test"),
 					Card = new Card {
 						Name = "John Doe",
@@ -107,7 +107,6 @@ namespace Beanstream.Api.SDK.Tests
 			return response.TransactionId;
 		}
 
-		[Test]
 		static void ProcessDeclinedPayment() {
 
 			Console.WriteLine ("Processing Payment... ");
@@ -121,7 +120,7 @@ namespace Beanstream.Api.SDK.Tests
 			try {
 				PaymentResponse response = beanstream.Payments.MakePayment (
 					new CardPaymentRequest {
-						Amount = 100.00,
+						Amount = 100.00M,
 						OrderNumber = getRandomOrderId("test"),
 						Card = new Card {
 							Name = "John Doe",
@@ -150,7 +149,6 @@ namespace Beanstream.Api.SDK.Tests
 			}
 		}
 
-		[Test]
 		static void ProcessReturns() {
 
 			Console.WriteLine ("Processing Returns... ");
@@ -164,7 +162,7 @@ namespace Beanstream.Api.SDK.Tests
 			// we make a payment first so we can return it
 			PaymentResponse response = beanstream.Payments.MakePayment (
 				new CardPaymentRequest {
-					Amount = 40.00,
+					Amount = 40.00M,
 					OrderNumber = getRandomOrderId("test"),
 					Card = new Card {
 						Name = "John Doe",
@@ -185,7 +183,7 @@ namespace Beanstream.Api.SDK.Tests
 			response = beanstream.Payments.Return (
 				response.TransactionId,
 				new ReturnRequest {
-					Amount = 40.00,
+					Amount = 40.00M,
 					OrderNumber = getRandomOrderId("test")
 				}
 			);
@@ -199,7 +197,6 @@ namespace Beanstream.Api.SDK.Tests
 		}
 
 
-		[Test]
 		static void ProcessPreauthorization() {
 
 			Console.WriteLine ("Processing Pre-auth payments... ");
@@ -211,7 +208,7 @@ namespace Beanstream.Api.SDK.Tests
 			};
 
 			CardPaymentRequest paymentRequest = new CardPaymentRequest {
-				Amount = 100.00,
+				Amount = 100.00M,
 				OrderNumber = getRandomOrderId("test"),
 				Card = new Card {
 					Name = "John Doe",
@@ -242,7 +239,7 @@ namespace Beanstream.Api.SDK.Tests
 			Assert.AreEqual ("PA", response.TransType);
 
 			// complete the pre-auth and get the money from the customer
-			response = beanstream.Payments.PreAuthCompletion ( response.TransactionId, 60.00 );
+			response = beanstream.Payments.PreAuthCompletion ( response.TransactionId, 60.00M );
 
 			Console.WriteLine ("Pre-auth result: " + response.TransactionId + ", " + response.Message+"\n" );
 
@@ -266,7 +263,7 @@ namespace Beanstream.Api.SDK.Tests
 			// we make a payment first so we can void it
 			PaymentResponse response = beanstream.Payments.MakePayment (
 				new CardPaymentRequest {
-					Amount = 30.00,
+					Amount = 30.00M,
 					OrderNumber = getRandomOrderId("test"),
 					Card = new Card {
 						Name = "John Doe",
@@ -396,7 +393,7 @@ namespace Beanstream.Api.SDK.Tests
 			// process cash payment
 			PaymentResponse response = beanstream.Payments.MakePayment (
 				new CashPaymentRequest () {
-					Amount = 50.00,
+					Amount = 50.00M,
 					OrderNumber = getRandomOrderId("test")
 				}
 			);
@@ -411,7 +408,7 @@ namespace Beanstream.Api.SDK.Tests
 			// process cheque payment
 			response = beanstream.Payments.MakePayment (
 				new ChequePaymentRequest () {
-					Amount = 30.00,
+					Amount = 30.00M,
 					OrderNumber = getRandomOrderId("test")
 				}
 			);
@@ -435,7 +432,7 @@ namespace Beanstream.Api.SDK.Tests
 
 			PaymentResponse response = beanstream.Payments.MakePayment (
 				new CardPaymentRequest {
-					Amount = 100.00,
+					Amount = 100.00M,
 					OrderNumber = getRandomOrderId("test"),
 					Card = new Card {
 						Name = "John Doe",
@@ -653,7 +650,7 @@ namespace Beanstream.Api.SDK.Tests
 			Assert.AreEqual ("Operation Successful", response.Message);
 
 			PaymentResponse payment = beanstream.Payments.MakePayment (new ProfilePaymentRequest() {
-				Amount = 40.95,
+				Amount = 40.95M,
 				OrderNumber = getRandomOrderId("profile"),
 				PaymentProfile = new PaymentProfileField() {
 					CardId = 2,
@@ -886,7 +883,7 @@ namespace Beanstream.Api.SDK.Tests
 			Assert.AreEqual ("Operation Successful", response.Message);
 
 			PaymentResponse pResp = beanstream.Payments.MakePayment (new ProfilePaymentRequest {
-				Amount = 7.91,
+				Amount = 7.91M,
 				OrderNumber = getRandomOrderId("profile"),
 				PaymentProfile = new PaymentProfileField() {
 					CardId = 2,

@@ -41,7 +41,7 @@ namespace Beanstream.Api.SDK.Requests
 		public string OrderNumber { get; set; }
 
 		[JsonProperty(PropertyName = "amount")]
-		public Double Amount { get; set; }
+		public decimal Amount { get; set; }
 	}
 }
 
