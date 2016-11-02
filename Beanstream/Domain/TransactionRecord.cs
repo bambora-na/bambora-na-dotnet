@@ -55,13 +55,13 @@ namespace Beanstream
 		public string MaskedMard {get; set;}
 
 		[JsonProperty(PropertyName = "trn_amount")]
-		public double Amount {get; set;}
+		public decimal Amount {get; set;}
 
 		[JsonProperty(PropertyName = "trn_returns")]
-		public double Returns {get; set;}
+		public decimal Returns {get; set;}
 
 		[JsonProperty(PropertyName = "trn_completions")]
-		public double Completions {get; set;}
+		public decimal Completions {get; set;}
 
 		[JsonProperty(PropertyName = "trn_voided")]
 		public string Voided {get; set;}

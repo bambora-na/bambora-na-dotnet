@@ -59,7 +59,7 @@ namespace Beanstream.Api.SDK.Tests
 		public void Setup()
 		{
 			_cardPaymentRequest = new CardPaymentRequest {
-				Amount = 40.00,
+				Amount = 40.00M,
 				OrderNumber = "asdfghjkl00001",
 				Card = new Card {
 					Name = "John Doe",
