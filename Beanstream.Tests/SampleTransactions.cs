@@ -482,7 +482,6 @@ namespace Beanstream.Api.SDK.Tests
 				DateTime.Now.Add(TimeSpan.FromMinutes(5)), 
 				1, 
 				100, 
-				"-07:00",
 				new Criteria[]{
 					new Criteria() {
 						Field = QueryFields.TransactionId, 
