@@ -37,7 +37,7 @@ namespace Beanstream.Api.SDK
 
 
 		[JsonProperty(PropertyName = "approved")]
-		protected string Approved { get; set; }
+		public string Approved { get; set; }
 
 		
 		[JsonProperty(PropertyName = "message_id")]
