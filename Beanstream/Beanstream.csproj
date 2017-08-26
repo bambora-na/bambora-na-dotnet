@@ -44,6 +44,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\TransactionCard.cs" />
     <Compile Include="Exceptions\InvalidRequestException.cs" />
     <Compile Include="Exceptions\BusinessRuleException.cs" />
     <Compile Include="Exceptions\CommunicationException.cs" />
