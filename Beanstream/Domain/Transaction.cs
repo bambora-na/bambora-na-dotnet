@@ -72,7 +72,7 @@ namespace Beanstream
 		public string PaymentMethod { get; set; }
 
 		[JsonProperty(PropertyName = "card")]
-		public Card Card { get; set; }
+		public TransactionCard Card { get; set; }
 
 		[JsonProperty(PropertyName = "billing")]
 		public Address Billing { get; set; }
