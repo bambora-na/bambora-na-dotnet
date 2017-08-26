@@ -52,7 +52,7 @@ namespace Beanstream
 		public string Comments {get; set;}
 
 		[JsonProperty(PropertyName = "trn_masked_card")]
-		public string MaskedMard {get; set;}
+		public string MaskedCard {get; set;}
 
 		[JsonProperty(PropertyName = "trn_amount")]
 		public decimal Amount {get; set;}
