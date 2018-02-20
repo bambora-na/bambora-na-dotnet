@@ -16,7 +16,7 @@ SDK is available as Nuget package for .NET 4.5, 4.6.1 and .NET standard 2.0
 Before you begin making purchases, you need to create a Bambora API object. It holds your user credentials and provides access to the various APIs.
 
 ```c#
-using Bambora.SDK;
+using Bambora.NA.SDK;
 ...
 
 Gateway bambora = new Gateway () {
@@ -34,11 +34,11 @@ Below is complete working example how to make credit card purchase.
 
 ```c#
 using System;
-using Bambora.SDK;
-using Bambora.SDK.Requests;
-using Bambora.SDK.Domain;
+using Bambora.NA.SDK;
+using Bambora.NA.SDK.Requests;
+using Bambora.NA.SDK.Domain;
 
-namespace Beanstream.SDK.Demo
+namespace Bambora.NA.SDK.Demo
 {
     class Program
    

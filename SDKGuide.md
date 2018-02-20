@@ -25,7 +25,7 @@ This documents is a brief outline of how to use the Bambora .NET SDK to process 
 ## Usage and Operations
 
 ```
-using bambora.SDK;
+using Bambora.NA.SDK;
 
 ...
 
