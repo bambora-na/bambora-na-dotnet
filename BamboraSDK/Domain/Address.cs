@@ -27,7 +27,7 @@ using Newtonsoft.Json;
 /// An address, used for Billing or Shipping which are the non-abstract implementations.
 /// The only required field is the email address.
 /// </summary>
-namespace Bambora.SDK.Domain
+namespace Bambora.NA.SDK.Domain
 {
 	public class Address
 	{

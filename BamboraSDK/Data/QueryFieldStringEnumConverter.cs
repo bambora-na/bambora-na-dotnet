@@ -28,7 +28,7 @@ using System.Reflection;
 /// Enums are zero-based, yet the fields in the Query search are 1-based. So we have to increment each output value by 1
 /// when writing to json.
 /// </summary>
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	public class QueryFieldStringEnumConverter : Newtonsoft.Json.Converters.StringEnumConverter
 	{

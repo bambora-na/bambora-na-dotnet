@@ -26,7 +26,7 @@ using Newtonsoft.Json;
 /// <summary>
 /// Details on a transaction that has been adjusted.
 /// </summary>
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	public class Adjustment
 	{

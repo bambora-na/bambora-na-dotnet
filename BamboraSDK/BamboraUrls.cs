@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 //
 
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	internal class BamboraUrls
 	{

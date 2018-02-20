@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bambora.SDK", "BamboraSDK\Bambora.SDK.csproj", "{9CC3E0ED-0C59-48B4-B81C-E9ABA5A18FC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bambora.NA.SDK", "BamboraSDK\Bambora.NA.SDK.csproj", "{9CC3E0ED-0C59-48B4-B81C-E9ABA5A18FC8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bambora.SDK.Tests", "BamboraSDK.Tests\Bambora.SDK.Tests.csproj", "{B17E8757-97A6-436C-9F4F-FF6D0936BAE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bambora.NA.SDK.Tests", "BamboraSDK.Tests\Bambora.NA.SDK.Tests.csproj", "{B17E8757-97A6-436C-9F4F-FF6D0936BAE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -28,7 +28,7 @@ using System.Net;
 ///  302 - Found - Used for redirection response in 3DS, Masterpass and Interac Online requests
 /// 
 /// </summary>
-namespace Bambora.SDK.Exceptions
+namespace Bambora.NA.SDK.Exceptions
 {
 	public class RedirectionException : BaseApiException
 	{

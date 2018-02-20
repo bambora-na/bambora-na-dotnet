@@ -21,12 +21,12 @@
 // THE SOFTWARE.
 //
 using System;
-using Bambora.SDK;
+using Bambora.NA.SDK;
 using System.Collections.Generic;
-using Bambora.SDK.Domain;
+using Bambora.NA.SDK.Domain;
 using Newtonsoft.Json;
 
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	public class ProfileCardsResponse : ProfileResponse
 	{

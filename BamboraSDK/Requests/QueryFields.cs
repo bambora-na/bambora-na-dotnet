@@ -26,7 +26,7 @@ using System;
 /// The fields we can query in the search criteria. Order matters in this enum so do not change it.
 /// Each field has a comment with what operators can be used with it.
 /// </summary>
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	public enum QueryFields
 	{

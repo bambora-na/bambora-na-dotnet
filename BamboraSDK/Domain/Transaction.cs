@@ -22,10 +22,10 @@
 //
 using System;
 using Newtonsoft.Json;
-using Bambora.SDK.Domain;
+using Bambora.NA.SDK.Domain;
 using System.Collections.Generic;
 
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	public class Transaction
 	{

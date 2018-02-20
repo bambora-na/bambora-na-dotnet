@@ -37,7 +37,7 @@ using System.Net;
 /// has its own IP address that you will need to obtain by calling Bambora's technical support. You will 
 /// also have to make sure your firewall will allow a connection out to these new IP addresses.
 /// </summary>
-namespace Bambora.SDK.Exceptions
+namespace Bambora.NA.SDK.Exceptions
 {
 	public class InternalServerException : BaseApiException
 	{

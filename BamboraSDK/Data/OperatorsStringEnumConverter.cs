@@ -29,7 +29,7 @@ using System.ComponentModel;
 /// Writes out the Operator Enum's attribute descriptions instead of the default value.
 /// We Want to write a URL encoded version of the operators.
 /// </summary>
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	public class OperatorsStringEnumConverter : Newtonsoft.Json.Converters.StringEnumConverter
 	{

@@ -21,9 +21,9 @@
 // THE SOFTWARE.
 //
 using System;
-using Bambora.SDK.Requests;
+using Bambora.NA.SDK.Requests;
 using Newtonsoft.Json;
-using Bambora.SDK.Data;
+using Bambora.NA.SDK.Data;
 
 /// <summary>
 /// Transaction repository is used to process payments and returns.
@@ -57,7 +57,7 @@ using Bambora.SDK.Data;
 /// 
 /// </summary>
 
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	public class PaymentsAPI
 	{

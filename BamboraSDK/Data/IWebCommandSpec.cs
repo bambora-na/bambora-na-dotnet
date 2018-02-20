@@ -24,7 +24,7 @@
 using System;
 using System.Net;
 
-namespace Bambora.SDK.Data
+namespace Bambora.NA.SDK.Data
 {
 	/// <summary>
 	/// Represents a web command, i.e. An HTTP web request and its response.

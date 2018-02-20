@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 //
 
-namespace Bambora.SDK.Data
+namespace Bambora.NA.SDK.Data
 {
 	/// <summary>
 	/// Represents the result of a web command, namely the status code, description and response data.

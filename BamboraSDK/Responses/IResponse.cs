@@ -22,7 +22,7 @@
 //
 using System;
 
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	/// <summary>
 	/// Responses from the various APIs

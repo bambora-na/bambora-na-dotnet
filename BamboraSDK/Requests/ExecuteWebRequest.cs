@@ -26,10 +26,10 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json;
-using Bambora.SDK.Data;
-using Bambora.SDK.Domain;
+using Bambora.NA.SDK.Data;
+using Bambora.NA.SDK.Domain;
 
-namespace Bambora.SDK.Requests
+namespace Bambora.NA.SDK.Requests
 {
 	public class ExecuteWebRequest : IWebCommandSpec<string>
 	{

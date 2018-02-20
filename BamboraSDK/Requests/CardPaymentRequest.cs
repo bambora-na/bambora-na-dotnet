@@ -22,13 +22,13 @@
 //
 using System;
 using Newtonsoft.Json;
-using Bambora.SDK.Domain;
+using Bambora.NA.SDK.Domain;
 
 /// <summary>
 /// Process a Credit Card payment. Along with the regular payment request parameters
 /// it also takes in a Card.
 /// </summary>
-namespace Bambora.SDK.Requests
+namespace Bambora.NA.SDK.Requests
 {
 	public class CardPaymentRequest : PaymentRequest
 	{

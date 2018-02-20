@@ -21,11 +21,11 @@
 // THE SOFTWARE.
 //
 using System;
-using Bambora.SDK.Requests;
+using Bambora.NA.SDK.Requests;
 using Newtonsoft.Json;
-using Bambora.SDK.Domain;
+using Bambora.NA.SDK.Domain;
 
-namespace Bambora.SDK.Requests
+namespace Bambora.NA.SDK.Requests
 {
 	public class PaymentRequest
 	{

@@ -29,7 +29,7 @@ using Newtonsoft.Json;
 /// Operations such as: return and void.
 /// These links aren't needed when using the SDK but are displayed none the less.
 /// </summary>
-namespace Bambora.SDK.Domain
+namespace Bambora.NA.SDK.Domain
 {
 	public class Link
 	{

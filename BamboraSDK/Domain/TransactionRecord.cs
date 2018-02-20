@@ -26,7 +26,7 @@ using Newtonsoft.Json;
 /// <summary>
 /// A query result representing a single transaction.
 /// </summary>
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	public class TransactionRecord
 	{

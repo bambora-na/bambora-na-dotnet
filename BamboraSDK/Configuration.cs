@@ -28,7 +28,7 @@ using System;
 /// At the minimum to use the Payments API you need to supply a MerchantID and
 /// an ApiPasscode.
 /// </summary>
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	public class Configuration
 	{

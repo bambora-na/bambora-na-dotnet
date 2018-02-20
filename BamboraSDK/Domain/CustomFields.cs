@@ -27,7 +27,7 @@ using Newtonsoft.Json;
 /// Extra result data from a payment request.
 /// All fields are optional and can be up to 256 characters in length.
 /// </summary>
-namespace Bambora.SDK.Domain
+namespace Bambora.NA.SDK.Domain
 {
 	public class CustomFields
 	{

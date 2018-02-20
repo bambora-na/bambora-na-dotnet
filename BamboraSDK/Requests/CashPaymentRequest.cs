@@ -31,7 +31,7 @@ using System;
 using Newtonsoft.Json;
 
 
-namespace Bambora.SDK.Requests
+namespace Bambora.NA.SDK.Requests
 {
 	public class CashPaymentRequest : PaymentRequest
 	{

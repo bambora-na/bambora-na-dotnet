@@ -29,7 +29,7 @@ using System.ComponentModel;
 using Newtonsoft.Json;
 
 
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	public enum Operators
 	{

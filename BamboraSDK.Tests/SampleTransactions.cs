@@ -22,11 +22,11 @@
 //
 
 using System;
-using Bambora.SDK.Data;
-using Bambora.SDK.Requests;
-using Bambora.SDK.Exceptions;
+using Bambora.NA.SDK.Data;
+using Bambora.NA.SDK.Requests;
+using Bambora.NA.SDK.Exceptions;
 using Newtonsoft.Json;
-using Bambora.SDK.Domain;
+using Bambora.NA.SDK.Domain;
 using System.Collections.Generic;
 using NUnit.Framework;
 
@@ -34,18 +34,26 @@ using NUnit.Framework;
  * An integration test showing the capabilities of the SDK.
  */
 
-namespace Bambora.SDK.Tests
+namespace Bambora.NA.SDK.Tests
 {
 
 	public class SampleTransactions
 	{
+        private static Gateway _bambora;
 
-		public static void Main(string[] args) {
+        public static void Main(string[] args) {
 
 			Console.WriteLine ("BEGIN running sample transactions");
-
-			// Payments API
-			SampleTransactions.ProcessPayment ();
+            _bambora = new Gateway()
+            { 
+                MerchantId = 300200578,
+				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
+				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+				ApiVersion = "1"
+            };
+            // Payments API
+            SampleTransactions.ProcessPayment ();
 			SampleTransactions.ProcessDeclinedPayment ();
 			SampleTransactions.ProcessReturns ();
 			SampleTransactions.ProcessPreauthorization ();
@@ -72,13 +80,7 @@ namespace Bambora.SDK.Tests
 
 			Console.WriteLine ("Processing Payment... ");
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ApiVersion = "1"
-			};
-					
-			PaymentResponse response = bambora.Payments.MakePayment (
+			PaymentResponse response = _bambora.Payments.MakePayment (
 				new CardPaymentRequest {
 					Amount = 100.00M,
 					OrderNumber = getRandomOrderId("test"),
@@ -105,14 +107,8 @@ namespace Bambora.SDK.Tests
 
 			Console.WriteLine ("Processing Payment... ");
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ApiVersion = "1"
-			};
-
 			try {
-				PaymentResponse response = bambora.Payments.MakePayment (
+				PaymentResponse response = _bambora.Payments.MakePayment (
 					new CardPaymentRequest {
 						Amount = 100.00M,
 						OrderNumber = getRandomOrderId("test"),
@@ -147,14 +143,8 @@ namespace Bambora.SDK.Tests
 
 			Console.WriteLine ("Processing Returns... ");
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ApiVersion = "1"
-			};
-
 			// we make a payment first so we can return it
-			PaymentResponse response = bambora.Payments.MakePayment (
+			PaymentResponse response = _bambora.Payments.MakePayment (
 				new CardPaymentRequest {
 					Amount = 40.00M,
 					OrderNumber = getRandomOrderId("test"),
@@ -174,7 +164,7 @@ namespace Bambora.SDK.Tests
 			Assert.AreEqual ("P", response.TransType);
 
 			// return the purchase
-			response = bambora.Payments.Return (
+			response = _bambora.Payments.Return (
 				response.TransactionId,
 				new ReturnRequest {
 					Amount = 40.00M,
@@ -195,12 +185,6 @@ namespace Bambora.SDK.Tests
 
 			Console.WriteLine ("Processing Pre-auth payments... ");
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ApiVersion = "1"
-			};
-
 			CardPaymentRequest paymentRequest = new CardPaymentRequest {
 				Amount = 100.00M,
 				OrderNumber = getRandomOrderId("test"),
@@ -214,7 +198,7 @@ namespace Bambora.SDK.Tests
 			};
 
 			// pre-authorize the payment for $100
-			PaymentResponse response = bambora.Payments.PreAuth (paymentRequest);
+			PaymentResponse response = _bambora.Payments.PreAuth (paymentRequest);
 
 			// In order for Pre-authorizations to work, you must enable them on your account:
 			// 
@@ -232,7 +216,7 @@ namespace Bambora.SDK.Tests
 			Assert.AreEqual ("PA", response.TransType);
 
 			// complete the pre-auth and get the money from the customer
-			response = bambora.Payments.PreAuthCompletion ( response.TransactionId, 60.00M );
+			response = _bambora.Payments.PreAuthCompletion ( response.TransactionId, 60.00M );
 
 			Console.WriteLine ("Pre-auth result: " + response.TransactionId + ", " + response.Message+"\n" );
 
@@ -247,14 +231,8 @@ namespace Bambora.SDK.Tests
 
 			Console.WriteLine ("Processing Voids... ");
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ApiVersion = "1"
-			};
-
 			// we make a payment first so we can void it
-			PaymentResponse response = bambora.Payments.MakePayment (
+			PaymentResponse response = _bambora.Payments.MakePayment (
 				new CardPaymentRequest {
 					Amount = 30.00M,
 					OrderNumber = getRandomOrderId("test"),
@@ -275,7 +253,7 @@ namespace Bambora.SDK.Tests
 
 
 			// void the purchase
-			response = bambora.Payments.Void (response.TransactionId, 30); // void the $30 amount
+			response = _bambora.Payments.Void (response.TransactionId, 30); // void the $30 amount
 
 			Console.WriteLine ("Void result: " + response.TransactionId + ", " + response.Message+"\n");
 
@@ -311,13 +289,7 @@ namespace Bambora.SDK.Tests
 			// Now that we have a token that represents our credit card info, we can process
 			// the payment with that token
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ApiVersion = "1"
-			};
-
-			PaymentResponse response = bambora.Payments.MakePayment (
+			PaymentResponse response = _bambora.Payments.MakePayment (
 				new TokenPaymentRequest () 
 				{
 					Amount = 30,
@@ -348,15 +320,8 @@ namespace Bambora.SDK.Tests
 
 			Console.WriteLine ("Processing Cash Payment... ");
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ApiVersion = "1"
-			};
-
-
 			// process cash payment
-			PaymentResponse response = bambora.Payments.MakePayment (
+			PaymentResponse response = _bambora.Payments.MakePayment (
 				new CashPaymentRequest () {
 					Amount = 50.00M,
 					OrderNumber = getRandomOrderId("test")
@@ -371,7 +336,7 @@ namespace Bambora.SDK.Tests
 
 			Console.WriteLine ("Processing Cheque Payment... ");
 			// process cheque payment
-			response = bambora.Payments.MakePayment (
+			response = _bambora.Payments.MakePayment (
 				new ChequePaymentRequest () {
 					Amount = 30.00M,
 					OrderNumber = getRandomOrderId("test")
@@ -388,14 +353,7 @@ namespace Bambora.SDK.Tests
 		public static void GetTransaction() {
 			Console.WriteLine ("Getting Transaction... ");
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
-				ApiVersion = "1"
-			};
-
-			PaymentResponse response = bambora.Payments.MakePayment (
+			PaymentResponse response = _bambora.Payments.MakePayment (
 				new CardPaymentRequest {
 					Amount = 100.00M,
 					OrderNumber = getRandomOrderId("test"),
@@ -409,8 +367,8 @@ namespace Bambora.SDK.Tests
 				}
 			);
 
-			bambora.Payments.Void (response.TransactionId, 100);
-			Transaction trans = bambora.Reporting.GetTransaction (response.TransactionId);
+			_bambora.Payments.Void (response.TransactionId, 100);
+			Transaction trans = _bambora.Reporting.GetTransaction (response.TransactionId);
 
 			Console.WriteLine ("Payment id: " + response.TransactionId + ", " + response.Message+"\n");
 
@@ -435,14 +393,7 @@ namespace Bambora.SDK.Tests
 			// create a payment so we have something to query for
 			string transId = ProcessPayment ();
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
-				ApiVersion = "1"
-			};
-
-			List<TransactionRecord> records = bambora.Reporting.Query (  
+			List<TransactionRecord> records = _bambora.Reporting.Query (  
 				DateTime.Now.Subtract(TimeSpan.FromMinutes(1)), 
 				DateTime.Now.Add(TimeSpan.FromMinutes(5)), 
 				1, 
@@ -476,7 +427,7 @@ namespace Bambora.SDK.Tests
 			// Test 2
 			// search and find NO records
 						
-			records = bambora.Reporting.Query (  
+			records = _bambora.Reporting.Query (  
 				DateTime.Now.Subtract(TimeSpan.FromMinutes(1)), 
 				DateTime.Now.Add(TimeSpan.FromMinutes(5)), 
 				1, 
@@ -496,15 +447,7 @@ namespace Bambora.SDK.Tests
 		private static void CreateAndDeleteProfile() {
 			Console.WriteLine ("Creating Payment Profile... ");
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
-				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
-				ApiVersion = "1"
-			};
-
-			ProfileResponse response = bambora.Profiles.CreateProfile (
+			ProfileResponse response = _bambora.Profiles.CreateProfile (
 				new Card() {
 					Name = "Jane Doe",
 					Number = "5100000010001004",
@@ -529,21 +472,13 @@ namespace Bambora.SDK.Tests
 
 
 			// delete it so when we create a profile again with the same card we won't get an error
-			response = bambora.Profiles.DeleteProfile (response.Id);
+			response = _bambora.Profiles.DeleteProfile (response.Id);
 			Assert.IsNotNull (response);
 			Assert.AreEqual ("Operation Successful", response.Message);
 		}
 
 		private static void CreateProfileWithToken() {
 			Console.WriteLine ("Creating Payment Profile with a Legato Token... ");
-
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
-				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
-				ApiVersion = "1"
-			};
 
 			string url = "https://web.na.bambora.com/scripts/tokenization/tokens";
 			var data = new {
@@ -563,7 +498,7 @@ namespace Bambora.SDK.Tests
 
 			// You can create a profile with a token instead of a card.
 			// It will save the billing information, but the token is still single-use
-			ProfileResponse response = bambora.Profiles.CreateProfile (
+			ProfileResponse response = _bambora.Profiles.CreateProfile (
 				new Token() {
 					Name = "Jane Doe",
 					Code = token.Token
@@ -584,21 +519,13 @@ namespace Bambora.SDK.Tests
 			Assert.AreEqual ("Operation Successful", response.Message);
 
 			// delete it so when we create a profile again with the same card we won't get an error
-			bambora.Profiles.DeleteProfile (response.Id);
+			_bambora.Profiles.DeleteProfile (response.Id);
 		}
 
 		private static void ProfileTakePayment() {
 			Console.WriteLine ("Take Payment with Profile... ");
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
-				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
-				ApiVersion = "1"
-			};
-
-			ProfileResponse response = bambora.Profiles.CreateProfile (
+			ProfileResponse response = _bambora.Profiles.CreateProfile (
 				new Card() {
 					Name = "Jane Doe",
 					Number = "5100000010001004",
@@ -619,7 +546,7 @@ namespace Bambora.SDK.Tests
 			Console.WriteLine ("Created profile with ID: " + response.Id);
 
 			// add a 2nd card
-			response = bambora.Profiles.AddCard (response.Id, new Card () {
+			response = _bambora.Profiles.AddCard (response.Id, new Card () {
 				Name = "Jane Doe",
 				Number = "4030000010001234",
 				ExpiryMonth = "04",
@@ -630,7 +557,7 @@ namespace Bambora.SDK.Tests
 			Assert.IsNotNull (response);
 			Assert.AreEqual ("Operation Successful", response.Message);
 
-			PaymentResponse payment = bambora.Payments.MakePayment (new ProfilePaymentRequest() {
+			PaymentResponse payment = _bambora.Payments.MakePayment (new ProfilePaymentRequest() {
 				Amount = 40.95M,
 				OrderNumber = getRandomOrderId("profile"),
 				PaymentProfile = new PaymentProfileField() {
@@ -645,22 +572,14 @@ namespace Bambora.SDK.Tests
 			Assert.AreEqual ("VI", payment.Card.CardType);
 
 			// delete it so when we create a profile again with the same card we won't get an error
-			bambora.Profiles.DeleteProfile (response.Id);
+			_bambora.Profiles.DeleteProfile (response.Id);
 		}
 
 
 		private static void GetProfile() {
 			Console.WriteLine ("Creating Payment Profile... ");
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
-				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
-				ApiVersion = "1"
-			};
-
-			ProfileResponse response = bambora.Profiles.CreateProfile (
+			ProfileResponse response = _bambora.Profiles.CreateProfile (
 				new Card() {
 					Name = "Jane Doe",
 					Number = "5100000010001004",
@@ -683,28 +602,20 @@ namespace Bambora.SDK.Tests
 			Assert.IsNotNull (response);
 			Assert.AreEqual ("Operation Successful", response.Message);
 
-			PaymentProfile profile = bambora.Profiles.GetProfile (response.Id);
+			PaymentProfile profile = _bambora.Profiles.GetProfile (response.Id);
 			Assert.IsNotNull (profile);
 			Assert.AreEqual (response.Id, profile.Id);
 			Assert.AreEqual ("Jane Doe", profile.Billing.Name);
 			Console.WriteLine ("got profile: " + profile.Id);
 
 			// delete it so when we create a profile again with the same card we won't get an error
-			bambora.Profiles.DeleteProfile (response.Id);
+			_bambora.Profiles.DeleteProfile (response.Id);
 		}
 
 		private static void UpdateProfile() {
 			Console.WriteLine ("Creating Payment Profile... ");
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
-				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
-				ApiVersion = "1"
-			};
-
-			ProfileResponse response = bambora.Profiles.CreateProfile (
+			ProfileResponse response = _bambora.Profiles.CreateProfile (
 				new Card() {
 					Name = "Jane Doe",
 					Number = "5100000010001004",
@@ -726,38 +637,30 @@ namespace Bambora.SDK.Tests
 			Assert.IsNotNull (response);
 			Assert.AreEqual ("Operation Successful", response.Message);
 
-			PaymentProfile profile = bambora.Profiles.GetProfile (response.Id);
+			PaymentProfile profile = _bambora.Profiles.GetProfile (response.Id);
 			Console.WriteLine ("Profile.billing.city: " + profile.Billing.City);
 
 
 			Console.WriteLine ("Updating profile's billing address: city");
 			profile.Billing.City = "penticton";
-			response = bambora.Profiles.UpdateProfile (profile);
+			response = _bambora.Profiles.UpdateProfile (profile);
 			Assert.IsNotNull (response);
 			Assert.AreEqual ("Operation Successful", response.Message);
 
-			profile = bambora.Profiles.GetProfile (response.Id);
+			profile = _bambora.Profiles.GetProfile (response.Id);
 			Assert.IsNotNull (profile);
 			Assert.AreEqual (response.Id, profile.Id);
 			Assert.AreEqual ("penticton", profile.Billing.City);
 			Console.WriteLine ("Profile.billing.city: " + profile.Billing.City);
 			// delete it so when we create a profile again with the same card we won't get an error
-			bambora.Profiles.DeleteProfile (response.Id);
+			_bambora.Profiles.DeleteProfile (response.Id);
 		}
 
 
 		private static void AddAndRemoveCardFromProfile() {
 			Console.WriteLine ("Adding Card to Profile... ");
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
-				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
-				ApiVersion = "1"
-			};
-
-			ProfileResponse response = bambora.Profiles.CreateProfile (
+			ProfileResponse response = _bambora.Profiles.CreateProfile (
 				new Card() {
 					Name = "Jane Doe",
 					Number = "5100000010001004",
@@ -780,9 +683,9 @@ namespace Bambora.SDK.Tests
 			Assert.AreEqual ("Operation Successful", response.Message);
 
 
-			PaymentProfile profile = bambora.Profiles.GetProfile (response.Id);
+			PaymentProfile profile = _bambora.Profiles.GetProfile (response.Id);
 
-			response = profile.AddCard (bambora.Profiles, new Card {
+			response = profile.AddCard (_bambora.Profiles, new Card {
 				Name = "Jane Doe",
 				Number = "4030000010001234",
 				ExpiryMonth = "03",
@@ -794,28 +697,20 @@ namespace Bambora.SDK.Tests
 			Assert.AreEqual ("Operation Successful", response.Message);
 
 			// delete the card
-			response = profile.RemoveCard (bambora.Profiles, 2); // delete card #2
+			response = profile.RemoveCard (_bambora.Profiles, 2); // delete card #2
 			Assert.IsNotNull (response);
 			Assert.AreEqual ("Operation Successful", response.Message);
 
 			Console.WriteLine ("Removed card from profile");
 
 			// delete it so when we create a profile again with the same card we won't get an error
-			bambora.Profiles.DeleteProfile (response.Id);
+			_bambora.Profiles.DeleteProfile (response.Id);
 		}
 
 		private static void AddTokenizedCardToProfileAndMakePayment() {
 			Console.WriteLine ("Adding Tokenized Card to Profile... ");
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
-				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
-				ApiVersion = "1"
-			};
-
-			ProfileResponse response = bambora.Profiles.CreateProfile (
+			ProfileResponse response = _bambora.Profiles.CreateProfile (
 				new Card() {
 					Name = "Jane Doe",
 					Number = "5100000010001004",
@@ -837,7 +732,7 @@ namespace Bambora.SDK.Tests
 			Assert.IsNotNull (response);
 			Assert.AreEqual ("Operation Successful", response.Message);
 
-			PaymentProfile profile = bambora.Profiles.GetProfile (response.Id);
+			PaymentProfile profile = _bambora.Profiles.GetProfile (response.Id);
 
 			// get a legato token representing the credit card
 			string url = "https://web.na.bambora.com/scripts/tokenization/tokens";
@@ -855,7 +750,7 @@ namespace Bambora.SDK.Tests
 
 			LegatoTokenResponse token = JsonConvert.DeserializeObject<LegatoTokenResponse>(result.Response);
 
-			response = profile.AddCard (bambora.Profiles, new Token {
+			response = profile.AddCard (_bambora.Profiles, new Token {
 				Name = "Jane Doe",
 				Code = token.Token
 			});
@@ -863,7 +758,7 @@ namespace Bambora.SDK.Tests
 			Assert.IsNotNull (response);
 			Assert.AreEqual ("Operation Successful", response.Message);
 
-			PaymentResponse pResp = bambora.Payments.MakePayment (new ProfilePaymentRequest {
+			PaymentResponse pResp = _bambora.Payments.MakePayment (new ProfilePaymentRequest {
 				Amount = 7.91M,
 				OrderNumber = getRandomOrderId("profile"),
 				PaymentProfile = new PaymentProfileField() {
@@ -874,22 +769,14 @@ namespace Bambora.SDK.Tests
 			Assert.IsNotNull (pResp);
 
 			// delete it so when we create a profile again with the same card we won't get an error
-			bambora.Profiles.DeleteProfile (response.Id);
+			_bambora.Profiles.DeleteProfile (response.Id);
 		}
 
 
 		private static void GetAllCardsFromProfile() {
 			Console.WriteLine ("Get all Cards from Profile... ");
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
-				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
-				ApiVersion = "1"
-			};
-
-			ProfileResponse response = bambora.Profiles.CreateProfile (
+			ProfileResponse response = _bambora.Profiles.CreateProfile (
 				new Card() {
 					Name = "Jane Doe",
 					Number = "5100000010001004",
@@ -911,9 +798,9 @@ namespace Bambora.SDK.Tests
 			Assert.IsNotNull (response);
 			Assert.AreEqual ("Operation Successful", response.Message);
 
-			PaymentProfile profile = bambora.Profiles.GetProfile (response.Id);
+			PaymentProfile profile = _bambora.Profiles.GetProfile (response.Id);
 
-			response = profile.AddCard (bambora.Profiles, new Card {
+			response = profile.AddCard (_bambora.Profiles, new Card {
 				Name = "Jane Doe",
 				Number = "4030000010001234",
 				ExpiryMonth = "03",
@@ -925,7 +812,7 @@ namespace Bambora.SDK.Tests
 			Assert.AreEqual ("Operation Successful", response.Message);
 
 			// get all cards
-			IList<Card> cards = profile.getCards (bambora.Profiles);
+			IList<Card> cards = profile.getCards (_bambora.Profiles);
 			Assert.NotNull (cards);
 			Assert.AreEqual (2, cards.Count);
 			Assert.AreEqual (1, cards[0].Id);
@@ -935,21 +822,13 @@ namespace Bambora.SDK.Tests
 			Console.WriteLine ("Card 2 expiry year: " + cards[1].ExpiryYear);
 
 			// delete it so when we create a profile again with the same card we won't get an error
-			bambora.Profiles.DeleteProfile (response.Id);
+			_bambora.Profiles.DeleteProfile (response.Id);
 		}
 
 		private static void GetCardFromProfile() {
 			Console.WriteLine ("Get a Card from a Profile... ");
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
-				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
-				ApiVersion = "1"
-			};
-
-			ProfileResponse response = bambora.Profiles.CreateProfile (
+			ProfileResponse response = _bambora.Profiles.CreateProfile (
 				new Card() {
 					Name = "Jane Doe",
 					Number = "5100000010001004",
@@ -971,9 +850,9 @@ namespace Bambora.SDK.Tests
 			Assert.IsNotNull (response);
 			Assert.AreEqual ("Operation Successful", response.Message);
 
-			PaymentProfile profile = bambora.Profiles.GetProfile (response.Id);
+			PaymentProfile profile = _bambora.Profiles.GetProfile (response.Id);
 
-			response = profile.AddCard (bambora.Profiles, new Card {
+			response = profile.AddCard (_bambora.Profiles, new Card {
 				Name = "Jane Doe",
 				Number = "4030000010001234",
 				ExpiryMonth = "03",
@@ -985,28 +864,20 @@ namespace Bambora.SDK.Tests
 			Assert.AreEqual ("Operation Successful", response.Message);
 
 			// get card
-			Card card = profile.getCard (bambora.Profiles, 2);
+			Card card = profile.getCard (_bambora.Profiles, 2);
 			Console.WriteLine ("Retrieved card with expiry year: " + card.ExpiryYear);
 			Assert.NotNull (card);
 			Assert.AreEqual ("403000XXXXXX1234", card.Number);
 
 			// delete it so when we create a profile again with the same card we won't get an error
-			bambora.Profiles.DeleteProfile (response.Id);
+			_bambora.Profiles.DeleteProfile (response.Id);
 		}
 
 
 		private static void UpdateCardInProfile() {
 			Console.WriteLine ("Update a Card in a Profile... ");
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
-				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
-				ApiVersion = "1"
-			};
-
-			ProfileResponse response = bambora.Profiles.CreateProfile (
+			ProfileResponse response = _bambora.Profiles.CreateProfile (
 				new Card() {
 					Name = "Jane Doe",
 					Number = "5100000010001004",
@@ -1028,24 +899,24 @@ namespace Bambora.SDK.Tests
 			Assert.IsNotNull (response);
 			Assert.AreEqual ("Operation Successful", response.Message);
 
-			PaymentProfile profile = bambora.Profiles.GetProfile (response.Id);
+			PaymentProfile profile = _bambora.Profiles.GetProfile (response.Id);
 			Assert.IsNotNull (profile);
 
 			// get card
-			Card card = profile.getCard (bambora.Profiles, 1);
+			Card card = profile.getCard (_bambora.Profiles, 1);
 			Console.WriteLine ("Retrieved card with expiry year: " + card.ExpiryYear);
 			Assert.IsNotNull (card);
 			Assert.AreEqual ("18", card.ExpiryYear);
 			card.ExpiryYear = "20";
-			profile.UpdateCard (bambora.Profiles, card);
+			profile.UpdateCard (_bambora.Profiles, card);
 			Console.WriteLine ("Updated card expiry");
-			card = profile.getCard (bambora.Profiles, 1);
+			card = profile.getCard (_bambora.Profiles, 1);
 			Assert.IsNotNull (card);
 			Assert.AreEqual ("20", card.ExpiryYear);
 			Console.WriteLine ("Retrieved updated card with expiry year: " + card.ExpiryYear);
 
 			// delete it so when we create a profile again with the same card we won't get an error
-			bambora.Profiles.DeleteProfile (response.Id);
+			_bambora.Profiles.DeleteProfile (response.Id);
 		}
 
 

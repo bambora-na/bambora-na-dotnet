@@ -25,7 +25,7 @@ using System;
 /// <summary>
 /// The types of payments you can make
 /// </summary>
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	public enum PaymentMethods
 	{

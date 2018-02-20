@@ -28,7 +28,7 @@ using Newtonsoft.Json;
 /// token to your server. This allows you to not have credit card information touch your code or network, thus lowering your
 /// PCI scope. (ie. less paperwork and less risk).
 /// </summary>
-namespace Bambora.SDK.Domain
+namespace Bambora.NA.SDK.Domain
 {
 	public class Token
 	{

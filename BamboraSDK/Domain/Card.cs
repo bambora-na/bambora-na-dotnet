@@ -26,7 +26,7 @@ using Newtonsoft.Json;
 /// <summary>
 /// A Credit Card. Some of the values on this object are set by the API and do not need to be set by the implementor.
 /// </summary>
-namespace Bambora.SDK.Domain
+namespace Bambora.NA.SDK.Domain
 {
 	public class Card
 	{

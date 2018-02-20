@@ -21,11 +21,11 @@
 // THE SOFTWARE.
 //
 using System;
-using Bambora.SDK;
-using Bambora.SDK.Data;
+using Bambora.NA.SDK;
+using Bambora.NA.SDK.Data;
 using System.Collections.Generic;
-using Bambora.SDK.Domain;
-using Bambora.SDK.Requests;
+using Bambora.NA.SDK.Domain;
+using Bambora.NA.SDK.Requests;
 using Newtonsoft.Json;
 
 /// <summary>
@@ -35,7 +35,7 @@ using Newtonsoft.Json;
 /// Profiles can be created with a Credit Card or with a single-use Legato token. If using a token then the card information
 /// needs to be entered each time the user checks out. However the profile will always save the customer's billing info.
 /// </summary>
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	public class ProfilesAPI
 	{

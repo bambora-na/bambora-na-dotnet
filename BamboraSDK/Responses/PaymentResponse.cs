@@ -23,9 +23,9 @@
 using System;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using Bambora.SDK.Domain;
+using Bambora.NA.SDK.Domain;
 
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	/// <summary>
 	/// Response information when a payment is processed.

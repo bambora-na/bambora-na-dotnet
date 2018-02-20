@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 //
 using System;
-using Bambora.SDK.Requests;
+using Bambora.NA.SDK.Requests;
 
 /// <summary>
 /// Token payments use a token generated from Bambora's Legato Javascript utility.
@@ -29,10 +29,10 @@ using Bambora.SDK.Requests;
 /// 
 /// </summary>
 using Newtonsoft.Json;
-using Bambora.SDK.Domain;
+using Bambora.NA.SDK.Domain;
 
 
-namespace Bambora.SDK.Requests
+namespace Bambora.NA.SDK.Requests
 {
 	public class TokenPaymentRequest : PaymentRequest
 	{

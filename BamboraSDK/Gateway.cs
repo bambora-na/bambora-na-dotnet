@@ -21,9 +21,9 @@
 // THE SOFTWARE.
 //
 
-using Bambora.SDK.Data;
-using Bambora.SDK;
-using Bambora.SDK.Requests;
+using Bambora.NA.SDK.Data;
+using Bambora.NA.SDK;
+using Bambora.NA.SDK.Requests;
 
 /// <summary>
 /// The entry-point into making payments and handling payment profiles.
@@ -41,7 +41,7 @@ using Bambora.SDK.Requests;
 /// This class is not threadsafe but designed to have its own instance per thread. If you 
 /// are making payments through multiple threads you want to create one Gateway object per thread.
 /// </summary>
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	public class Gateway
 	{

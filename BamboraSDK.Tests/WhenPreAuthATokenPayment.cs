@@ -23,25 +23,25 @@
 
 using System;
 using System.Net;
-using Bambora.SDK.Data;
-using Bambora.SDK.Exceptions;
-using Bambora.SDK;
+using Bambora.NA.SDK.Data;
+using Bambora.NA.SDK.Exceptions;
+using Bambora.NA.SDK;
 using Moq;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using Bambora.SDK.Requests;
-using Bambora.SDK.Domain;
+using Bambora.NA.SDK.Requests;
+using Bambora.NA.SDK.Domain;
 
-namespace Bambora.SDK.Tests
+namespace Bambora.NA.SDK.Tests
 {
 	[TestFixture]
 	public class WhenPreAuthATokenPayment
 	{
 		private TokenPaymentRequest _paymentRequest;
 		private Mock<IWebCommandExecuter> _executer;
+        private Gateway _bambora;
 
-
-		[SetUp]
+        [SetUp]
 		public void Setup()
 		{
 			_paymentRequest = new TokenPaymentRequest {
@@ -54,7 +54,15 @@ namespace Bambora.SDK.Tests
 			};
 
 			_executer = new Mock<IWebCommandExecuter>();
-		}
+            _bambora = new Gateway()
+            {
+                MerchantId = 300200578,
+                PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
+                ReportingApiKey = "4e6Ff318bee64EA391609de89aD4CF5d",
+                ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
+                ApiVersion = "1"
+            };
+        }
 
 		[Test]
 		public void ItShouldHaveATransactionIdForASuccessfulPreAuth()
@@ -64,16 +72,10 @@ namespace Bambora.SDK.Tests
 
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>())).Returns(webresult);
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
-				ApiVersion = "1"
-			};
-			bambora.WebCommandExecuter = _executer.Object;
+			_bambora.WebCommandExecuter = _executer.Object;
 
 			// Act
-			PaymentResponse response = bambora.Payments.PreAuth (_paymentRequest);
+			PaymentResponse response = _bambora.Payments.PreAuth (_paymentRequest);
 
 
 			// Assert
@@ -87,17 +89,11 @@ namespace Bambora.SDK.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new ArgumentNullException());
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
-				ApiVersion = "1"
-			};
-			bambora.WebCommandExecuter = _executer.Object;
+			_bambora.WebCommandExecuter = _executer.Object;
 
 			// Act
 			var ex = (ArgumentNullException)Assert.Throws(typeof(ArgumentNullException),
-				() => bambora.Payments.PreAuth( (TokenPaymentRequest)null));
+				() => _bambora.Payments.PreAuth( (TokenPaymentRequest)null));
 
 			// Assert
 			Assert.That(ex.ParamName, Is.EqualTo("paymentRequest"));
@@ -110,17 +106,11 @@ namespace Bambora.SDK.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new ForbiddenException(HttpStatusCode.Forbidden, "", "", 1, 0));
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
-				ApiVersion = "1"
-			};
-			bambora.WebCommandExecuter = _executer.Object;
+			_bambora.WebCommandExecuter = _executer.Object;
 
 			// Act
 			var ex = (ForbiddenException)Assert.Throws(typeof(ForbiddenException),
-				() => bambora.Payments.PreAuth(_paymentRequest));
+				() => _bambora.Payments.PreAuth(_paymentRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.Forbidden));
@@ -133,17 +123,11 @@ namespace Bambora.SDK.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new UnauthorizedException(HttpStatusCode.Unauthorized, "", "", 1, 0));
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
-				ApiVersion = "1"
-			};
-			bambora.WebCommandExecuter = _executer.Object;
+			_bambora.WebCommandExecuter = _executer.Object;
 
 			// Act
 			var ex = (UnauthorizedException)Assert.Throws(typeof(UnauthorizedException),
-				() => bambora.Payments.PreAuth(_paymentRequest));
+				() => _bambora.Payments.PreAuth(_paymentRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.Unauthorized));
@@ -156,17 +140,11 @@ namespace Bambora.SDK.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new BusinessRuleException(HttpStatusCode.PaymentRequired, "", "", 1, 0));
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
-				ApiVersion = "1"
-			};
-			bambora.WebCommandExecuter = _executer.Object;
+			_bambora.WebCommandExecuter = _executer.Object;
 
 			// Act
 			var ex = (BusinessRuleException)Assert.Throws(typeof(BusinessRuleException),
-				() => bambora.Payments.PreAuth(_paymentRequest));
+				() => _bambora.Payments.PreAuth(_paymentRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.PaymentRequired));
@@ -179,17 +157,11 @@ namespace Bambora.SDK.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new InvalidRequestException(HttpStatusCode.PaymentRequired, "", "", 1, 0));
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
-				ApiVersion = "1"
-			};
-			bambora.WebCommandExecuter = _executer.Object;
+			_bambora.WebCommandExecuter = _executer.Object;
 
 			// Act
 			var ex = (InvalidRequestException)Assert.Throws(typeof(InvalidRequestException),
-				() => bambora.Payments.PreAuth(_paymentRequest));
+				() => _bambora.Payments.PreAuth(_paymentRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.PaymentRequired));
@@ -202,18 +174,12 @@ namespace Bambora.SDK.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new RedirectionException(HttpStatusCode.Redirect, "", "", 1, 0));
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
-				ApiVersion = "1"
-			};
-			bambora.WebCommandExecuter = _executer.Object;
+			_bambora.WebCommandExecuter = _executer.Object;
 
 
 			// Act
 			var ex = (RedirectionException)Assert.Throws(typeof(RedirectionException),
-				() => bambora.Payments.PreAuth(_paymentRequest));
+				() => _bambora.Payments.PreAuth(_paymentRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.Redirect));
@@ -226,18 +192,12 @@ namespace Bambora.SDK.Tests
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new InternalServerException(HttpStatusCode.InternalServerError, "", "", 1, 0));
 
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
-				ApiVersion = "1"
-			};
-			bambora.WebCommandExecuter = _executer.Object;
+			_bambora.WebCommandExecuter = _executer.Object;
 
 
 			// Act
 			var ex = (InternalServerException)Assert.Throws(typeof(InternalServerException),
-				() => bambora.Payments.PreAuth(_paymentRequest));
+				() => _bambora.Payments.PreAuth(_paymentRequest));
 
 			// Assert
 			Assert.That(ex.StatusCode, Is.EqualTo((int)HttpStatusCode.InternalServerError));
@@ -249,17 +209,12 @@ namespace Bambora.SDK.Tests
 			// Arrange
 			_executer.Setup(e => e.ExecuteCommand(It.IsAny<ExecuteWebRequest>()))
 				.Throws(new CommunicationException("API exception occured", null));
-			Gateway bambora = new Gateway () {
-				MerchantId = 300200578,
-				PaymentsApiKey = "4BaD82D9197b4cc4b70a221911eE9f70",
-				ProfilesApiKey = "D97D3BE1EE964A6193D17A571D9FBC80",
-				ApiVersion = "1"
-			};
-			bambora.WebCommandExecuter = _executer.Object;
+
+			_bambora.WebCommandExecuter = _executer.Object;
 
 			// Act
 			var ex = (CommunicationException)Assert.Throws(typeof(CommunicationException),
-				() => bambora.Payments.PreAuth(_paymentRequest));
+				() => _bambora.Payments.PreAuth(_paymentRequest));
 
 			// Assert
 			Assert.That(ex.Message, Is.EqualTo("API exception occured"));

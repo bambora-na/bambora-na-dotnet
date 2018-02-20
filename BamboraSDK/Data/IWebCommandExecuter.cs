@@ -21,9 +21,9 @@
 // THE SOFTWARE.
 //
 
-using Bambora.SDK.Data;
+using Bambora.NA.SDK.Data;
 
-namespace Bambora.SDK.Data
+namespace Bambora.NA.SDK.Data
 {
 	public interface IWebCommandExecuter
 	{

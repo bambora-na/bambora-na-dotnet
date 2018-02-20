@@ -26,7 +26,7 @@ using Newtonsoft.Json;
 /// <summary>
 /// Search criteria used when querying for transaction records.
 /// </summary>
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	public class Criteria
 	{

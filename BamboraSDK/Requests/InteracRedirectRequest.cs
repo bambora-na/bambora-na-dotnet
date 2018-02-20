@@ -22,7 +22,7 @@
 //
 using System;
 
-namespace Bambora.SDK.Requests
+namespace Bambora.NA.SDK.Requests
 {
 	public class InteracRedirectRequest
 	{

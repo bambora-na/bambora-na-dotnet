@@ -34,7 +34,7 @@ using System.Net;
 /// invalid card info is entered. It can also be thrown by developer-induced formatting errors. The
 /// UserFacingMessage will tell the card holder what happened.
 /// </summary>
-namespace Bambora.SDK.Exceptions
+namespace Bambora.NA.SDK.Exceptions
 {
 	public class InvalidRequestException : BaseApiException
 	{

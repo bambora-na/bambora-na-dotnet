@@ -21,11 +21,11 @@
 // THE SOFTWARE.
 //
 using System;
-using Bambora.SDK.Domain;
+using Bambora.NA.SDK.Domain;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	public class PaymentProfile
 	{

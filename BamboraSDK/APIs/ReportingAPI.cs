@@ -21,13 +21,13 @@
 // THE SOFTWARE.
 //
 using System;
-using Bambora.SDK.Data;
-using Bambora.SDK.Requests;
+using Bambora.NA.SDK.Data;
+using Bambora.NA.SDK.Requests;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	public class ReportingAPI
 	{

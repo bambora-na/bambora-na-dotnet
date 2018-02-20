@@ -33,7 +33,7 @@ using System.Net;
 /// has done something wrong and the cardholder or merchant getting this message should contact the developer
 /// of the software.
 /// </summary>
-namespace Bambora.SDK.Exceptions
+namespace Bambora.NA.SDK.Exceptions
 {
 	public class UnauthorizedException : BaseApiException
 	{

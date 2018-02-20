@@ -23,7 +23,7 @@
 
 using System;
 
-namespace Bambora.SDK.Exceptions
+namespace Bambora.NA.SDK.Exceptions
 {
 	public class CommunicationException : Exception
 	{

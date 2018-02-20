@@ -21,13 +21,13 @@
 // THE SOFTWARE.
 //
 using System;
-using Bambora.SDK.Requests;
+using Bambora.NA.SDK.Requests;
 using Newtonsoft.Json;
 
 /// <summary>
 /// Return a payment for a partial or full amount.
 /// </summary>
-namespace Bambora.SDK.Requests
+namespace Bambora.NA.SDK.Requests
 {
 	public class ReturnRequest
 	{

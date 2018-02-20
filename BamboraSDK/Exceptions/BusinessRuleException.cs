@@ -29,7 +29,7 @@ using System.Net;
 /// 
 /// 
 /// </summary>
-namespace Bambora.SDK.Exceptions
+namespace Bambora.NA.SDK.Exceptions
 {
 	public class BusinessRuleException : BaseApiException
 	{

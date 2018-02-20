@@ -22,7 +22,7 @@
 //
 using System;
 
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	/// <summary>
 	/// Step 2 in the Interac purchase process.

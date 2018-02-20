@@ -25,8 +25,8 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Net;
-using Bambora.SDK.Data;
-using Bambora.SDK.Exceptions;
+using Bambora.NA.SDK.Data;
+using Bambora.NA.SDK.Exceptions;
 
 /// <summary>
 /// Creates the actual web request and returns the response object.
@@ -34,10 +34,10 @@ using Bambora.SDK.Exceptions;
 /// </summary>
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Bambora.SDK.Domain;
+using Bambora.NA.SDK.Domain;
 
 
-namespace Bambora.SDK.Requests
+namespace Bambora.NA.SDK.Requests
 {
 	public class HttpsWebRequest
 	{

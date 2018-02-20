@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 //
 
-namespace Bambora.SDK.Requests
+namespace Bambora.NA.SDK.Requests
 {
 	/// <summary>
 	/// Credentials for authentication. You do not want to create this object yourself

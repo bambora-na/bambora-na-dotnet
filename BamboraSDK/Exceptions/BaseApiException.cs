@@ -48,7 +48,7 @@ using System.Net;
 ///       in the 500+ range. Card holders should wait a minute and try the transaction again.
 /// 
 /// </summary>
-namespace Bambora.SDK.Exceptions
+namespace Bambora.NA.SDK.Exceptions
 {
 	public abstract class BaseApiException : Exception
 	{

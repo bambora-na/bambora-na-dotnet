@@ -23,7 +23,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	public class ProfileResponse
 	{

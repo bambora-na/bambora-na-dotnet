@@ -23,7 +23,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace Bambora.SDK
+namespace Bambora.NA.SDK
 {
 	/// <summary>
 	/// The result of storing a card on a payment profile or from a credit card purchase.

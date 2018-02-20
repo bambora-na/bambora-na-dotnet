@@ -25,7 +25,7 @@ using System;
 using System.Net;
 
 
-namespace Bambora.SDK.Data
+namespace Bambora.NA.SDK.Data
 {
 	/// <summary>
 	/// Executes web requests. This piece of code is pulled out from HttpWebRequest
