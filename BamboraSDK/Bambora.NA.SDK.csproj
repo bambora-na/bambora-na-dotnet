@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net45;net461;netstandard2.0</TargetFrameworks>
+    <Company>Bambora (North America), Inc.</Company>
+    <Copyright>Copyright © Bambora (North America), Inc.</Copyright>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <Description>Provides easy access to the Bambora (North America) Payments, Reporting, and Profiles APIs.</Description>
+    <Product>Bambora .NET SDK</Product>
+    <PackageTags>Bambora, Bambora SDK</PackageTags>
+    <Authors>Bambora (North America), Inc.</Authors>
+    <PackageProjectUrl>https://github.com/bambora-na/bambora-na-dotnet</PackageProjectUrl>
+    <PackageIconUrl></PackageIconUrl>
+    <PackageLicenseUrl>https://github.com/bambora-na/bambora-na-dotnet/blob/master/LICENSE</PackageLicenseUrl>
+    <Version>2.0.0</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
+    <DefineConstants>TRACE;RELEASE</DefineConstants>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+
+</Project>

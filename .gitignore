@@ -4,3 +4,17 @@ Debug/
 Release/
 bin/
 packages/
+obj/
+
+*.scc
+*.vs
+
+*.pdb
+.nuget/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
