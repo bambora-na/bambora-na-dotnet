@@ -36,7 +36,10 @@ namespace Bambora.NA.SDK.Data
 	{
         public WebCommandExecuter ()
         {
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            if(!ServicePointManager.SecurityProtocol.HasFlag(SecurityProtocolType.Tls12))
+            {
+                ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
+            }
         }
 		public WebCommandResult<T> ExecuteCommand<T>(IWebCommandSpec<T> spec)
 		{
