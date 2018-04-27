@@ -43,7 +43,10 @@ namespace Bambora.NA.SDK.Tests
 
         public static void Main(string[] args) {
 
-			Console.WriteLine ("BEGIN running sample transactions");
+            //To point Sample Application to TLS 1.2 ONLY server, uncomment line below
+            //Bambora.NA.SDK.BamboraUrls.BaseUrl = "https://tls12-api.na.bambora.com";
+
+            Console.WriteLine ("BEGIN running sample transactions");
             _bambora = new Gateway()
             { 
                 MerchantId = 300200578,
