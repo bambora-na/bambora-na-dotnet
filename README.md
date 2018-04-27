@@ -10,7 +10,23 @@ To assist as a centralized record of all your sales, we also accept cash and che
 For very detailed information on the Payments API, look at the Bambora developer portal's [documentation](https://dev.na.bambora.com/docs/references/payment_SDKs/take_payments/).
 
 ## Nuget packages
-SDK is available as Nuget package for .NET 4.5, 4.6.1 and .NET standard 2.0
+SDK is available as Nuget package for .NET 4.5, 4.6.1 and .NET standard 2.0. 
+
+Latest version of SDK is 2.1.0 and you can get it [here](https://www.nuget.org/packages/Bambora.NA.SDK/)
+
+## Version history
+
+New in 2.1.0
+* Merged community pull request #26 to allow TLS 1.0/1.1 so that calling application can use other services which do not support TLS 1.2
+* PaymentResponse.Approved property is made public (community pull request #17)
+* Bambora.NA.SDK.BamboraUrls.BaseUrl made public so you can change APi adderss in order to test your integration (see sample below for usage)
+
+New in 2.0.0 
+* Updated to support TLS 1.2
+* Requires .NET 4.5 or later
+* Rebranded from Beanstream to Bambora. This is breaking change (all namespaces renamed from Beanstream to Bambora)
+
+
 
 ## Setup
 Before you begin making purchases, you need to create a Bambora API object. It holds your user credentials and provides access to the various APIs.
@@ -46,6 +62,10 @@ namespace Bambora.NA.SDK.Demo
         public static void Main(string[] args)
         {
             Console.WriteLine("BEGIN running sample transactions");
+            
+            //To point this sample application to TLS 1.2 ONLY server, uncomment line below
+            //Bambora.NA.SDK.BamboraUrls.BaseUrl = "https://tls12-api.na.bambora.com";
+
             // Payments API
             ProcessPayment();            
             Console.WriteLine("FINISHED running sample transactions");
