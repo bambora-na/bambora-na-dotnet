@@ -23,18 +23,20 @@
 
 namespace Bambora.NA.SDK
 {
-	internal class BamboraUrls
+	public class BamboraUrls
 	{
-		public static string BaseUrl = "https://api.na.bambora.com";
-		public static string BasePaymentsUrl = BaseUrl + "/{v}/payments";
-		public static string BaseProfilesUrl = BaseUrl + "/{v}/profiles";
-		public static string PreAuthCompletionsUrl = BasePaymentsUrl + "/{id}/completions";
-		public static string ReturnsUrl = BasePaymentsUrl + "/{id}/returns";
-		public static string VoidsUrl =  BasePaymentsUrl + "/{id}/void";
-		public static string GetPaymentUrl =  BasePaymentsUrl + "/{id}";
-		public static string ContinuationsUrl = BasePaymentsUrl + "/{md}/continue";
-		public static string ReportsUrl =  BaseUrl + "/{v}/reports";
-		public static string ProfileUri = "/{id}";
-		public static string CardsUrl = BaseProfilesUrl+ProfileUri+"/cards";
+        private static string baseUrl = "https://api.na.bambora.com";
+
+	    public static string BaseUrl { get => baseUrl;set => baseUrl = value; }
+	    public static string BasePaymentsUrl => BaseUrl + "/{v}/payments";
+		public static string BaseProfilesUrl => BaseUrl + "/{v}/profiles";
+		public static string PreAuthCompletionsUrl => BasePaymentsUrl + "/{id}/completions";
+		public static string ReturnsUrl => BasePaymentsUrl + "/{id}/returns";
+		public static string VoidsUrl =>  BasePaymentsUrl + "/{id}/void";
+		public static string GetPaymentUrl =>  BasePaymentsUrl + "/{id}";
+		public static string ContinuationsUrl => BasePaymentsUrl + "/{md}/continue";
+		public static string ReportsUrl =>  BaseUrl + "/{v}/reports";
+		private static string profileUri = "/{id}";
+	    public static string CardsUrl => BaseProfilesUrl + profileUri + "/cards";
 	}
 }
