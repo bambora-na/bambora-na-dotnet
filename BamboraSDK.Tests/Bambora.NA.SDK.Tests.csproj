@@ -4,8 +4,8 @@
     <TargetFrameworks>net45;net461</TargetFrameworks>
     <Company>Bambora (North America), Inc.</Company>
     <Copyright>Copyright © Bambora (North America), Inc.</Copyright>
-    <AssemblyVersion>2.1.0.0</AssemblyVersion>
-    <FileVersion>2.1.0.0</FileVersion>
+    <AssemblyVersion>2.1.1.0</AssemblyVersion>
+    <FileVersion>2.1.1.0</FileVersion>
     <Description>Provides easy access to the Bambora (North America) Payments, Reporting, and Profiles APIs.</Description>
     <Product>Bambora .NET SDK Tests</Product>
     <PackageTags>Bambora, Bambora SDK</PackageTags>
@@ -15,7 +15,7 @@
     <ApplicationIcon />
     <OutputType>Exe</OutputType>
     <StartupObject />
-    <Version>2.1.0</Version>
+    <Version>2.1.1</Version>
     <PackageLicenseUrl>https://github.com/bambora-na/bambora-na-dotnet/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
