@@ -12,9 +12,15 @@ For very detailed information on the Payments API, look at the Bambora developer
 ## Nuget packages
 SDK is available as Nuget package for .NET 4.5, 4.6.1 and .NET standard 2.0. 
 
-Latest version of SDK is 2.1.0 and you can get it [here](https://www.nuget.org/packages/Bambora.NA.SDK/)
+Latest version of SDK is 2.1.1 and you can get it [here](https://www.nuget.org/packages/Bambora.NA.SDK/)
+
+## TLS 1.2 support
+For testing instructions with our TLS1.2-only server, please refer to our [developer portal](https://dev.na.bambora.com/docs/references/payment_SDKs/support_tls12/#c-sdk)
 
 ## Version history
+
+New in 2.1.1
+* Always allow all TLS versions 1.0/1.1/1.2 so that calling application can use other services which do not support TLS 1.2
 
 New in 2.1.0
 * Merged community pull request #26 to allow TLS 1.0/1.1 so that calling application can use other services which do not support TLS 1.2
