@@ -21,11 +21,10 @@ New in 2.1.0
 * PaymentResponse.Approved property is made public (community pull request #17)
 * Bambora.NA.SDK.BamboraUrls.BaseUrl made public so you can change APi adderss in order to test your integration (see sample below for usage)
 
-New in 2.0.0 
+New in 2.0.0
 * Updated to support TLS 1.2
 * Requires .NET 4.5 or later
-* Rebranded from Beanstream to Bambora. This is breaking change (all namespaces renamed from Beanstream to Bambora)
-
+* Rebranded from Beanstream to Bambora. This is a breaking change (all namespaces renamed from Beanstream to Bambora)
 
 
 ## Setup
@@ -117,8 +116,3 @@ namespace Bambora.NA.SDK.Demo
 }
 
 ```
-
-
-
-
-
