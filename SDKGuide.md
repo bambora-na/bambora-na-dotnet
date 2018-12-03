@@ -1,7 +1,5 @@
 
-REST Process Transaction .NET SDK Guide
-=======================================
-
+# REST Process Transaction .NET SDK Guide
 
 ## Table Of Contents
 
@@ -15,16 +13,18 @@ REST Process Transaction .NET SDK Guide
 8. [Redirections](#Redirections)
 
 ## Overview
-This documents is a brief outline of how to use the Bambora .NET SDK to process transactions.
+
+This document is a brief outline of how to use the Bambora .NET SDK to process transactions.
 
 ## Prerequesite
-* A Bambora test account  
+
+* A Bambora test account
 * Visual Studio 2015 and up  
 * .NET Framework 4.5 and up. SDK is available as Nuget package for .NET 4.5, 4.6.1 and .NET standard 2.0
 
 ## Usage and Operations
 
-```
+```c#
 using Bambora.NA.SDK;
 
 ...
@@ -38,7 +38,6 @@ Gateway bambora = new Gateway()
 
 ```
 
-
 # Purchase
 
 ## Credit Card
@@ -47,7 +46,7 @@ Gateway bambora = new Gateway()
 bambora.MerchantId = 276790000;
 bambora.Passcode = "6EF5C0Db8E89410E8835433A54f169c2";
 var payment = new {
-    order_number = "ABC1234567890,
+    order_number = "ABC1234567890",
     amount = 100.00,
     payment_method = "card",
     card = new {
@@ -79,7 +78,7 @@ var payment = new {
         phone_number = "2501231234",
         email_address = "johndoe@bambora.com"
     },
-    comments= "create a payment"
+    comments = "create a payment"
 };
 try
 {
@@ -90,11 +89,12 @@ catch...
 ```
 
 ## Payment Profile
+
 ```c#
 bambora.MerchantId = 276790000;
 bambora.Passcode = "6EF5C0Db8E89410E8835433A54f169c2";
 var payment = new {
-    order_number = "ABC1234567890,
+    order_number = "ABC1234567890",
     amount = 100.00,
     payment_method = "payment_profile",
     payment_profile = new
@@ -111,12 +111,13 @@ try
 catch...
 ```
 
-## Token 
+## Token
+
 ```c#
 bambora.MerchantId = 276790000;
 bambora.Passcode = "6EF5C0Db8E89410E8835433A54f169c2";
 var payment = new {
-    order_number = "ABC1234567890,
+    order_number = "ABC1234567890",
     amount = 100.00,
     payment_method = "token",
     token = new {
@@ -155,19 +156,20 @@ catch...
 ```
 
 ## Cash
-``` c#
+
+```c#
 bambora.MerchantId = 276790000;
 bambora.Passcode = "6EF5C0Db8E89410E8835433A54f169c2";
 var payment = new
 {
-order_number = "ABC1234567890,
-amount = 100.00,
-payment_method = "cash",
-comments= "create a payment"
+    order_number = "ABC1234567890",
+    amount = 100.00,
+    payment_method = "cash",
+    comments= "create a payment"
 };
 try
 {
-var result = bambora.Payments.Create(payment);
+    var result = bambora.Payments.Create(payment);
 }
 catch...
 
@@ -180,74 +182,78 @@ bambora.MerchantId = 276790000;
 bambora.Passcode = "6EF5C0Db8E89410E8835433A54f169c2";
 var payment = new
 {
-order_number = "ABC1234567890,
-amount = 100.00,
-payment_method = "cheque",
-comments= "create a payment"
+    order_number = "ABC1234567890",
+    amount = 100.00,
+    payment_method = "cheque",
+    comments= "create a payment"
 };
 try
 {
-var result = bambora.Payments.Create(payment);
+    var result = bambora.Payments.Create(payment);
 }
 catch...
 ```
 
 ## Interac (First Request)
-```
+
+```c#
 bambora.MerchantId = 276790000;
 bambora.Passcode = "6EF5C0Db8E89410E8835433A54f169c2";
 var payment = new
 {
-order_number = "ABC1234567890,
-amount = 100.00,
-payment_method = "interac",
-billing = new
-{
-name = "John Doe",
-address_line1 = "2659 Douglas Street",
-address_line2 = "302",
-city = "Victoria",
-province = "BC",
-country = "CA",
-postal_code = "V8T4M3",
-phone_number = "2501231234",
-email_address = "johndoe@bambora.com"
-},
-comments= "create a payment"
+    order_number = "ABC1234567890",
+    amount = 100.00,
+    payment_method = "interac",
+    billing = new
+    {
+        name = "John Doe",
+        address_line1 = "2659 Douglas Street",
+        address_line2 = "302",
+        city = "Victoria",
+        province = "BC",
+        country = "CA",
+        postal_code = "V8T4M3",
+        phone_number = "2501231234",
+        email_address = "johndoe@bambora.com"
+    },
+    comments= "create a payment"
 };
 try
 {
-var result = bambora.Payments.Create(payment);
+    var result = bambora.Payments.Create(payment);
 }
 catch...
 ```
 
 # Return
+
 Credit Card, Payment Profile, Cash, Cheque, Interac, Token
-```
+
+```c#
 bambora.MerchantId = 276790000;
 bambora.Passcode = "6EF5C0Db8E89410E8835433A54f169c2";
 var payment = new
 {
-order_number = "ABC1234567890,
-amount = 100.00
+    order_number = "ABC1234567890",
+    amount = 100.00
 };
 try
 {
-var transId = 10000001;
-var result = bambora.Payments.Return(transId , payment);
+    var transId = 10000001;
+    var result = bambora.Payments.Return(transId , payment);
 }
 catch...
 ```
 
 # Pre-Authorization (Authorization)
-##  Credit Card
 
-```
+## Credit Card
+
+```c#
 bambora.MerchantId = 276790000;
 bambora.Passcode = "6EF5C0Db8E89410E8835433A54f169c2";
 var payment = new {
-    order_number = "ABC1234567890,
+    order_number = "ABC1234567890",
     amount = 100.00,
     payment_method = "card",
     card = new {
@@ -269,7 +275,6 @@ var payment = new {
         phone_number = "2501231234",
         email_address = "johndoe@bambora.com"
     },
-
     shipping = new {
         name = "John Doe",
         address_line1 = "2659 Douglas Street",
@@ -292,11 +297,11 @@ catch...
 
 ## Payment Profile
 
-```
+```c#
 bambora.MerchantId = 276790000;
 bambora.Passcode = "6EF5C0Db8E89410E8835433A54f169c2";
 var payment = new {
-    order_number = "ABC1234567890,
+    order_number = "ABC1234567890",
     amount = 100.00,
     payment_method = "payment_profile",
     payment_profile = new {
@@ -314,11 +319,12 @@ catch...
 ```
 
 ## Token
-```
+
+```c#
 bambora.MerchantId = 276790000;
 bambora.Passcode = "6EF5C0Db8E89410E8835433A54f169c2";
 var payment = new {
-    order_number = "ABC1234567890,
+    order_number = "ABC1234567890",
     amount = 100.00,
     payment_method = "token",
     token = new {
@@ -358,13 +364,15 @@ catch...
 ```
 
 # Pre-Authorization Complete (Capture)
+
 Credit Card, PaymentProfile, Token
-```
+
+```c#
 bambora.MerchantId = 276790000;
 bambora.Passcode = "6EF5C0Db8E89410E8835433A54f169c2";
 var payment = new
     {
-        order_number = "ABC1234567890,
+        order_number = "ABC1234567890",
         amount = 100.00
     };
 try
@@ -375,14 +383,16 @@ try
 catch...
 ```
 
-# Void 
+# Void
+
 Credit Card, PaymentProfile, Token
-```
+
+```c#
 bambora.MerchantId = 276790000;
 bambora.Passcode = "6EF5C0Db8E89410E8835433A54f169c2";
 var payment = new
 {
-    order_number = "ABC1234567890
+    order_number = "ABC1234567890"
 };
 try
 {
@@ -393,8 +403,10 @@ catch...
 ```
 
 # Redirections
+
 ## 3D secure cards
-```
+
+```c#
 bambora.MerchantId = 276790000;
 bambora.Passcode = "6EF5C0Db8E89410E8835433A54f169c2";
 var payment = new {
@@ -412,34 +424,36 @@ catch...
 ```
 
 ## Interac
-```
+
+```c#
 bambora.MerchantId = 276790000;
 bambora.Passcode = "6EF5C0Db8E89410E8835433A54f169c2";
 var payment = new
 {
-payment_method = "interac",
-interac_response = new
-{
-funded = 1,
-idebit_track2 = "3728024906540591214=14010123456789XYZ",
-idebit_isslang = "en",
-idebit_version = 1,
-idebit_issconf = "CONF#TEST",
-idebit_issname = "TestBank2",
-idebit_amount = 10000,
-idebit_invoice = "10000123"
-}
+    payment_method = "interac",
+    interac_response = new
+    {
+        funded = 1,
+        idebit_track2 = "3728024906540591214=14010123456789XYZ",
+        idebit_isslang = "en",
+        idebit_version = 1,
+        idebit_issconf = "CONF#TEST",
+        idebit_issname = "TestBank2",
+        idebit_amount = 10000,
+        idebit_invoice = "10000123"
+    }
 };
 try
 {
-var merchantData = "45AA2840-C435-461A-B014-9AE5EA477BAD";
-var result = bambora.Payments.Continue(merchantData, payment);
+    var merchantData = "45AA2840-C435-461A-B014-9AE5EA477BAD";
+    var result = bambora.Payments.Continue(merchantData, payment);
 }
 catch...
 ```
 
 # Exceptions
-```
+
+```c#
 catch (InvalidRequestException ex)
 {
     //Display message to the user
